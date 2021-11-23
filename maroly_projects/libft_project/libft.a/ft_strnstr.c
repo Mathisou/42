@@ -6,7 +6,7 @@
 /*   By: maroly <maroly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/18 18:23:40 by maroly            #+#    #+#             */
-/*   Updated: 2021/10/18 18:23:50 by maroly           ###   ########.fr       */
+/*   Updated: 2021/11/23 11:01:19 by maroly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "libft.h"
@@ -33,6 +33,7 @@ char	*ft_strnstr(const char *big, const char *little, size_t len)
 				if (little[j] == '\0')
 					return ((char *)&big[i]);
 			}
+			return (NULL);
 			j = 0;
 		}
 		i++;

@@ -30,7 +30,7 @@ char *ft_strjoin(char const *s1, char const *s2)
 	size = ft_strlen(s1) + ft_strlen(s2);
 	new = NULL;
 	new = (char *) malloc(sizeof(*new) * (size + 1));
-	printf("%d\n", size + 1);
+	//printf("%d\n", size + 1);
 	if (new == NULL)
 		return (NULL);
 	new = ft_strcat(new, (char *)s1);
@@ -40,5 +40,17 @@ char *ft_strjoin(char const *s1, char const *s2)
 
 int main(int ac, char **av)
 {
-	printf("%d\n", ft_strjoin(NULL, NULL));
+        char *s1 = "where is my ";
+        char *s2 = "malloc ???";
+        char *s3 = "where is my malloc ???";
+
+        char *res = ft_strjoin(s1, s2);
+        if (!memcmp(res, s3, 24))
+{
+                printf("success\n");
+return 0;
+}
+        printf("failed\n");
+return 0;
+	//printf("%d\n", ft_strjoin(NULL, NULL));
 }

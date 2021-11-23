@@ -1,72 +1,66 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   ft_strtrim.c                                       :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: maroly <maroly@student.42.fr>              +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/10/19 13:22:25 by maroly            #+#    #+#             */
-/*   Updated: 2021/11/07 13:23:49 by maroly           ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "libft.h"
 
-static int	check_string(char const c, char const *set)
+int	check_string(char const c, char const *set)
 {
-	size_t	i;
+    int i;
 
-	i = 0;
-	while (set[i])
-	{
-		if (set[i] == c)
-			return (0);
-		i++;
-	}
-	return (1);
+    i = 0;
+    while (set[i])
+    {
+        if (set[i] == c)
+            return (0);
+        i++;
+    }
+    return (1);
 }
 
-static char	*count_size(char const *s1, char const *set)
+char	*count_size(char const *s1, char const *set)
 {
-	size_t	i;
-	size_t	size;
-	char	*new;
+    size_t i;
+    size_t size;
+    size_t s;
+    char *new;
 
-	i = 0;
-	size = 0;
-	new = NULL;
-	while (s1[i])
-	{
-		if (check_string(s1[i], set) == 1)
-			size++;
-		i++;
-	}
-	new = (char *) malloc(sizeof(*new) * size);
-	if (new == NULL)
-		return (NULL);
-	return (new);
+    i = 0;
+    size = ft_strlen(s1) - 1;
+    new = NULL;
+    while (check_string(s1[i], set) == 0)
+        i++;
+    while (check_string(s1[size], set) == 0)
+        size--;
+    while (i <= size)
+    {
+        i++;
+        s++;
+    }
+    new = (char *) malloc(sizeof(*new) * (s + 1));
+    if (new == NULL)
+        return (NULL);
+    return (new);
+
 }
 
-char	*ft_strtrim(char const *s1, char const *set)
+char *ft_strtrim(char const *s1, char const *set)
 {
-	size_t	i;
-	size_t	j;
-	char	*new;
+    size_t i;
+    size_t j;
+    size_t size;
+    char *new;
 
-	i = 0;
-	j = 0;
-	if (!s1 || !set)
-		return (NULL);
-	new = count_size(s1, set);
-	while (s1[i])
-	{
-		if (check_string(s1[i], set) == 1)
-		{
-			new[j] = s1[i];
-			j++;
-		}
-		i++;
-	}
-	new[j] = '\0';
-	return (new);
+    i = 0;
+    j = 0;
+    size = ft_strlen(s1) - 1;
+    new = count_size(s1, set);
+    while (check_string(s1[i], set) == 0)
+        i++;
+    while (check_string(s1[size], set) == 0)
+        size--;
+    while (i <= size)
+    {
+        new[j] = (char)s1[i];
+        j++;
+        i++;
+    }
+    new[j] = '\0';
+    return (new);
 }

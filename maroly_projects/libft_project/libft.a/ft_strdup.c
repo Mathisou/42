@@ -6,7 +6,7 @@
 /*   By: maroly <maroly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/18 18:23:18 by maroly            #+#    #+#             */
-/*   Updated: 2021/10/18 18:23:27 by maroly           ###   ########.fr       */
+/*   Updated: 2021/11/23 10:46:24 by maroly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "libft.h"
@@ -20,7 +20,7 @@ char	*ft_strdup(const char *s)
 	i = 0;
 	new = NULL;
 	size = ft_strlen(s);
-	new = (char *) malloc(sizeof(*new) * size);
+	new = (char *) malloc(sizeof(*new) * (size + 1));
 	if (new == NULL)
 		return (NULL);
 	while (s[i])
