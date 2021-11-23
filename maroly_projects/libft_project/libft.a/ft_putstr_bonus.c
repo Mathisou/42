@@ -6,14 +6,14 @@
 /*   By: maroly <maroly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/19 13:28:12 by maroly            #+#    #+#             */
-/*   Updated: 2021/10/19 13:28:15 by maroly           ###   ########.fr       */
+/*   Updated: 2021/11/23 14:32:42 by maroly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "libft.h"
 
 void	ft_putstr(char *str)
 {
-	int	i;
+	size_t	i;
 
 	i = 0;
 	while (str[i])

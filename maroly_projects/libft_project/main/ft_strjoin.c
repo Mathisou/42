@@ -1,6 +1,6 @@
 #include "libft.h"
 
-char	*ft_strcat(char *dest, char *src)
+char	*ft_strcat(char *dest, const char *src)
 {
 	int	i;
 	int	size;
@@ -30,11 +30,20 @@ char *ft_strjoin(char const *s1, char const *s2)
 	size = ft_strlen(s1) + ft_strlen(s2);
 	new = NULL;
 	new = (char *) malloc(sizeof(*new) * (size + 1));
-	//printf("%d\n", size + 1);
+	//printf("cque jmalloc : %lu\n", size + 1);
 	if (new == NULL)
 		return (NULL);
-	new = ft_strcat(new, (char *)s1);
-	new = ft_strcat(new, (char *)s2);
+	//ft_strcat(new, s1);
+    while (s1[i])
+    {
+        new[j] = s1[i];
+        i++;
+        j++;
+    }
+    new[j] = '\0';
+    //printf("1er : %s\n", new);
+	ft_strcat(new, s2);
+    //printf("2eme : %s\n", new);
 	return (new);
 }
 
@@ -44,13 +53,15 @@ int main(int ac, char **av)
         char *s2 = "malloc ???";
         char *s3 = "where is my malloc ???";
 
+       // printf("taille du res attendu : %lu\n", strlen(s3) + 1);
         char *res = ft_strjoin(s1, s2);
-        if (!memcmp(res, s3, 24))
-{
-                printf("success\n");
-return 0;
-}
+        printf("res = %s\n s3 = %s\n", res, s3);
+        if (!memcmp(res, s3, 22))
+        {
+                 printf("success\n");
+                return 0;
+        }
         printf("failed\n");
-return 0;
+        return 0;
 	//printf("%d\n", ft_strjoin(NULL, NULL));
 }

@@ -6,14 +6,18 @@
 /*   By: maroly <maroly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/19 13:09:01 by maroly            #+#    #+#             */
-/*   Updated: 2021/10/19 14:31:02 by maroly           ###   ########.fr       */
+/*   Updated: 2021/11/23 18:26:02 by maroly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "libft.h"
 
 t_list	*ft_lstlast(t_list *lst)
 {
-	while (lst->next != NULL)
-		lst = lst->next;
-	return (lst);
+    while (lst)
+    {
+        if (!lst->next)
+            return (lst);
+        lst = lst->next;
+    }
+    return (lst);
 }

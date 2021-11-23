@@ -6,7 +6,7 @@
 /*   By: maroly <maroly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/19 13:21:16 by maroly            #+#    #+#             */
-/*   Updated: 2021/10/19 13:21:21 by maroly           ###   ########.fr       */
+/*   Updated: 2021/11/23 18:27:57 by maroly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "libft.h"
@@ -14,5 +14,5 @@
 void	ft_lstdelone(t_list *lst, void (*del)(void *))
 {
 	del(lst->content);
-	free(lst->content);
+	free(lst);
 }

@@ -6,7 +6,7 @@
 /*   By: maroly <maroly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/19 13:24:12 by maroly            #+#    #+#             */
-/*   Updated: 2021/11/23 11:12:27 by maroly           ###   ########.fr       */
+/*   Updated: 2021/11/23 17:55:50 by maroly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "libft.h"
@@ -43,5 +43,6 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	new = (char *) malloc(sizeof(*new) * (j + 1));
 	if (new == NULL)
 		return (NULL);
+    new[0] = '\0';
 	return (ft_strncats(new, &s[i], len));
 }

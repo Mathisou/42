@@ -6,12 +6,12 @@
 /*   By: maroly <maroly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/18 18:17:20 by maroly            #+#    #+#             */
-/*   Updated: 2021/11/21 13:58:45 by maroly           ###   ########.fr       */
+/*   Updated: 2021/11/23 15:16:42 by maroly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "libft.h"
 
-char	*ft_strcat(char *dest, const char *src)
+char	*ft_strcats(char *dest, const char *src)
 {
 	int	i;
 	int	size;
@@ -39,7 +39,8 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	new = (char *) malloc(sizeof(*new) * (size + 1));
 	if (new == NULL)
 		return (NULL);
-	new = ft_strcat(new, (char *)s1);
-	new = ft_strcat(new, (char *)s2);
+    new[0] = '\0';
+	new = ft_strcats(new, (char *)s1);
+	new = ft_strcats(new, (char *)s2);
 	return (new);
 }
