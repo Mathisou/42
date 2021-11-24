@@ -9,7 +9,7 @@ int	create_tab(char const *s, char c)
     size = 0;
     while (s[i])
     {
-        if ((s[i - 1] == c || i == 0) && s[i] != c)
+        if (((s[i - 1] == c || i == 0) && s[i] != c) && s[i])
             size++;
         i++;
     }
@@ -25,7 +25,7 @@ char *put_str_in_tab(const char *s, char c)
     i = 0;
     while (s[i] != c && s[i])
         i++;
-    str = (char *) malloc(sizeof(*str) * i);
+    str = (char *) malloc(sizeof(*str) * (i + 1));
     i = 0;
     while (s[i] && s[i] != c)
     {
@@ -45,7 +45,7 @@ char **ft_split(char const *s, char c)
     i = 0;
     string = 0;
     tab = NULL;
-    tab = (char **) malloc(sizeof(*tab) * create_tab(s, c));
+    tab = (char **) malloc(sizeof(*tab) * (create_tab(s, c) + 1));
     if (tab == NULL)
         return (NULL);
     while (s[i])
@@ -68,12 +68,13 @@ int main()
 {
     char **tab;
       int i;
-    char *s = "split  ||this|for|me|||||!|";
+    char *s = "lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus. Suspendisse lectus tortor, dignissim sit amet, adipiscing nec, ultricies sed, dolor. Cras elementum ultricies diam. Maecenas ligula massa, varius a, semper congue, euismod non, mi.";
 
+char c = 'i';
       i = 0;
-      tab = malloc(sizeof(*tab) * create_tab(s, '|' + 1));
-      tab = ft_split(s, '|');
-      while (i < create_tab(s, '|'))
+      tab = malloc(sizeof(*tab) * create_tab(s, c + 1));
+      tab = ft_split(s, c);
+      while (i < create_tab(s, c))
       {
       printf("%s\n", tab[i]);
       i++;

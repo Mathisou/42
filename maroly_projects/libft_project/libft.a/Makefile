@@ -6,7 +6,7 @@
 #    By: maroly <maroly@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/10/19 13:36:30 by maroly            #+#    #+#              #
-#    Updated: 2021/11/23 14:23:37 by maroly           ###   ########.fr        #
+#    Updated: 2021/11/24 12:51:59 by maroly           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -54,8 +54,8 @@ SRCS_BONUS 	=	ft_lstnew.c					\
 	       		ft_lstclear.c				\
 	       		ft_lstiter.c				\
 	       		ft_lstmap.c					\
-	    	   	ft_putchar_bonus.c			\
-	    	   	ft_putnbr_bonus.c			\
+	    	   	#ft_putchar_bonus.c			\
+	    	    ft_putnbr_bonus.c			\
 	   	 	   	ft_swap_bonus.c				\
 	     	  	ft_putstr_bonus.c			\
 	   	    	ft_strcpy_bonus.c			\
@@ -129,9 +129,9 @@ fclean		:	clean
 
 re			:	fclean all
 
-so:
-	$(CC) -nostartfiles -fPIC $(FLAGS) $(SRCS)
-	gcc -nostartfiles -shared -o libft.so $(OBJS)
+so			:
+				$(CC) -nostartfiles -fPIC $(FLAGS) $(SRCS)
+				gcc -nostartfiles -shared -o libft.so $(OBJS)
 
 
 .PHONY		: 	all, clean, fclean, re

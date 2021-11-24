@@ -6,7 +6,7 @@
 /*   By: maroly <maroly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/19 13:24:12 by maroly            #+#    #+#             */
-/*   Updated: 2021/11/23 17:55:50 by maroly           ###   ########.fr       */
+/*   Updated: 2021/11/24 12:49:24 by maroly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "libft.h"
@@ -35,6 +35,10 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 
 	i = 0;
 	j = 0;
+    if (!s)
+    {
+        return (NULL);
+    }
 	new = NULL;
 	while (s[i] && i != start)
 		i++;

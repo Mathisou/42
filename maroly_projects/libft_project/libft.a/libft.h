@@ -6,7 +6,7 @@
 /*   By: maroly <maroly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/19 12:50:21 by maroly            #+#    #+#             */
-/*   Updated: 2021/10/19 18:44:21 by maroly           ###   ########.fr       */
+/*   Updated: 2021/11/24 12:42:09 by maroly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef LIBFT_H
@@ -72,7 +72,7 @@ void	ft_lstdelone(t_list *lst, void (*del)(void *));
 void	ft_lstclear(t_list **lst, void (*del)(void *));
 void	ft_lstiter(t_list *lst, void (*f)(void *));
 t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *));
-void	ft_putchar(int c);
+/*void	ft_putchar(int c);
 void	ft_putnbr(int nb);
 void	ft_swap(int *a, int *b);
 void	ft_putstr(char *str);
@@ -104,6 +104,6 @@ void	ft_sort_string_tab(char **tab);
 int		ft_count_strings(char **tab);
 void	ft_sort_list(t_list *lst, int (*cmp)());
 void	ft_list_remove_if(t_list **begin_list, void *data_ref, int (*cmp)());
-int		ft_is_power_of_2(int nb);
+int		ft_is_power_of_2(int nb);*/
 
 #endif

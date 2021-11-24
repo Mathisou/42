@@ -72,6 +72,10 @@ char *ft_strtrim(char const *s1, char const *set)
     int size;
     char *new;
 
+    if (!s1 || !set)
+    {
+        return (NULL);
+    }
     size = ft_strlen(s1);
     new = NULL;
     if (size > 0)

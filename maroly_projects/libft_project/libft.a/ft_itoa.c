@@ -6,22 +6,22 @@
 /*   By: maroly <maroly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/19 13:14:34 by maroly            #+#    #+#             */
-/*   Updated: 2021/11/23 17:36:17 by maroly           ###   ########.fr       */
+/*   Updated: 2021/11/24 12:33:00 by maroly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "libft.h"
 
-int	count_divide(int n)
+int	count_divide(long nb)
 {
 	int	size;
 
 	size = 0;
-	while (n >= 10 || n <= -10)
+	while (nb >= 10 || nb <= -10)
 	{
-		n = n / 10;
+		nb = nb / 10;
 		size++;
 	}
-	if (n < 0)
+	if (nb < 0)
 		size++;
 	return (size + 1);
 }
@@ -30,26 +30,26 @@ char	*ft_itoa(int n)
 {
 	int		size;
 	char	*str;
+    long    nb;
 
 	str = NULL;
-	size = count_divide(n);
-	if (n == -2147483648)
-		return ("-2147483648\0");
+    nb = n;
+	size = count_divide(nb);
 	str = (char *) malloc(sizeof(*str) * (size + 1));
 	if (str == NULL)
 		return (NULL);
 	str[size] = '\0';
-	if (n < 0)
+	if (nb < 0)
 	{
 		str[0] = '-';
-		n = -n;
+		nb = -nb;
 	}
-	while (n >= 10)
+	while (nb >= 10)
 	{
-		str[size - 1] = n % 10 + 48;
+		str[size - 1] = nb % 10 + 48;
 		size--;
-		n = n / 10;
+		nb = nb / 10;
 	}
-	str[size - 1] = n + 48;
+	str[size - 1] = nb + 48;
 	return (str);
 }

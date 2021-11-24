@@ -6,7 +6,7 @@
 /*   By: maroly <maroly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/18 18:20:12 by maroly            #+#    #+#             */
-/*   Updated: 2021/10/31 23:02:42 by maroly           ###   ########.fr       */
+/*   Updated: 2021/11/24 13:22:58 by maroly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "libft.h"
@@ -20,7 +20,7 @@ static int	create_tab(char const *s, char c)
 	size = 0;
 	while (s[i])
 	{
-		if ((s[i - 1] == c || i == 0) && s[i] != c)
+		if (((s[i - 1] == c || i == 0) && s[i] != c) && s[i])
 			size++;
 		i++;
 	}
@@ -36,7 +36,7 @@ static char	*put_str_in_tab(const char *s, char c)
 	i = 0;
 	while (s[i] != c && s[i])
 		i++;
-	str = (char *) malloc(sizeof(*str) * i);
+	str = (char *) malloc(sizeof(*str) * (i + 1));
 	if (str == NULL)
 		return (NULL);
 	i = 0;
@@ -57,8 +57,12 @@ char	**ft_split(char const *s, char c)
 
 	i = 0;
 	string = 0;
+    if (!s)
+    {
+        return (NULL);
+    }
 	tab = NULL;
-	tab = (char **) malloc(sizeof(*tab) * create_tab(s, c));
+	tab = (char **) malloc(sizeof(*tab) * (create_tab(s, c) + 1));
 	if (tab == NULL)
 		return (NULL);
 	while (s[i])
@@ -67,8 +71,8 @@ char	**ft_split(char const *s, char c)
 			i++;
 		if (((s[i - 1] == c || i == 0) && s[i] != c) && s[i])
 		{
-			tab[string] = put_str_in_tab(&s[i], c);
-			string++;
+			tab[string++] = put_str_in_tab(&s[i], c);
+			//string++;
 		}
 		if (s[i])
 			i++;

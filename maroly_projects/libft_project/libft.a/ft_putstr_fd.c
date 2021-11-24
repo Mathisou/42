@@ -6,7 +6,7 @@
 /*   By: maroly <maroly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/19 12:19:57 by maroly            #+#    #+#             */
-/*   Updated: 2021/10/19 12:23:10 by maroly           ###   ########.fr       */
+/*   Updated: 2021/11/24 12:09:43 by maroly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "libft.h"
@@ -16,6 +16,10 @@ void	ft_putstr_fd(char *s, int fd)
 	size_t	i;
 
 	i = 0;
+    if (!s)
+    {
+        return ;
+    }
 	while (s[i])
 	{
 		ft_putchar_fd(s[i], fd);
