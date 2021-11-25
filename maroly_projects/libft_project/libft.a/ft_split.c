@@ -6,7 +6,7 @@
 /*   By: maroly <maroly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/18 18:20:12 by maroly            #+#    #+#             */
-/*   Updated: 2021/11/24 13:22:58 by maroly           ###   ########.fr       */
+/*   Updated: 2021/11/24 16:54:51 by maroly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "libft.h"
@@ -57,10 +57,8 @@ char	**ft_split(char const *s, char c)
 
 	i = 0;
 	string = 0;
-    if (!s)
-    {
-        return (NULL);
-    }
+	if (!s)
+		return (NULL);
 	tab = NULL;
 	tab = (char **) malloc(sizeof(*tab) * (create_tab(s, c) + 1));
 	if (tab == NULL)
@@ -70,10 +68,7 @@ char	**ft_split(char const *s, char c)
 		while (s[i] == c && s[i])
 			i++;
 		if (((s[i - 1] == c || i == 0) && s[i] != c) && s[i])
-		{
 			tab[string++] = put_str_in_tab(&s[i], c);
-			//string++;
-		}
 		if (s[i])
 			i++;
 	}

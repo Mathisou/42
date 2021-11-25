@@ -6,7 +6,7 @@
 /*   By: maroly <maroly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/19 13:14:34 by maroly            #+#    #+#             */
-/*   Updated: 2021/11/24 12:33:00 by maroly           ###   ########.fr       */
+/*   Updated: 2021/11/24 16:57:31 by maroly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "libft.h"
@@ -30,10 +30,10 @@ char	*ft_itoa(int n)
 {
 	int		size;
 	char	*str;
-    long    nb;
+	long	nb;
 
 	str = NULL;
-    nb = n;
+	nb = n;
 	size = count_divide(nb);
 	str = (char *) malloc(sizeof(*str) * (size + 1));
 	if (str == NULL)
