@@ -6,10 +6,10 @@
 /*   By: maroly <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/26 14:14:38 by maroly            #+#    #+#             */
-/*   Updated: 2021/11/26 15:52:13 by maroly           ###   ########.fr       */
+/*   Updated: 2021/12/01 14:47:19 by maroly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "printflib.h"
+#include "ft_printf.h"
 
 void	ft_putchar(char c)
 {
@@ -18,17 +18,22 @@ void	ft_putchar(char c)
 
 void	ft_putstr(const char *str)
 {
-	int i;
+	int	i;
 
 	i = 0;
-	while (str[i])
+	if (str == NULL)
+		ft_putstr("(null)");
+	else
 	{
-		write(1, &str[i], 1);
-		i++;
+		while (str[i])
+		{
+			write(1, &str[i], 1);
+			i++;
+		}
 	}
 }
 
-void	ft_putnbr(long long nb)
+void	ft_putnbr(long nb)
 {
 	if (nb < 0)
 	{
@@ -46,9 +51,11 @@ void	ft_putnbr(long long nb)
 
 int	ft_strlen(const char *str)
 {
-	int i;
+	int	i;
 
 	i = 0;
+	if (str == NULL)
+		return (6);
 	while (str[i])
 		i++;
 	return (i);
