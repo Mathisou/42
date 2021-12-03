@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   test.c                                             :+:      :+:    :+:   */
+/*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: maroly <maroly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/02 11:26:11 by maroly            #+#    #+#             */
-/*   Updated: 2021/12/02 19:01:35 by maroly           ###   ########.fr       */
+/*   Updated: 2021/12/03 12:56:57 by maroly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,13 @@ size_t	ft_strlen(const char *s)
 	size_t	i;
 
 	i = 0;
-	//if (s[0] == '\n')
-	//	return (1);
-	while (s[i])
-		i++;
+    if (!s)
+        return (0);
+    else
+    {
+    	while (s[i])
+	    	i++;
+    }
 	return (i);
 
 }
@@ -47,16 +50,22 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	size_t	size;
 	char	*new;
 
-	if (!s1 || !s2)
-		return (NULL);
+	if (!s2)
+    	return (NULL);
 	size = ft_strlen(s1) + ft_strlen(s2);
 	new = NULL;
 	new = (char *) malloc(sizeof(*new) * (size + 1));
 	if (new == NULL)
 		return (NULL);
 	new[0] = '\0';
-	new = ft_strcat(new, (char *)s1);
-	new = ft_strcat(new, (char *)s2);
+    if (!s1)
+        return (ft_strcat(new, (char *)s2));
+    else
+    {
+        new = ft_strcat(new, (char *)s1);
+        free((char *)s1);
+	    new = ft_strcat(new, (char *)s2);
+    }
 	return (new);
 }
 
@@ -85,29 +94,31 @@ char *get_next_line(int fd)
 	int i;
 
 	i = 0;
-	new_line = malloc(sizeof(*new_line) * 1);
-	*new_line = '\0';
+    new_line = 0;
+    /*buffer = malloc(sizeof(*buffer) * (BUFFER_SIZE + 1));
+    if (!buffer)
+        return (NULL);*/
 	if (!stock)
 		stock = malloc(sizeof(*stock) * (BUFFER_SIZE + 1));
 	else if (stock)
 		new_line = ft_strdup(stock);
-	while (check_buffer(new_line) == 0 && (read_output = read(fd, &buffer, BUFFER_SIZE)) > 0)
+	while (check_buffer(new_line) == 0 && (read_output = read(fd, buffer, BUFFER_SIZE)) > 0)
 	{
 		buffer[read_output] = '\0';
-		//free(new_line);
 		new_line = ft_strjoin(new_line, buffer);
-	}
-	if (read_output == -1)
+    }
+    printf("test\n");
+	if (read_output == -1 || !stock)
 		return (NULL);
 	while (new_line[i] && new_line[i] != '\n')
 		i++;
 	stock = split(&new_line[++i], stock);
 	stock[read_output] = '\0';
 	new_line[i] = '\0';
-	return (value_to_return(new_line, stock));
+	return (value_to_return(new_line, stock, buffer));
 }
 
-/*int main()
+int main()
 {
 	int i = 0;
 	int fd = open("bible.txt", O_RDONLY);
@@ -119,5 +130,5 @@ char *get_next_line(int fd)
 		i++;
 		free(str);
 	}
-	//printf("%d\n", i);
-}*/
+	printf("%d\n", i);
+}

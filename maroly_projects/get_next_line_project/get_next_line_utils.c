@@ -6,26 +6,29 @@
 /*   By: maroly <maroly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/02 11:56:38 by maroly            #+#    #+#             */
-/*   Updated: 2021/12/02 20:03:26 by maroly           ###   ########.fr       */
+/*   Updated: 2021/12/03 12:50:40 by maroly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-char *value_to_return(char *new_line, char *stock)
+char *value_to_return(char *new_line, char *stock, char *buffer)
 {
-	if (new_line[0] == '\0')
+    free(buffer);
+	if (*new_line == '\0')
 	{
 		if (stock)
 			free(stock);
 		if (new_line)
 			free(new_line);
+        //if (buffer)
+        //    free(buffer);
 		return (NULL);
 	}
 	return (new_line);
 }
 
-char	*ft_strdup(const char *s)
+char	*ft_strdup(char *s)
 {
 	char	*new;
 	size_t	size;
@@ -43,6 +46,7 @@ char	*ft_strdup(const char *s)
 		i++;
 	}
 	new[i] = '\0';
+    //free(s);
 	return (new);
 }
 
