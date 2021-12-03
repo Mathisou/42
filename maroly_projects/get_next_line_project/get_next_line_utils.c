@@ -6,23 +6,24 @@
 /*   By: maroly <maroly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/02 11:56:38 by maroly            #+#    #+#             */
-/*   Updated: 2021/12/03 12:50:40 by maroly           ###   ########.fr       */
+/*   Updated: 2021/12/03 17:43:51 by maroly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-char *value_to_return(char *new_line, char *stock, char *buffer)
+char *value_to_return(char *new_line, char *stock, int i)
 {
-    free(buffer);
-	if (*new_line == '\0')
+	//printf("new_line : %s et stock = %s\n", new_line, stock);
+	if (i == -1 || *new_line == '\0' || new_line == 0)
 	{
-		if (stock)
-			free(stock);
+		printf("free stock\n");
+		free(stock);
 		if (new_line)
+		{
+			printf("free new_line\n");
 			free(new_line);
-        //if (buffer)
-        //    free(buffer);
+		}
 		return (NULL);
 	}
 	return (new_line);
@@ -46,7 +47,6 @@ char	*ft_strdup(char *s)
 		i++;
 	}
 	new[i] = '\0';
-    //free(s);
 	return (new);
 }
 

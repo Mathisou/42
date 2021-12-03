@@ -6,7 +6,7 @@
 /*   By: maroly <maroly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/02 11:26:11 by maroly            #+#    #+#             */
-/*   Updated: 2021/12/03 12:56:57 by maroly           ###   ########.fr       */
+/*   Updated: 2021/12/03 17:44:31 by maroly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ char	*ft_strjoin(char const *s1, char const *s2)
     else
     {
         new = ft_strcat(new, (char *)s1);
+		printf("free dans trjoin\n");
         free((char *)s1);
 	    new = ft_strcat(new, (char *)s2);
     }
@@ -95,33 +96,32 @@ char *get_next_line(int fd)
 
 	i = 0;
     new_line = 0;
-    /*buffer = malloc(sizeof(*buffer) * (BUFFER_SIZE + 1));
-    if (!buffer)
-        return (NULL);*/
 	if (!stock)
 		stock = malloc(sizeof(*stock) * (BUFFER_SIZE + 1));
-	else if (stock)
+	else if (ft_strlen(stock) > 0)
+	{
+		//printf("test\n");
 		new_line = ft_strdup(stock);
+	}
 	while (check_buffer(new_line) == 0 && (read_output = read(fd, buffer, BUFFER_SIZE)) > 0)
 	{
 		buffer[read_output] = '\0';
 		new_line = ft_strjoin(new_line, buffer);
     }
-    printf("test\n");
-	if (read_output == -1 || !stock)
-		return (NULL);
+	if (read_output == -1 || !stock || (read_output == 0 && !new_line))
+		return (value_to_return(new_line, stock, -1));
 	while (new_line[i] && new_line[i] != '\n')
 		i++;
 	stock = split(&new_line[++i], stock);
 	stock[read_output] = '\0';
 	new_line[i] = '\0';
-	return (value_to_return(new_line, stock, buffer));
+	return (value_to_return(new_line, stock, 0));
 }
 
 int main()
 {
 	int i = 0;
-	int fd = open("bible.txt", O_RDONLY);
+	int fd = open("tes.txt", O_RDONLY);
 	char *str;
 	//while ((str = get_next_line(fd)) != NULL)
 	while ((str = get_next_line(fd)) != NULL)
@@ -130,5 +130,5 @@ int main()
 		i++;
 		free(str);
 	}
-	printf("%d\n", i);
+	//printf("%d\n", i);
 }
