@@ -6,11 +6,23 @@
 /*   By: maroly <maroly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/18 18:20:12 by maroly            #+#    #+#             */
-/*   Updated: 2021/12/27 15:08:21 by maroly           ###   ########.fr       */
+/*   Updated: 2021/12/29 13:55:20 by maroly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
+
+void	close_fd(t_list s, int index)
+{
+	close(s.p2[0]);
+	close(s.p1[0]);
+	close(s.p2[1]);
+	close(s.p1[1]);
+	if (s.check == 0)
+		close(s.p2[0]);
+	if (index != 0)
+		close(s.fd2);
+}
 
 static int	create_tab(char const *s, char c)
 {

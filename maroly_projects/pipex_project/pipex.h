@@ -6,7 +6,7 @@
 /*   By: maroly <maroly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/23 15:51:29 by maroly            #+#    #+#             */
-/*   Updated: 2021/12/27 15:45:09 by maroly           ###   ########.fr       */
+/*   Updated: 2021/12/29 13:55:26 by maroly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 # include <sys/types.h>
 # include <sys/uio.h>
 # include <libgen.h>
+# include <sys/wait.h>
 
 typedef struct s_list
 {
@@ -38,6 +39,7 @@ typedef struct s_list
 	char	*path;
 	char	**newargv;
 	int		check;
+	int		error;
 }	t_list;
 
 char	*ft_strstr(char *s1, char *s2);
@@ -55,5 +57,6 @@ void	startchildprocess(char **av, char **env, t_list s);
 char	**ft_split(char const *s, char c);
 char	**destroy_tab(char **tab);
 char	*ft_strdup(char *s);
+void	close_fd(t_list s, int index);
 
 #endif
