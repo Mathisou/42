@@ -6,7 +6,7 @@
 /*   By: maroly <maroly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/18 18:20:12 by maroly            #+#    #+#             */
-/*   Updated: 2021/12/01 18:00:23 by maroly           ###   ########.fr       */
+/*   Updated: 2021/11/25 19:04:20 by maroly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "libft.h"
@@ -59,7 +59,6 @@ char	**destroy_tab(char **tab, int size)
 		free(tab[i]);
 		i++;
 	}
-	free(tab);
 	return (NULL);
 }
 
