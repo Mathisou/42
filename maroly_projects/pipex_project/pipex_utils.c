@@ -6,7 +6,7 @@
 /*   By: maroly <maroly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/23 15:50:40 by maroly            #+#    #+#             */
-/*   Updated: 2021/12/27 16:32:44 by maroly           ###   ########.fr       */
+/*   Updated: 2021/12/29 17:17:34 by maroly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,7 @@ char	*findpath(char **av, char **env, int index)
 
 	i = 0;
 	j = -1;
+	new = NULL;
 	while (ft_strstr(env[i], "PATH=") == NULL)
 		i++;
 	path = ft_split(ft_strstr(env[i], "PATH="), ':');
@@ -95,7 +96,8 @@ char	*findpath(char **av, char **env, int index)
 	j = 0;
 	while (path[j] && access(path[j], X_OK) == -1)
 		j++;
-	new = ft_strdup(path[j]);
+	if (path[j] != NULL)
+		new = ft_strdup(path[j]);
 	destroy_tab(path);
 	return (new);
 }

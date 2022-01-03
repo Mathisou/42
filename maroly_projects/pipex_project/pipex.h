@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: maroly <maroly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/23 15:51:29 by maroly            #+#    #+#             */
-/*   Updated: 2021/12/29 13:55:26 by maroly           ###   ########.fr       */
+/*   Created: 2021/12/29 16:23:52 by maroly            #+#    #+#             */
+/*   Updated: 2021/12/30 12:09:58 by maroly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@ typedef struct s_list
 	int		child;
 	char	*path;
 	char	**newargv;
-	int		check;
 	int		error;
 }	t_list;
 

@@ -6,7 +6,7 @@
 /*   By: maroly <maroly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/23 14:54:48 by maroly            #+#    #+#             */
-/*   Updated: 2021/12/29 13:55:36 by maroly           ###   ########.fr       */
+/*   Updated: 2022/01/03 13:51:58 by maroly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,41 +16,45 @@ int	firstchild(char **av, char **env, t_list s)
 {
 	s.path = findpath(av, env, s.nbarg);
 	s.newargv = ft_split(av[s.nbarg], ' ');
-	if (((s.nbarg == 2 && s.i == 1) && s.check == 0)
-		|| (s.nbarg == 3 && s.i == 2))
-		if (dup2(s.fd, 0) == -1)
-			s.error += ft_putstr(strerror(errno), 2);
-	if (((s.nbarg > 2 || s.check > 0) && s.i == 1) || (s.nbarg > 3 && s.i == 2))
-		if (dup2(s.p2[0], 0) == -1)
-			s.error += ft_putstr(strerror(errno), 2);
+	if (s.path == NULL)
+	{
+		ft_putstr("Command not found: ", 2);
+		ft_putstr(av[s.nbarg], 2);
+		write(2, "\n", 1);
+	}
+	if ((s.nbarg == 2 && s.i == 1) || (s.nbarg == 3 && s.i == 2))
+		dup2(s.fd, 0);
+	close(s.fd);
+	if ((s.nbarg > 2 && s.i == 1) || (s.nbarg > 3 && s.i == 2))
+		dup2(s.p2[0], 0);
 	if (s.nbarg < s.ac - 2)
-		if (dup2(s.p1[1], 1) == -1)
-			s.error += ft_putstr(strerror(errno), 2);
+		dup2(s.p1[1], 1);
 	if (s.nbarg == s.ac - 2)
-		if (dup2(s.fd2, 1) == -1)
-			s.error += ft_putstr(strerror(errno), 2);
+		dup2(s.fd2, 1);
 	close_fd(s, 1);
-	if (execve(s.path, s.newargv, env) == -1)
-		s.error += ft_putstr(strerror(errno), 2);
-	return (0);
+	execve(s.path, s.newargv, env);
+	return (1);
 }
 
 int	secondchild(char **av, char **env, t_list s)
 {
 	s.path = findpath(av, env, s.nbarg);
 	s.newargv = ft_split(av[s.nbarg], ' ');
-	if (dup2(s.p1[0], 0) == -1)
-		s.error += ft_putstr(strerror(errno), 2);
+	if (s.path == NULL)
+	{
+		ft_putstr("Command not found: ", 2);
+		ft_putstr(av[s.nbarg], 2);
+		write(2, "\n", 1);
+	}
+	close(s.fd);
+	dup2(s.p1[0], 0);
 	if (s.nbarg < s.ac - 2)
-		if (dup2(s.p2[1], 1) == -1)
-			s.error += ft_putstr(strerror(errno), 2);
+		dup2(s.p2[1], 1);
 	if (s.nbarg == s.ac - 2)
-		if (dup2(s.fd2, 1) == -1)
-			s.error += ft_putstr(strerror(errno), 2);
+		dup2(s.fd2, 1);
 	close_fd(s, 1);
-	if (execve(s.path, s.newargv, env) == -1)
-		s.error += ft_putstr(strerror(errno), 2);
-	return (0);
+	execve(s.path, s.newargv, env);
+	return (1);
 }
 
 void	opening_child(char **av, char **env, t_list s, int sign)
@@ -59,7 +63,7 @@ void	opening_child(char **av, char **env, t_list s, int sign)
 	{
 		s.child = fork();
 		if (s.child < 0)
-			s.error += ft_putstr(strerror(errno), 2);
+			perror("Fork failed");
 		if (s.child == 0)
 			exit(firstchild(av, env, s));
 		close(s.p1[1]);
@@ -68,7 +72,7 @@ void	opening_child(char **av, char **env, t_list s, int sign)
 	{
 		s.child = fork();
 		if (s.child < 0)
-			s.error += ft_putstr(strerror(errno), 2);
+			perror("Fork failed");
 		if (s.child == 0)
 			exit(secondchild(av, env, s));
 		close(s.p2[1]);
@@ -83,17 +87,16 @@ void	startchildprocess(char **av, char **env, t_list s)
 	{
 		if ((s.nbarg % 2 == 0 && s.i == 1) || (s.nbarg % 2 != 0 && s.i == 2))
 		{
-			if (pipe(s.p1) == -1)
-				s.error += ft_putstr(strerror(errno), 2);
+			pipe(s.p1);
 			opening_child(av, env, s, 1);
 		}
 		else
 		{
-			if (pipe(s.p2) == -1)
-				s.error += ft_putstr(strerror(errno), 2);
+			pipe(s.p2);
 			opening_child(av, env, s, 2);
 		}
 	}
+	wait(NULL);
 	close_fd(s, 1);
 }
 
@@ -102,16 +105,15 @@ int	main(int ac, char **av, char **env)
 	t_list	s;
 
 	if (ac < 5)
-		return (1);
+	{
+		ft_putstr("Too few arguments!\n", 2);
+		return(1);
+	}
 	s.ac = ac;
-	s.check = 0;
 	s.error = 0;
-	if (ft_strcmp(av[1], "/dev/stdin") == 0)
-		s.check = 1;
 	if (initializing_s(av, env, s) > 0)
 		return (2);
 	if (ft_strcmp(av[1], "here_doc") == 0)
-		if (unlink("here_doc") == -1)
-			ft_putstr(strerror(errno), 2);
+		unlink("here_doc");
 	return (0);
 }
