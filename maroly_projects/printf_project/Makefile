@@ -3,21 +3,36 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: maroly <marvin@42.fr>                      +#+  +:+       +#+         #
+#    By: maroly <maroly@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/28 17:44:54 by maroly            #+#    #+#              #
-#    Updated: 2021/11/29 17:26:32 by maroly           ###   ########.fr        #
+#    Updated: 2021/12/15 17:07:52 by maroly           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 SRCS		=	ft_printf.c				\
-				utils.c					\
-				dec_to_hex.c			\
-				parse_s.c				\
-				flag_check.c				\
-				flag_check_count.c		\
+				precision.c				\
+				ft_printf_utils.c		\
+				bonus.c					\
+				ft_printf_utils2.c		\
+				bonusminus.c 			\
+				bonuswidths.c			\
+				bonuswidthsminus.c 		\
+				sixthfonction.c			\
+
+SRCS_BONUS	=	ft_printf.c				\
+				precision.c				\
+				ft_printf_utils.c		\
+				bonus.c					\
+				ft_printf_utils2.c		\
+				bonusminus.c 			\
+				bonuswidths.c			\
+				bonuswidthsminus.c 		\
+				sixthfonction.c			\
 
 OBJS		=  	$(SRCS:.c=.o)
+
+OBJS_BONUS	=	$(SRCS_BONUS:.c=.o)
 
 CC			= 	gcc
 
@@ -36,10 +51,6 @@ $(NAME)		:	$(OBJS)
 				@ranlib $(NAME)
 				@echo "\t\t\t\t \033[33;32mDONE.\033[33;32m"
 
-bonus		:	$(OBJS_BONUS)
-				@ar rc $(NAME) $(OBJS_BONUS)
-				@echo "\t\t\t\t \033[33;32mDONE.\033[33;32m"
-
 clean		:
 				@rm -rf *.o
 				@echo "\t\t      \x1b[31mfiles .o deleted successfully.\x1b[31m"
@@ -47,6 +58,11 @@ clean		:
 fclean		:	clean
 				@rm -f $(NAME)
 				@echo "\t\t       \x1b[31m$(NAME) deleted sucessfully.\x1b[31m"
+
+bonus		:	$(OBJS_BONUS)
+				@ar rc $(NAME) $(OBJS_BONUS)
+				@ranlib $(NAME)
+
 
 re			:	fclean all
 
