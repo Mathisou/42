@@ -6,27 +6,38 @@
 /*   By: maroly <maroly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/02 11:56:38 by maroly            #+#    #+#             */
-/*   Updated: 2021/12/03 17:43:51 by maroly           ###   ########.fr       */
+/*   Updated: 2021/12/07 17:33:03 by maroly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-char *value_to_return(char *new_line, char *stock, int i)
+char	*value_to_return(char *new_line, char *stock, char *buffer, int check)
 {
-	//printf("new_line : %s et stock = %s\n", new_line, stock);
-	if (i == -1 || *new_line == '\0' || new_line == 0)
+	if (buffer)
+		free(buffer);
+	if (!new_line || check == -1)
 	{
-		printf("free stock\n");
-		free(stock);
-		if (new_line)
-		{
-			printf("free new_line\n");
-			free(new_line);
-		}
+		if (stock)
+			free(stock);
 		return (NULL);
 	}
 	return (new_line);
+}
+
+size_t	ft_strlen(const char *s)
+{
+	size_t	i;
+
+	i = 0;
+	if (!s)
+		return (0);
+	else
+	{
+		while (s[i])
+			i++;
+	}
+	return (i);
 }
 
 char	*ft_strdup(char *s)
@@ -50,9 +61,9 @@ char	*ft_strdup(char *s)
 	return (new);
 }
 
-char *split(char *str, char *new)
+char	*split(char *str, char *new)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (str[i])
