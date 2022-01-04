@@ -6,7 +6,7 @@
 /*   By: maroly <maroly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/03 19:12:05 by maroly            #+#    #+#             */
-/*   Updated: 2022/01/03 19:15:02 by maroly           ###   ########.fr       */
+/*   Updated: 2022/01/04 12:31:26 by maroly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,4 +83,19 @@ void    lst_add_front(nb_list **pile, nb_list *new)
         new->next = *pile;
         *pile = new; 
     }
+}
+
+int	lst_size(nb_list **pile)
+{
+	int		i;
+	nb_list	*tmp;
+
+	i = 0;
+	tmp = *pile;
+	while (tmp != NULL)
+	{
+		tmp = tmp->next;
+		i++;
+	}
+	return (i);
 }

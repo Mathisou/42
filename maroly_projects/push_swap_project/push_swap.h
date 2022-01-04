@@ -6,7 +6,7 @@
 /*   By: maroly <maroly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/03 14:14:30 by maroly            #+#    #+#             */
-/*   Updated: 2022/01/03 19:38:47 by maroly           ###   ########.fr       */
+/*   Updated: 2022/01/04 12:31:49 by maroly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,5 +46,6 @@ void    ra(nb_list **pile_a);
 void    rb(nb_list **pile_b);
 void    rr(nb_list **pile_a, nb_list **pile_b);
 void    rra(nb_list **pile_a);
+int		lst_size(nb_list **pile);
 
 #endif
