@@ -3,6 +3,12 @@ SRCS		=	push_swap.c				\
 				check.c					\
 				utils.c					\
 				manipulating_lists.c	\
+				end_algo.c				\
+				call_moves.c			\
+				find_best_movement.c	\
+				manipulating_lists2.c	\
+				find_median.c			\
+				first_algo.c			\
 
 SRCS_BONUS	=	
 
@@ -12,7 +18,7 @@ OBJS_BONUS	=	$(SRCS_BONUS:.c=.o)
 
 CC			= 	gcc
 
-FLAGS		=   -Wall -Wextra -Werror
+FLAGS		=   -Wall -Wextra -Werror -O0 -g
 
 NAME		= 	push_swap
 
