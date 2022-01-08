@@ -6,7 +6,7 @@
 /*   By: maroly <maroly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/03 14:28:00 by maroly            #+#    #+#             */
-/*   Updated: 2022/01/08 15:39:56 by maroly           ###   ########.fr       */
+/*   Updated: 2022/01/08 16:40:47 by maroly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,9 @@ int	main(int ac, char **av)
 		return (1);
 	if (pile_a == NULL || pile_a->next == NULL)
 		return (0);
-	if (check_pile(&pile_a) == 0)
+	else if (check_pile(&pile_a) == 0)
+		return (0);
+	else if (check_pile2(&pile_a) == 0)
 		return (0);
 	launch_algo(&pile_a, &pile_b);
 	clear_lst(&pile_a);

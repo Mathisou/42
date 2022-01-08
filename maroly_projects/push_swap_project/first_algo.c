@@ -6,7 +6,7 @@
 /*   By: maroly <maroly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 22:37:57 by maroly            #+#    #+#             */
-/*   Updated: 2022/01/08 13:33:04 by maroly           ###   ########.fr       */
+/*   Updated: 2022/01/08 16:52:41 by maroly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	ra_or_rra(t_lst **pile_a, t_lst **pile_b, t_var s)
 {
-	if (s.posfirst - 1 <= s.size - s.poslast + 1)
+	if (s.posfirst - 1 < s.size - s.poslast + 1)
 	{
 		while ((*pile_a)->pos != s.posfirst)
 			call_rx(pile_a, pile_b, 1);

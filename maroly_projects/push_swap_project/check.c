@@ -6,7 +6,7 @@
 /*   By: maroly <maroly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/03 18:38:56 by maroly            #+#    #+#             */
-/*   Updated: 2022/01/08 13:40:06 by maroly           ###   ########.fr       */
+/*   Updated: 2022/01/08 16:52:32 by maroly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,5 +98,29 @@ int	check_pile(t_lst **pile_a)
 			return (1);
 		tmp = tmp->next;
 	}
+	return (0);
+}
+
+int	check_pile2(t_lst **pile_a)
+{
+	t_var	s;
+	int		check;
+
+	check = 0;
+	s.tmp = *pile_a;
+	s.posmin = s.tmp->pos;
+	s.stockmin = s.tmp->nb;
+	while (s.tmp->next != NULL)
+	{
+		if (take_stat(&s, &check) == 1)
+			return (1);
+		s.tmp = s.tmp->next;
+	}
+	if (s.posmin - 1 < lst_size(pile_a) - s.posmin + 1)
+		while ((*pile_a)->pos != s.posmin)
+			call_rx(pile_a, NULL, 1);
+	else if (s.posmin - 1 >= lst_size(pile_a) - s.posmin + 1)
+		while ((*pile_a)->pos != s.posmin)
+			call_rrx(pile_a, NULL, 1);
 	return (0);
 }
