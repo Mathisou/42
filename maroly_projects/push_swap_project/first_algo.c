@@ -6,13 +6,13 @@
 /*   By: maroly <maroly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 22:37:57 by maroly            #+#    #+#             */
-/*   Updated: 2022/01/08 00:09:09 by maroly           ###   ########.fr       */
+/*   Updated: 2022/01/08 13:33:04 by maroly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void ra_or_rra(t_lst **pile_a, t_lst **pile_b, t_var s)
+void	ra_or_rra(t_lst **pile_a, t_lst **pile_b, t_var s)
 {
 	if (s.posfirst - 1 <= s.size - s.poslast + 1)
 	{
@@ -49,7 +49,7 @@ void	search_pos(t_lst **pile_a, t_var *s)
 
 void	algo_above10(t_lst **pile_a, t_lst **pile_b)
 {
-	t_var s;
+	t_var	s;
 
 	s.size = lst_size(pile_a);
 	s.point = find_point(s.size, pile_a, 2);
@@ -69,8 +69,8 @@ void	algo_above10(t_lst **pile_a, t_lst **pile_b)
 
 void	algo_10_and_under(t_lst **pile_a, t_lst **pile_b)
 {
-	t_var s;
-	
+	t_var	s;
+
 	put_pos(pile_a);
 	s.tmp = *pile_a;
 	s.stockmin = s.tmp->nb;

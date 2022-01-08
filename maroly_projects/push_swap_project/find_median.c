@@ -6,18 +6,18 @@
 /*   By: maroly <maroly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 22:38:36 by maroly            #+#    #+#             */
-/*   Updated: 2022/01/07 22:38:46 by maroly           ###   ########.fr       */
+/*   Updated: 2022/01/08 13:33:35 by maroly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-char **sort_tab(char **tab)
+char	**sort_tab(char **tab)
 {
-	int i;
-	int j;
-	char *swap;
-	
+	int		i;
+	int		j;
+	char	*swap;
+
 	i = 0;
 	j = i + 1;
 	while (tab[i] && tab[j])
@@ -40,11 +40,11 @@ char **sort_tab(char **tab)
 
 int	find_point(int size, t_lst **pile, int sign)
 {
-	int i;
-	t_lst *tmp;
-	char **tab;
-	int mid;
-	
+	int		i;
+	t_lst	*tmp;
+	char	**tab;
+	int		mid;
+
 	i = -1;
 	tab = malloc(sizeof(*tab) * (size + 1));
 	if (!tab)

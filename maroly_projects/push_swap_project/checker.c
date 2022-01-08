@@ -6,7 +6,7 @@
 /*   By: maroly <maroly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 23:00:52 by maroly            #+#    #+#             */
-/*   Updated: 2022/01/08 01:21:10 by maroly           ###   ########.fr       */
+/*   Updated: 2022/01/08 13:52:41 by maroly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	exec_moves2(char **tab, t_lst **pile_a, t_lst **pile_b, int i)
 
 void	exec_moves(char **tab, t_lst **pile_a, t_lst **pile_b)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (tab[i])
@@ -60,11 +60,11 @@ void	exec_moves(char **tab, t_lst **pile_a, t_lst **pile_b)
 	}
 }
 
-int main(int ac, char **av)
+int	main(int ac, char **av)
 {
-	t_lst *pile_a;
-	t_lst *pile_b;
-	t_varbns s;
+	t_lst		*pile_a;
+	t_lst		*pile_b;
+	t_varbns	s;
 
 	pile_a = NULL;
 	pile_b = NULL;
@@ -73,7 +73,7 @@ int main(int ac, char **av)
 	s.count = 1;
 	if (ac < 2)
 		return (print_error());
-	else if (pre_init_pile(&pile_a, av, ac) == 1)
+	if (pre_init_pile(&pile_a, av, ac) == 1)
 		return (1);
 	if (pile_a == NULL || pile_a->next == NULL)
 		return (ft_putstr("OK\n"));

@@ -6,15 +6,15 @@
 /*   By: maroly <maroly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/03 19:12:05 by maroly            #+#    #+#             */
-/*   Updated: 2022/01/08 01:07:53 by maroly           ###   ########.fr       */
+/*   Updated: 2022/01/08 13:40:20 by maroly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-t_lst *new_elem(int nb, int pos)
+t_lst	*new_elem(int nb, int pos)
 {
-	t_lst *new_elem;
+	t_lst	*new_elem;
 
 	new_elem = malloc(sizeof(t_lst));
 	if (new_elem == NULL)
@@ -27,8 +27,8 @@ t_lst *new_elem(int nb, int pos)
 
 void	put_pos(t_lst **pile_a)
 {
-	t_lst *tmp;
-	int i;
+	t_lst	*tmp;
+	int		i;
 
 	i = 1;
 	tmp = *pile_a;
@@ -40,9 +40,9 @@ void	put_pos(t_lst **pile_a)
 	}
 }
 
-int    initializing_pile(t_lst **pile_a, char **tab, int sign)
+int	initializing_pile(t_lst **pile_a, char **tab, int sign)
 {
-	int i;
+	int	i;
 
 	i = -1;
 	if (check_arg(tab) == 1)
@@ -56,14 +56,14 @@ int    initializing_pile(t_lst **pile_a, char **tab, int sign)
 	else
 	{
 		while (tab[++i])
-			lst_add_back(pile_a, ft_atoi(tab[i]), i); // Possible pb de malloc, a free.
+			lst_add_back(pile_a, ft_atoi(tab[i]), i);
 	}
 	return (0);
 }
 
 void	clear_lst(t_lst **pile)
 {
-	t_lst *tmp;
+	t_lst	*tmp;
 
 	tmp = *pile;
 	if (pile)

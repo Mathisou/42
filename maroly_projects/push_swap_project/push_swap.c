@@ -6,15 +6,15 @@
 /*   By: maroly <maroly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/03 14:28:00 by maroly            #+#    #+#             */
-/*   Updated: 2022/01/08 00:32:01 by maroly           ###   ########.fr       */
+/*   Updated: 2022/01/08 14:11:59 by maroly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-int find_max_pos(t_lst **pile_a)
+int	find_max_pos(t_lst **pile_a)
 {
-	t_var s;
+	t_var	s;
 
 	s.tmp = *pile_a;
 	s.stockmax = s.tmp->nb;
@@ -50,8 +50,8 @@ void	launch_algo(t_lst **pile_a, t_lst **pile_b)
 
 int	pre_init_pile(t_lst **pile_a, char **av, int ac)
 {
-	char **tab;
-	int i;
+	char	**tab;
+	int		i;
 
 	i = -1;
 	if (ac == 2 && check_first_arg(av[1]) == 0)
@@ -76,10 +76,10 @@ int	pre_init_pile(t_lst **pile_a, char **av, int ac)
 	return (0);
 }
 
-int main(int ac, char **av)
+int	main(int ac, char **av)
 {
-	t_lst *pile_a;
-	t_lst *pile_b;
+	t_lst	*pile_a;
+	t_lst	*pile_b;
 
 	pile_a = NULL;
 	pile_b = NULL;

@@ -25,7 +25,7 @@ OBJS_BONUS	=	$(SRCS_BONUS:.c=.o)
 
 CC			= 	gcc
 
-FLAGS		=   -Wall -Wextra -Werror -O0 -g
+FLAGS		=   -Wall -Wextra -Werror -fsanitize=address
 
 NAME		= 	push_swap
 
