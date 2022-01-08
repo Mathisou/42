@@ -10,7 +10,14 @@ SRCS		=	push_swap.c				\
 				find_median.c			\
 				first_algo.c			\
 
-SRCS_BONUS	=	
+SRCS_BONUS	=	checker.c				\
+				checker_utils.c			\
+				manipulating_lists2.c	\
+				moves.c					\
+				check.c					\
+				utils.c					\
+				call_moves.c			\
+				manipulating_lists.c	\
 
 OBJS		=  	$(SRCS:.c=.o)
 
@@ -21,6 +28,8 @@ CC			= 	gcc
 FLAGS		=   -Wall -Wextra -Werror -O0 -g
 
 NAME		= 	push_swap
+
+NAME_BONUS	=	checker
 
 LIBFT		=	libft/libft.a
 
@@ -33,12 +42,12 @@ all			:	$(NAME)
 $(LIBFT)	:	
 				make -C libft
 
-$(NAME)		:	$(OBJS) $(LIBFT)
+$(NAME)		:	$(OBJS) $(LIBFT) 
 				@$(CC) $(FLAGS) -o $@ $^ -Llibft/ -lft
 				@echo "\t\t\t\t \033[33;32mDONE.\033[33;32m"
 
-bonus		:	$(OBJS_BONUS)
-				@$(CC) $(FLAGS) -o $(NAME) $^
+bonus		:	$(OBJS_BONUS) $(LIBFT)
+				@$(CC) $(FLAGS) -o $(NAME_BONUS) $^ -Llibft/ -lft
 				@echo "\t\t\t\t \033[33;32mDONE.\033[33;32m"
 
 clean		:
@@ -46,7 +55,7 @@ clean		:
 				@echo "\t\t      \x1b[31mfiles .o deleted successfully.\x1b[31m"
 
 fclean		:	clean
-				@rm -f $(NAME) $(LIBFT)
+				@rm -f $(NAME) $(NAME_BONUS) $(LIBFT)
 				@echo "\t\t       \x1b[31m$(NAME) deleted sucessfully.\x1b[31m"
 
 re			:	fclean all

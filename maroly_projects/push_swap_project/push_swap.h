@@ -6,7 +6,7 @@
 /*   By: maroly <maroly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/03 14:14:30 by maroly            #+#    #+#             */
-/*   Updated: 2022/01/07 22:43:16 by maroly           ###   ########.fr       */
+/*   Updated: 2022/01/08 01:20:35 by maroly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,10 +39,18 @@ typedef struct s_var
     int point;
 }   t_var;
 
+typedef struct s_varbns
+{
+    int count;
+    char *buffer;
+    char *new;
+    char **tab;
+}   t_varbns;
+
 # include "libft/libft.h"
 
 char    **destroy_tab(char **tab);
-void    sa(t_lst **pile_a);
+void    sx(t_lst **pile, int sign);
 void    rrx(t_lst **pile);
 void    rx(t_lst **pile);
 void    call_rx(t_lst **pile_a, t_lst **pile_b, int sign);
@@ -68,5 +76,11 @@ char    **sort_tab(char **tab);
 int     find_point(int size, t_lst **pile, int sign);
 void	algo_above10(t_lst **pile_a, t_lst **pile_b);
 void	algo_10_and_under(t_lst **pile_a, t_lst **pile_b);
+int     pre_init_pile(t_lst **pile_a, char **av, int ac);
+int     ft_putstr(char *str);
+char    **init_tab(t_varbns *s);
+int     check_tab(char **tab);
+char    *ft_strjoin(char const *s1, char const *s2);
+char    *ft_strcat(char *dest, const char *src);
 
 #endif

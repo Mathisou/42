@@ -6,7 +6,7 @@
 /*   By: maroly <maroly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 22:37:57 by maroly            #+#    #+#             */
-/*   Updated: 2022/01/07 22:42:23 by maroly           ###   ########.fr       */
+/*   Updated: 2022/01/08 00:09:09 by maroly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ void	algo_10_and_under(t_lst **pile_a, t_lst **pile_b)
 	if (s.posmin == 1)
 		px(pile_a, pile_b, 2);
 	else if ((*pile_a)->nb > (*pile_a)->next->nb)
-		sa(pile_a);
+		sx(pile_a, 1);
 	else
 		call_rrx(pile_a, pile_b, 1);
 }

@@ -6,7 +6,7 @@
 /*   By: maroly <maroly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/03 18:38:56 by maroly            #+#    #+#             */
-/*   Updated: 2022/01/07 22:33:35 by maroly           ###   ########.fr       */
+/*   Updated: 2022/01/08 00:25:25 by maroly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,8 @@ int	check_pile(t_lst **pile_a)
 	t_lst *tmp;
 	
 	tmp = *pile_a;
+	if (tmp == NULL)
+		return (0);
 	while (tmp->next != NULL)
 	{
 		if (tmp->nb > tmp->next->nb)

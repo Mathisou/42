@@ -6,25 +6,30 @@
 /*   By: maroly <maroly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/03 17:37:16 by maroly            #+#    #+#             */
-/*   Updated: 2022/01/07 22:25:50 by maroly           ###   ########.fr       */
+/*   Updated: 2022/01/08 01:10:38 by maroly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void    sa(t_lst **pile_a)
+void    sx(t_lst **pile, int sign)
 {
     t_lst *tmp;
     t_lst *tmp2;
 
-    tmp = *pile_a;
-    tmp2 = (*pile_a)->next;
-    if (lst_size(pile_a) < 2)
+    if (lst_size(pile) < 2)
 		return ;
+    tmp = *pile;
+    tmp2 = (*pile)->next;
     tmp->next = tmp->next->next;
     tmp2->next = tmp;
-    *pile_a = tmp2;
-    ft_putstr_fd("sa\n", 1);
+    *pile = tmp2;
+    if (sign == 1)
+        ft_putstr_fd("sa\n", 1);
+    if (sign == 2)
+        ft_putstr_fd("sb\n", 1);
+    if (sign == 3)
+        ft_putstr_fd("ss\n", 1);
 }
 
 void    px(t_lst **pile_from, t_lst **pile_to, int sign)

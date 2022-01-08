@@ -6,7 +6,7 @@
 /*   By: maroly <maroly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/03 18:39:49 by maroly            #+#    #+#             */
-/*   Updated: 2022/01/07 22:35:58 by maroly           ###   ########.fr       */
+/*   Updated: 2022/01/08 00:51:48 by maroly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,16 @@ int ft_strcmp(char *s1, char *s2)
 	}
 	if (!(s1[i] == s2[i]))
 		return (1);
+	return (0);
+}
+
+int ft_putstr(char *str)
+{
+	int i;
+
+	i = 0;
+	while (str[i])
+		write(1, &str[i++], 1);
 	return (0);
 }
 
