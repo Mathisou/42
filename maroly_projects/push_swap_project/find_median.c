@@ -6,7 +6,7 @@
 /*   By: maroly <maroly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 22:38:36 by maroly            #+#    #+#             */
-/*   Updated: 2022/01/08 13:33:35 by maroly           ###   ########.fr       */
+/*   Updated: 2022/01/08 14:36:37 by maroly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,6 @@ int	find_point(int size, t_lst **pile, int sign)
 	tab[++i] = NULL;
 	sort_tab(tab);
 	mid = ft_atoi(tab[size / sign]);
-	free(tab);
+	destroy_tab(tab);
 	return (mid);
 }

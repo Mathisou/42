@@ -6,7 +6,7 @@
 /*   By: maroly <maroly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/08 01:16:29 by maroly            #+#    #+#             */
-/*   Updated: 2022/01/08 13:59:16 by maroly           ###   ########.fr       */
+/*   Updated: 2022/01/08 15:07:22 by maroly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,6 +114,7 @@ char	**init_tab(t_varbns *s)
 	if (check_tab(s->tab) == 1)
 	{
 		print_error();
+		destroy_tab(s->tab);
 		return (NULL);
 	}
 	return (s->tab);

@@ -25,7 +25,7 @@ OBJS_BONUS	=	$(SRCS_BONUS:.c=.o)
 
 CC			= 	gcc
 
-FLAGS		=   -Wall -Wextra -Werror -fsanitize=address
+FLAGS		=   -Wall -Wextra -Werror
 
 NAME		= 	push_swap
 
@@ -43,11 +43,11 @@ $(LIBFT)	:
 				make -C libft
 
 $(NAME)		:	$(OBJS) $(LIBFT) 
-				@$(CC) $(FLAGS) -o $@ $^ -Llibft/ -lft
+				@$(CC) $(FLAGS) -o $@ $^
 				@echo "\t\t\t\t \033[33;32mDONE.\033[33;32m"
 
 bonus		:	$(OBJS_BONUS) $(LIBFT)
-				@$(CC) $(FLAGS) -o $(NAME_BONUS) $^ -Llibft/ -lft
+				@$(CC) $(FLAGS) -o $(NAME_BONUS) $^
 				@echo "\t\t\t\t \033[33;32mDONE.\033[33;32m"
 
 clean		:

@@ -6,9 +6,10 @@
 /*   By: maroly <maroly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/19 13:29:30 by maroly            #+#    #+#             */
-/*   Updated: 2021/10/19 13:29:36 by maroly           ###   ########.fr       */
+/*   Updated: 2022/01/08 15:18:13 by maroly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "libft.h"
 
 size_t	ft_strlen(const char *s)

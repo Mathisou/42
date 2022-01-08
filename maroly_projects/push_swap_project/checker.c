@@ -6,7 +6,7 @@
 /*   By: maroly <maroly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 23:00:52 by maroly            #+#    #+#             */
-/*   Updated: 2022/01/08 13:52:41 by maroly           ###   ########.fr       */
+/*   Updated: 2022/01/08 15:54:15 by maroly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,17 @@ void	exec_moves(char **tab, t_lst **pile_a, t_lst **pile_b)
 	}
 }
 
+int	split_main(t_lst **pile_a, t_varbns *s)
+{
+	s->tab = init_tab(s);
+	if (!s->tab)
+	{
+		clear_lst(pile_a);
+		return (1);
+	}
+	return (0);
+}
+
 int	main(int ac, char **av)
 {
 	t_lst		*pile_a;
@@ -77,13 +88,14 @@ int	main(int ac, char **av)
 		return (1);
 	if (pile_a == NULL || pile_a->next == NULL)
 		return (ft_putstr("OK\n"));
-	s.tab = init_tab(&s);
-	if (!s.tab)
+	if (split_main(&pile_a, &s) == 1)
 		return (1);
 	exec_moves(s.tab, &pile_a, &pile_b);
 	if (check_pile(&pile_a) == 1 || lst_size(&pile_b) > 0)
 		ft_putstr_fd("KO\n", 1);
 	else
 		ft_putstr_fd("OK\n", 1);
+	destroy_tab(s.tab);
+	clear_lst(&pile_a);
 	return (0);
 }
