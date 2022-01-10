@@ -6,7 +6,7 @@
 /*   By: maroly <maroly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/23 14:54:48 by maroly            #+#    #+#             */
-/*   Updated: 2022/01/03 13:51:58 by maroly           ###   ########.fr       */
+/*   Updated: 2022/01/10 15:22:49 by maroly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,7 @@ int	main(int ac, char **av, char **env)
 	if (ac < 5)
 	{
 		ft_putstr("Too few arguments!\n", 2);
-		return(1);
+		return (1);
 	}
 	s.ac = ac;
 	s.error = 0;
