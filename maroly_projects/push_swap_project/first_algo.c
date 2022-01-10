@@ -6,7 +6,7 @@
 /*   By: maroly <maroly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 22:37:57 by maroly            #+#    #+#             */
-/*   Updated: 2022/01/08 16:52:41 by maroly           ###   ########.fr       */
+/*   Updated: 2022/01/10 14:17:27 by maroly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,6 @@ void	algo_10_and_under(t_lst **pile_a, t_lst **pile_b)
 	s.tmp = *pile_a;
 	s.stockmin = s.tmp->nb;
 	s.posmin = s.tmp->pos;
-	s.size = lst_size(pile_a);
 	while (s.tmp != NULL)
 	{
 		if (s.tmp->nb < s.stockmin)
@@ -85,10 +84,13 @@ void	algo_10_and_under(t_lst **pile_a, t_lst **pile_b)
 		}
 		s.tmp = s.tmp->next;
 	}
-	if (s.posmin == 1)
+	if ((*pile_a)->pos == s.posmin)
 		px(pile_a, pile_b, 2);
-	else if ((*pile_a)->nb > (*pile_a)->next->nb)
-		sx(pile_a, 1);
 	else
-		call_rrx(pile_a, pile_b, 1);
+	{
+		if (s.posmin - 1 < lst_size(pile_a) - s.posmin + 1)
+			call_rx(pile_a, pile_b, 1);
+		else
+			call_rrx(pile_a, pile_b, 1);
+	}
 }
