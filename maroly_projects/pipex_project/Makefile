@@ -16,7 +16,7 @@ OBJS_BONUS	=	$(SRCS_BONUS:.c=.o)
 
 CC			= 	gcc
 
-FLAGS		=   -Wall -Wextra -Werror -g3 -fsanitize=address
+FLAGS		=   -Wall -Wextra -Werror
 
 NAME		= 	pipex
 
