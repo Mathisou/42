@@ -6,7 +6,7 @@
 /*   By: maroly <maroly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 23:00:52 by maroly            #+#    #+#             */
-/*   Updated: 2022/01/08 15:54:15 by maroly           ###   ########.fr       */
+/*   Updated: 2022/01/10 13:17:42 by maroly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ int	main(int ac, char **av)
 	s.buffer = NULL;
 	s.count = 1;
 	if (ac < 2)
-		return (print_error());
+		return (1);
 	if (pre_init_pile(&pile_a, av, ac) == 1)
 		return (1);
 	if (pile_a == NULL || pile_a->next == NULL)
