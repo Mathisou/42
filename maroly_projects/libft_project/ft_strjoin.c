@@ -6,9 +6,10 @@
 /*   By: maroly <maroly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/18 18:17:20 by maroly            #+#    #+#             */
-/*   Updated: 2021/11/24 16:53:20 by maroly           ###   ########.fr       */
+/*   Updated: 2022/01/10 15:20:09 by maroly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "libft.h"
 
 char	*ft_strcats(char *dest, const char *src)
@@ -29,18 +30,20 @@ char	*ft_strcats(char *dest, const char *src)
 
 char	*ft_strjoin(char const *s1, char const *s2)
 {
-	size_t	size;
 	char	*new;
 
-	if (!s1 || !s2)
+	if (!s2)
 		return (NULL);
-	size = ft_strlen(s1) + ft_strlen(s2);
-	new = NULL;
-	new = (char *) malloc(sizeof(*new) * (size + 1));
-	if (new == NULL)
-		return (NULL);
-	new[0] = '\0';
-	new = ft_strcats(new, (char *)s1);
-	new = ft_strcats(new, (char *)s2);
-	return (new);
+	if (!s1)
+		return ((char *)s2);
+	else
+	{
+		new = malloc(sizeof(*new) * (ft_strlen(s2) + ft_strlen(s1) + 1));
+		if (!new)
+			return (NULL);
+		new[0] = '\0';
+		new = ft_strcat(new, (char *)s1);
+		free((char *)s1);
+		return (ft_strcat(new, (char *)s2));
+	}
 }
