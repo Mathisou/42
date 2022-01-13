@@ -6,11 +6,29 @@
 /*   By: maroly <maroly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/03 14:28:00 by maroly            #+#    #+#             */
-/*   Updated: 2022/01/12 14:40:44 by maroly           ###   ########.fr       */
+/*   Updated: 2022/01/13 14:05:41 by maroly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
+
+int	reverse_sort(t_lst **pile_a)
+{
+	t_var	s;
+
+	s.tmp = *pile_a;
+	s.stockmax = (*pile_a)->nb;
+	s.posmax = (*pile_a)->pos;
+	while (s.tmp && s.tmp->nb <= s.stockmax)
+		s.tmp = s.tmp->next;
+	if (s.tmp == NULL)
+	{
+		sx(pile_a, 1);
+		call_rrx(pile_a, NULL, 1);
+		return (0);
+	}
+	return (1);
+}
 
 int	find_max_pos(t_lst **pile_a)
 {
@@ -88,7 +106,8 @@ int	main(int ac, char **av)
 	else if (pre_init_pile(&pile_a, av, ac) == 1)
 		return (1);
 	if (pile_a == NULL || pile_a->next == NULL || check_pile(&pile_a) == 0
-		|| check_pile2(&pile_a) == 0)
+		|| check_pile2(&pile_a) == 0 || ((reverse_sort(&pile_a) == 0
+				|| min_middle_max_end(&pile_a)) && lst_size(&pile_a) == 3))
 	{
 		clear_lst(&pile_a);
 		return (0);

@@ -6,7 +6,7 @@
 /*   By: maroly <maroly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/03 14:14:30 by maroly            #+#    #+#             */
-/*   Updated: 2022/01/08 16:46:30 by maroly           ###   ########.fr       */
+/*   Updated: 2022/01/13 14:04:08 by maroly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,5 +84,6 @@ char	*ft_strjoin(char const *s1, char const *s2);
 char	*ft_strcat(char *dest, const char *src);
 int		take_stat(t_var *s, int *check);
 int		check_pile2(t_lst **pile_a);
+int		min_middle_max_end(t_lst **pile_a);
 
 #endif

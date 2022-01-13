@@ -6,7 +6,7 @@
 /*   By: maroly <maroly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 22:37:57 by maroly            #+#    #+#             */
-/*   Updated: 2022/01/10 14:17:27 by maroly           ###   ########.fr       */
+/*   Updated: 2022/01/13 14:04:14 by maroly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,30 @@ void	algo_above10(t_lst **pile_a, t_lst **pile_b)
 		else
 			call_rx(pile_a, pile_b, 1);
 	}
+}
+
+int	min_middle_max_end(t_lst **pile_a)
+{
+	t_var	s;
+
+	s.tmp = *pile_a;
+	s.stockmax = (*pile_a)->nb;
+	s.posmax = (*pile_a)->pos;
+	while (s.tmp)
+	{
+		if (s.tmp->nb > s.stockmax)
+		{
+			s.stockmax = s.tmp->nb;
+			s.posmax = s.tmp->pos;
+		}
+		s.tmp = s.tmp->next;
+	}
+	if (s.posmax == 3)
+	{
+		sx(pile_a, 1);
+		return (0);
+	}
+	return (1);
 }
 
 void	algo_10_and_under(t_lst **pile_a, t_lst **pile_b)
