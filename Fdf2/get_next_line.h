@@ -6,7 +6,7 @@
 /*   By: maroly <maroly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/20 15:59:48 by maroly            #+#    #+#             */
-/*   Updated: 2022/01/13 19:19:07 by maroly           ###   ########.fr       */
+/*   Updated: 2022/01/21 19:05:39 by maroly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,12 @@
 # include <stddef.h>
 # include <stdio.h>
 # include <stdlib.h>
-# define BUFFER_SIZE 1
+# define BUFFER_SIZE 10
 
 char	*ft_strdup(char *str);
 char	*split(char *str, char *new);
 size_t	ft_strlen(const char *s);
-char	*value_to_return(char *new_line, char *stock, char *buffer, int check);
+char	*value_to_return(char *new_line, char *buffer, int check);
 char	*get_next_line(int fd);
 void	*ft_calloc(size_t nmemb, size_t size);
 

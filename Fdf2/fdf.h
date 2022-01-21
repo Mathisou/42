@@ -6,15 +6,15 @@
 /*   By: maroly <maroly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/13 14:41:02 by maroly            #+#    #+#             */
-/*   Updated: 2022/01/21 13:11:09 by maroly           ###   ########.fr       */
+/*   Updated: 2022/01/21 19:12:45 by maroly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FDF_H
 # define FDF_H
 
-# define HEIGHT 800
-# define WIDTH 600
+# define HEIGHT 600
+# define WIDTH 800
 # define LEFT 0
 # define TOP 0
 
@@ -50,6 +50,8 @@ typedef struct s_pos
     int y2;
     int z;
     int e;
+    int signx;
+    int signy;
     int dx;
     int dy;
 }   t_pos;
@@ -58,6 +60,8 @@ typedef struct s_pos
 # include <mlx.h>
 # include <math.h>
 
-char    *get_next_line(int fd);
+char            *get_next_line(int fd);
+unsigned int    get_color(char *str);
+int             ft_atoi_base(char *str, char *base);
 
 #endif

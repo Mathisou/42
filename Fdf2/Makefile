@@ -6,13 +6,15 @@
 #    By: maroly <maroly@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/01/13 14:42:43 by maroly            #+#    #+#              #
-#    Updated: 2022/01/20 14:35:16 by maroly           ###   ########.fr        #
+#    Updated: 2022/01/21 18:54:21 by maroly           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 SRCS		=	fdf.c						\
 				get_next_line.c 			\
 				get_next_line_utils.c		\
+				color.c						\
+				ft_atoi_base.c				\
 
 SRCS_BONUS	=	
 
@@ -26,7 +28,7 @@ MLX_INC		=	-I ./minilibx_macos
 
 MLX_LNK		=	-L ./minilibx_macos -l mlx -framework OpenGL -framework Appkit
 
-FLAGS		=   -Werror -Wextra -Wall -g3
+FLAGS		=   -Werror -Wextra -Wall -g3 -fsanitize=address
 
 NAME		= 	fdf
 

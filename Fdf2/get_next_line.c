@@ -6,7 +6,7 @@
 /*   By: maroly <maroly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/02 11:26:11 by maroly            #+#    #+#             */
-/*   Updated: 2021/12/07 17:33:51 by maroly           ###   ########.fr       */
+/*   Updated: 2022/01/21 19:05:24 by maroly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,10 +77,10 @@ char	*get_next_line2(int fd, char *stock, char *buffer, char *new_line)
 		if (read_output == 0 && check_newline(stock) == 0)
 		{
 			*stock = '\0';
-			return (value_to_return(new_line, stock, buffer, 0));
+			return (value_to_return(new_line, buffer, 0));
 		}
 		if (read_output == -1)
-			return (value_to_return(new_line, stock, buffer, 0));
+			return (value_to_return(new_line, buffer, 0));
 		buffer[read_output] = '\0';
 		new_line = ft_strjoin(new_line, buffer);
 	}
@@ -89,7 +89,7 @@ char	*get_next_line2(int fd, char *stock, char *buffer, char *new_line)
 	if (new_line[i] == '\n')
 		stock = split(&new_line[++i], stock);
 	new_line[i] = '\0';
-	return (value_to_return(new_line, stock, buffer, 0));
+	return (value_to_return(new_line, buffer, 0));
 }
 
 char	*get_next_line(int fd)
@@ -103,13 +103,13 @@ char	*get_next_line(int fd)
 		return (NULL);
 	buffer = malloc(sizeof(*buffer) * (BUFFER_SIZE + 1));
 	if (!buffer)
-		return (value_to_return(new_line, stock, buffer, -1));
+		return (value_to_return(new_line, buffer, -1));
 	if (!stock)
 	{
 		stock = malloc((BUFFER_SIZE + 1) * sizeof(*stock));
 		stock[0] = '\0';
 		if (!stock)
-			return (value_to_return(new_line, stock, buffer, -1));
+			return (value_to_return(new_line, buffer, -1));
 	}
 	if (stock && ft_strlen(stock) > 0)
 		new_line = ft_strdup(stock);
