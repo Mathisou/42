@@ -6,7 +6,7 @@
 /*   By: maroly <maroly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/13 14:41:02 by maroly            #+#    #+#             */
-/*   Updated: 2022/01/21 19:12:45 by maroly           ###   ########.fr       */
+/*   Updated: 2022/01/22 01:46:24 by maroly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,20 +36,14 @@ typedef struct s_var
     int     fd;
     int     count_y;
     int     count_x;
-    int     sizex;
-    int     sizey;
+    int     size;
 }   t_var;
 
 typedef struct s_pos
 {
     int x;
     int y;
-    int x1;
-    int x2;
-    int y1;
-    int y2;
     int z;
-    int e;
     int signx;
     int signy;
     int dx;

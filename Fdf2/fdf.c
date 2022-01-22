@@ -6,7 +6,7 @@
 /*   By: maroly <maroly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/19 23:20:45 by maroly            #+#    #+#             */
-/*   Updated: 2022/01/21 19:35:50 by maroly           ###   ########.fr       */
+/*   Updated: 2022/01/22 02:36:28 by maroly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static void	put_pixel(t_data *fdf, int x, int y, int color)
 {
 	int		i;
 
-	if (y >= 0 && y <= HEIGHT && x >= 0 && x <= WIDTH)
+	if (y >= 0 && y < HEIGHT && x >= 0 && x < WIDTH)
 	{
 		i = (x * fdf->bits_per_pixel / 8) + (y * fdf->line_length);
 		fdf->addr[i] = color;
@@ -42,9 +42,8 @@ static void	put_pixel(t_data *fdf, int x, int y, int color)
 int    count_elem(t_var *s)
 {
     s->count_x = 0;
-    while (s->tab[0][s->count_x])
+    while (s->tab[0][s->count_x] && ft_strcmp(s->tab[0][s->count_x], "\n") == 1)
         s->count_x++;
-    s->count_x--;
     return (s->count_x);
 }
 
@@ -79,7 +78,8 @@ int parsing_map(t_var *s, char *map)
     s->tab = malloc(sizeof(char **) * (s->count_y + 1));
     if (!s->tab)
         return (1);
-    *s->tab = ft_split(get_next_line(s->fd), ' ');
+    s->tab[i] = ft_split(get_next_line(s->fd), ' ');
+    count_elem(s);
     while (s->tab[i++])
         s->tab[i] = ft_split(get_next_line(s->fd), ' ');
     close(s->fd);
@@ -94,11 +94,11 @@ int parsing_map(t_var *s, char *map)
 
     (void)s;
     if ((WIDTH - (LEFT * 2)) / s.count_x < (HEIGHT - (TOP * 2)) / s.count_y)
-        s.sizex = ((WIDTH - (LEFT * 2)) / s.count_x);// / 3 * 2;
+        s.size = ((WIDTH - (LEFT * 2)) / s.count_x) / 3 * 2;
     else
-        s.sizex = ((HEIGHT - (TOP * 2)) / s.count_y);// / 3 * 2;
-    previous_x = x * (s.sizex * 86 / 100);
-    previous_y = y * s.sizex;
+        s.size = ((HEIGHT - (TOP * 2)) / s.count_y) / 3 * 2;
+    previous_x = x * (s.size * 86 / 100);
+    previous_y = y * s.size;
     pos.x = (previous_x - previous_y) * cos(0.523599) + 500;
     pos.y = -(z * 4) + (previous_x + previous_y) * sin(0.523599) + 50;
     return (pos);
@@ -141,16 +141,16 @@ void	bersenham(t_pos beg, t_pos end, t_data *mlx, unsigned int color)
 
 void    background(t_data *img)
 {
-    t_pos pos;
+    t_pos   beg;
+    t_pos   end;
 
-    pos.x = -1;
-    while (++pos.x < WIDTH)
+    beg.x = -1;
+    while (++beg.x < WIDTH)
     {
-        pos.x1 = pos.x;
-        pos.y1 = 0;
-        pos.x2 = pos.x;
-        pos.y2 = HEIGHT;
-        bersenham(pos, pos, img, 0x222222);
+        beg.y = 0;
+        end.x = beg.x;
+        end.y = HEIGHT;
+        bersenham(beg, end, img, 0x222222);
     }
 }
 
@@ -184,7 +184,6 @@ int main(int ac, char **av)
     img.mlx_win = mlx_new_window(img.mlx, WIDTH, HEIGHT, "FDF");
     img.img = mlx_new_image(img.mlx_win, WIDTH, HEIGHT);
     img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_length, &img.endian);
-    count_elem(&s);
     pos.y = -1;
     background(&img);
     while (++pos.y < s.count_y)
@@ -192,16 +191,13 @@ int main(int ac, char **av)
         pos.x = -1;
         while (++pos.x < s.count_x)
         {
-            bersenham(iso(pos.x, pos.y, ft_atoi(s.tab[pos.y][pos.x]), s),
-            iso(pos.x + 1, pos.y, ft_atoi(s.tab[pos.y][pos.x + 1]), s),
-            &img, 0x9A1F6A);
-            if (pos.y < s.count_y - 1)
+            if (pos.x < s.count_x - 1)
+                bersenham(iso(pos.x, pos.y, ft_atoi(s.tab[pos.y][pos.x]), s),
+                iso(pos.x + 1, pos.y, ft_atoi(s.tab[pos.y][pos.x + 1]), s),
+                &img, 0x9A1F6A);
+            if (pos.y != s.count_y - 1)
                 bersenham(iso(pos.x, pos.y, ft_atoi(s.tab[pos.y][pos.x]), s),
                 iso(pos.x, pos.y + 1, ft_atoi(s.tab[pos.y + 1][pos.x]), s),
-                &img, 0x9A1F6A);
-            if (pos.x + 1 == s.count_x && pos.y < s.count_y - 1)
-                bersenham(iso(pos.x + 1, pos.y, ft_atoi(s.tab[pos.y][pos.x + 1]), s),
-                iso(pos.x + 1, pos.y + 1, ft_atoi(s.tab[pos.y + 1][pos.x + 1]), s),
                 &img, 0x9A1F6A);
         }
     }

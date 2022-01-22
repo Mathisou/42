@@ -6,7 +6,7 @@
 #    By: maroly <maroly@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/01/13 14:42:43 by maroly            #+#    #+#              #
-#    Updated: 2022/01/21 18:54:21 by maroly           ###   ########.fr        #
+#    Updated: 2022/01/22 02:37:59 by maroly           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,7 +28,7 @@ MLX_INC		=	-I ./minilibx_macos
 
 MLX_LNK		=	-L ./minilibx_macos -l mlx -framework OpenGL -framework Appkit
 
-FLAGS		=   -Werror -Wextra -Wall -g3 -fsanitize=address
+FLAGS		=   -Werror -Wextra -Wall
 
 NAME		= 	fdf
 
