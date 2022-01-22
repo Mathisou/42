@@ -6,11 +6,15 @@
 #    By: maroly <maroly@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/01/13 14:42:43 by maroly            #+#    #+#              #
-#    Updated: 2022/01/13 15:22:54 by maroly           ###   ########.fr        #
+#    Updated: 2022/01/22 02:37:59 by maroly           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-SRCS		=	fdf.c
+SRCS		=	fdf.c						\
+				get_next_line.c 			\
+				get_next_line_utils.c		\
+				color.c						\
+				ft_atoi_base.c				\
 
 SRCS_BONUS	=	
 
@@ -20,18 +24,27 @@ OBJS_BONUS	=	$(SRCS_BONUS:.c=.o)
 
 CC			= 	gcc
 
-FLAGS		=   -Wall -Wextra -Werror -Iminilibx-linux/ -Lminilibx-linux -lmlx
+MLX_INC		=	-I ./minilibx_macos
+
+MLX_LNK		=	-L ./minilibx_macos -l mlx -framework OpenGL -framework Appkit
+
+FLAGS		=   -Werror -Wextra -Wall
 
 NAME		= 	fdf
+
+LIBFT		=	libft/libft.a
 
 all			:	$(NAME)
 		
 .c.o		:	 	
 				@echo "\t\t    \033[33;32mCreation of $(NAME) in progress...\033[33;32m"
-				@$(CC) $(FLAGS) -c $<
+				@$(CC) $(FLAGS) $(MLX_INC) -c $<
 
-$(NAME)		:	$(OBJS)
-				@$(CC) $(FLAGS) -o $@ $^
+$(LIBFT)	:	
+				make -C libft
+
+$(NAME)		:	$(OBJS) $(LIBFT)
+				@$(CC) $(FLAGS) $(MLX_LNK) -o $@ $^
 				@echo "\t\t\t\t \033[33;32mDONE.\033[33;32m"
 
 bonus		:	$(OBJS_BONUS)
