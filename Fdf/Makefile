@@ -6,15 +6,17 @@
 #    By: maroly <maroly@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/01/13 14:42:43 by maroly            #+#    #+#              #
-#    Updated: 2022/01/22 02:37:59 by maroly           ###   ########.fr        #
+#    Updated: 2022/01/22 18:53:30 by maroly           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 SRCS		=	fdf.c						\
 				get_next_line.c 			\
 				get_next_line_utils.c		\
-				color.c						\
 				ft_atoi_base.c				\
+				draw.c						\
+				utils.c						\
+				map.c						\
 
 SRCS_BONUS	=	
 
