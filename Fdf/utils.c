@@ -6,7 +6,7 @@
 /*   By: maroly <maroly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/22 18:49:50 by maroly            #+#    #+#             */
-/*   Updated: 2022/01/22 18:54:13 by maroly           ###   ########.fr       */
+/*   Updated: 2022/01/25 23:22:55 by maroly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,16 +22,13 @@ void    find_origin(t_var *s)
     tmp.y = 0;
     tmp2.x = 0;
     tmp2.y = s->count_y - 1;
-    tmp = iso(tmp.x, tmp.y, ft_atoi(s->tab[tmp.y][tmp.x]), *s);
-    tmp2 = iso(tmp2.x, tmp2.y, ft_atoi(s->tab[tmp2.y][tmp2.x]), *s);
-    s->originx = (WIDTH - tmp.x + abs(tmp2.x)) / 2;
-    tmp.x = 0;
-    tmp.y = 0;
+    iso(&tmp.x, &tmp.y, ft_atoi(s->tab[tmp.y][tmp.x]));
+    iso(&tmp2.x, &tmp2.y, ft_atoi(s->tab[tmp2.y][tmp2.x]));
+    s->originx = (WIDTH - tmp.x + abs(tmp2.x)) / 5 * 2;
     tmp2.x = s->count_x - 1;
     tmp2.y = s->count_y - 1;
-    tmp = iso(tmp.x, tmp.y, ft_atoi(s->tab[tmp.y][tmp.x]), *s);
-    tmp2 = iso(tmp2.x, tmp2.y, ft_atoi(s->tab[tmp2.y][tmp2.x]), *s);
-    s->originy = (HEIGHT - tmp2.y) / 3 * 2;
+    iso(&tmp2.x, &tmp2.y, ft_atoi(s->tab[tmp2.y][tmp2.x]));
+    s->originy = (HEIGHT - tmp2.y) / 5;
 }
 
 int    count_lines(t_var *s, char *map)

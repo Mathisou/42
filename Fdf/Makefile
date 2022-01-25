@@ -6,9 +6,10 @@
 #    By: maroly <maroly@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/01/13 14:42:43 by maroly            #+#    #+#              #
-#    Updated: 2022/01/22 18:53:30 by maroly           ###   ########.fr        #
+#    Updated: 2022/01/25 20:27:55 by maroly           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
+
 
 SRCS		=	fdf.c						\
 				get_next_line.c 			\
@@ -17,8 +18,11 @@ SRCS		=	fdf.c						\
 				draw.c						\
 				utils.c						\
 				map.c						\
+				controls_utils.c			\
+				mouse.c						\
+				
 
-SRCS_BONUS	=	
+LIB			=	fdf.h
 
 OBJS		=  	$(SRCS:.c=.o)
 
@@ -30,7 +34,7 @@ MLX_INC		=	-I ./minilibx_macos
 
 MLX_LNK		=	-L ./minilibx_macos -l mlx -framework OpenGL -framework Appkit
 
-FLAGS		=   -Werror -Wextra -Wall
+FLAGS		=   -Werror -Wextra -Wall -g
 
 NAME		= 	fdf
 
@@ -38,7 +42,7 @@ LIBFT		=	libft/libft.a
 
 all			:	$(NAME)
 		
-.c.o		:	 	
+.c.o		:	$(SRCS) $(LIB) $(LIBFT)
 				@echo "\t\t    \033[33;32mCreation of $(NAME) in progress...\033[33;32m"
 				@$(CC) $(FLAGS) $(MLX_INC) -c $<
 
