@@ -6,7 +6,7 @@
 /*   By: maroly <maroly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/23 16:11:08 by maroly            #+#    #+#             */
-/*   Updated: 2022/01/26 19:18:58 by maroly           ###   ########.fr       */
+/*   Updated: 2022/01/26 19:23:19 by maroly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int plan(int keycode, t_data *img)
         img->camera->zoom = ((WIDTH - (X_MARGIN * 2)) / img->camera->count_x) / 3 * 2;
     else
         img->camera->zoom = ((HEIGHT - (Y_MARGIN * 2)) / img->camera->count_y) / 3 * 2;
-    if (img->camera->zoom == 0)
+    if (img->camera->zoom < 1)
         img->camera->zoom= 1;
     if (keycode == ISO)
         img->camera->projection = ISO;
@@ -63,13 +63,13 @@ int relief(int keycode, t_data *img)
 int move(int keycode, t_data *img)
 {
     if (keycode == LEFT)
-        img->camera->x_move -= 5;
-    else if (keycode == RIGHT)
         img->camera->x_move += 5;
+    else if (keycode == RIGHT)
+        img->camera->x_move -= 5;
     else if (keycode == UP)
-        img->camera->y_move -= 5;
-    else if (keycode == DOWN)
         img->camera->y_move += 5;
+    else if (keycode == DOWN)
+        img->camera->y_move -= 5;
     img->img = mlx_new_image(img->mlx_win, WIDTH, HEIGHT);
     img->addr = mlx_get_data_addr(img->img, &img->bits_per_pixel, &img->line_length, &img->endian);
     draw(img->camera, img, img->pos);

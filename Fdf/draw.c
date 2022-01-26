@@ -6,7 +6,7 @@
 /*   By: maroly <maroly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/22 18:48:14 by maroly            #+#    #+#             */
-/*   Updated: 2022/01/26 18:57:29 by maroly           ###   ########.fr       */
+/*   Updated: 2022/01/26 19:35:12 by maroly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ void	bersenham(t_pos beg, t_pos end, t_data *mlx, int sgn)
 {
 	t_pos	delta;
 	t_pos   sign;
-    t_pos   start;
+    t_pos   cur;
 	int		error[2];
 
 	delta.dx = abs(end.x - beg.x);
@@ -91,12 +91,11 @@ void	bersenham(t_pos beg, t_pos end, t_data *mlx, int sgn)
 	sign.signx = ter_dw(beg.x, end.x);
 	sign.signy = ter_dw(beg.y, end.y);
 	error[0] = delta.dx - delta.dy;
-    start.x = beg.x;
-    start.y = beg.y;
+    cur = beg;
     while (beg.x != end.x || beg.y != end.y)
 	{
         if (sgn == 0)
-            put_pixel(mlx, beg.x, beg.y, get_color(beg, start, end, delta));
+            put_pixel(mlx, beg.x, beg.y, get_color(beg, cur, end, delta));
         else if (sgn == 1)
             put_pixel(mlx, beg.x, beg.y, 0x222222);
         error[1] = error[0] * 2;
