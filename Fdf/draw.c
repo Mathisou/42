@@ -6,7 +6,7 @@
 /*   By: maroly <maroly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/22 18:48:14 by maroly            #+#    #+#             */
-/*   Updated: 2022/01/26 00:00:11 by maroly           ###   ########.fr       */
+/*   Updated: 2022/01/26 18:57:29 by maroly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,20 +57,17 @@ t_pos		project(t_pos p, t_data *img) //pb avec loriginev et commandes inverse av
 		iso(&p.x, &p.y, p.z);
     p.x += WIDTH / 2 + img->camera->x_move;
 	p.y += (HEIGHT + img->camera->count_y * img->camera->zoom) / 3 + img->camera->y_move;
-	//p.x += img->camera->originx + img->camera->x_move;
-	//p.y += img->camera->originy + img->camera->y_move;
 	return (p);
 }
 
-t_pos	new_point(int x, int y, int z)
+t_pos	new_point(int x, int y, int z, t_var *s)
 {
 	t_pos	point;
 
 	point.x = x;
 	point.y = y;
 	point.z = z;
-	/*point.color = (map->colors_arr[index] == -1) ?
-			get_default_color(point.z, map) : map->colors_arr[index];*/
+	point.color = get_default_color(point.z, s);
 	return (point);
 }
 
@@ -82,10 +79,11 @@ int	ter_dw(int f, int s)
 	return (-1);
 }
 
-void	bersenham(t_pos beg, t_pos end, t_data *mlx, unsigned int color)
+void	bersenham(t_pos beg, t_pos end, t_data *mlx, int sgn)
 {
 	t_pos	delta;
 	t_pos   sign;
+    t_pos   start;
 	int		error[2];
 
 	delta.dx = abs(end.x - beg.x);
@@ -93,9 +91,14 @@ void	bersenham(t_pos beg, t_pos end, t_data *mlx, unsigned int color)
 	sign.signx = ter_dw(beg.x, end.x);
 	sign.signy = ter_dw(beg.y, end.y);
 	error[0] = delta.dx - delta.dy;
+    start.x = beg.x;
+    start.y = beg.y;
     while (beg.x != end.x || beg.y != end.y)
 	{
-        put_pixel(mlx, beg.x, beg.y, color);
+        if (sgn == 0)
+            put_pixel(mlx, beg.x, beg.y, get_color(beg, start, end, delta));
+        else if (sgn == 1)
+            put_pixel(mlx, beg.x, beg.y, 0x222222);
         error[1] = error[0] * 2;
         if (error[1] > -delta.dy)
 		{
@@ -120,11 +123,11 @@ void draw(t_var *s, t_data *img, t_pos *pos)
         while (++pos->x < s->count_x)
         {
             if (pos->x < s->count_x - 1)
-                bersenham(project(new_point(pos->x, pos->y, ft_atoi(s->tab[pos->y][pos->x])), img),
-                project(new_point(pos->x + 1, pos->y, ft_atoi(s->tab[pos->y][pos->x + 1])), img), img, 0x9A1F6A);
+                bersenham(project(new_point(pos->x, pos->y, ft_atoi(s->tab[pos->y][pos->x]), s), img),
+                project(new_point(pos->x + 1, pos->y, ft_atoi(s->tab[pos->y][pos->x + 1]), s), img), img, 0);
             if (pos->y < s->count_y - 1)
-                bersenham(project(new_point(pos->x, pos->y, ft_atoi(s->tab[pos->y][pos->x])), img),
-                project(new_point(pos->x, pos->y + 1, ft_atoi(s->tab[pos->y + 1][pos->x])), img), img, 0x9A1F6A);
+                bersenham(project(new_point(pos->x, pos->y, ft_atoi(s->tab[pos->y][pos->x]), s), img),
+                project(new_point(pos->x, pos->y + 1, ft_atoi(s->tab[pos->y + 1][pos->x]), s), img), img, 0);
         }
     }
     mlx_put_image_to_window(img->mlx, img->mlx_win, img->img, X_MARGIN, Y_MARGIN);
@@ -136,11 +139,11 @@ void    background(t_data *img)
     t_pos   end;
 
     beg.x = -1;
-    while (++beg.x < WIDTH)
+    while (++beg.x <= WIDTH)
     {
         beg.y = 0;
         end.x = beg.x;
         end.y = HEIGHT;
-        bersenham(beg, end, img, 0x222222);
+        bersenham(beg, end, img, 1);
     }
 }

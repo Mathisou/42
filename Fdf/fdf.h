@@ -6,7 +6,7 @@
 /*   By: maroly <maroly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/13 14:41:02 by maroly            #+#    #+#             */
-/*   Updated: 2022/01/25 23:50:45 by maroly           ###   ########.fr       */
+/*   Updated: 2022/01/26 19:17:39 by maroly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,11 @@
 # define WIDTH 800
 # define X_MARGIN 0
 # define Y_MARGIN 0
+# define COLOR_DISCO		0x9A1F6A
+# define COLOR_BRICK_RED	0xC2294E
+# define COLOR_FLAMINGO		0xEC4B27
+# define COLOR_JAFFA		0xEF8633
+# define COLOR_SAFFRON		0xF3AF3D
 
 # include <stdbool.h>
 
@@ -88,7 +93,7 @@ char            *get_next_line(int fd);
 int             ft_atoi_base(char *str, char *base);
 //t_pos   iso(int x, int y, int z, t_var s);
 void	iso(int *x, int *y, int z);
-void	bersenham(t_pos beg, t_pos end, t_data *mlx, unsigned int color);
+void	bersenham(t_pos beg, t_pos end, t_data *mlx, int sgn);
 void    background(t_data *img);
 void	put_pixel(t_data *fdf, int x, int y, int color);
 void    find_origin(t_var *s);
@@ -113,5 +118,10 @@ int     mouse_move(int x, int y, t_data *img);
 void	rotate_x(int *y, int *z, double alpha);
 void	rotate_y(int *x, int *z, double beta);
 void	rotate_z(int *x, int *y, double gamma);
+int	get_default_color(int z, t_var *s);
+int	get_color(t_pos current, t_pos start, t_pos end, t_pos delta);
+void    main_hook(t_data *img);
+void    add_text(t_data *img);
+int controls(int keycode, void *param);
 
 #endif

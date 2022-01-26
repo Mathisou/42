@@ -6,7 +6,7 @@
 /*   By: maroly <maroly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/19 23:20:45 by maroly            #+#    #+#             */
-/*   Updated: 2022/01/25 23:43:14 by maroly           ###   ########.fr       */
+/*   Updated: 2022/01/26 19:17:05 by maroly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,12 @@ int main(int ac, char **av)
     s.relief = 6;
     s.originx = 0;
     s.originy = 0;
-    s.zoom = 25;
+    if ((WIDTH - (LEFT * 2)) / s.count_x < (HEIGHT - (Y_MARGIN * 2)) / s.count_y)
+        s.zoom = ((WIDTH - (X_MARGIN * 2)) / s.count_x) / 3 * 2;
+    else
+        s.zoom = ((HEIGHT - (Y_MARGIN * 2)) / s.count_y) / 3 * 2;
+    if (s.zoom == 0)
+        s.zoom = 1;
     s.projection = ISO;
     img->mlx = mlx_init();
     img->mlx_win = mlx_new_window(img->mlx, WIDTH, HEIGHT, "FDF");
@@ -57,12 +62,11 @@ int main(int ac, char **av)
     img->mouse = &is_pressed;
     img->camera = &s;
     draw(img->camera, img, img->pos);
-    //mlx_string_put(img->mlx, img->mlx_win, 50, 50, 0x00FFFFFF, "DGAUYGDKJAHDJKNAJKBDNJKHABHSVSAKH");
-    mlx_hook(img->mlx_win, 2, 0, controls, img);
-    mlx_hook(img->mlx_win, 4, 0, mouse_pressed, img);
-    mlx_hook(img->mlx_win, 5, 0, mouse_unpressed, img);
-    mlx_hook(img->mlx_win, 6, 0, mouse_move, img);
+    add_text(img);
+    main_hook(img);
 	mlx_loop(img->mlx);
+    mlx_clear_window(img->mlx, img->mlx_win);
+    mlx_destroy_window(img->mlx, img->mlx_win);
     clear_tab(&s);
     close(s.fd);
     free(img);

@@ -6,7 +6,7 @@
 #    By: maroly <maroly@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/01/13 14:42:43 by maroly            #+#    #+#              #
-#    Updated: 2022/01/25 20:27:55 by maroly           ###   ########.fr        #
+#    Updated: 2022/01/26 16:16:15 by maroly           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,6 +20,7 @@ SRCS		=	fdf.c						\
 				map.c						\
 				controls_utils.c			\
 				mouse.c						\
+				color.c						\
 				
 
 LIB			=	fdf.h

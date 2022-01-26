@@ -6,7 +6,7 @@
 /*   By: maroly <maroly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/22 18:49:50 by maroly            #+#    #+#             */
-/*   Updated: 2022/01/25 23:22:55 by maroly           ###   ########.fr       */
+/*   Updated: 2022/01/26 19:17:56 by maroly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,4 +85,22 @@ void    clear_tab(t_var *s)
         free(s->tab[i]);
     }
     free(s->tab);
+}
+
+void    add_text(t_data *img)
+{
+    mlx_string_put(img->mlx, img->mlx_win, 10, 10, 0x00FFFFFF, "Zoom : '+' '-' / scroll");
+    mlx_string_put(img->mlx, img->mlx_win, 10, 30, 0x00FFFFFF, "Relief : 'z' 'x'");
+    mlx_string_put(img->mlx, img->mlx_win, 10, 50, 0x00FFFFFF, "Plan : 'c' 'i'");
+    mlx_string_put(img->mlx, img->mlx_win, 10, 70, 0x00FFFFFF, "Move : 'left' 'right'");
+    mlx_string_put(img->mlx, img->mlx_win, 10, 90, 0x00FFFFFF, "       'top' 'down'");
+}
+
+void    main_hook(t_data *img)
+{
+    mlx_hook(img->mlx_win, 2, 0, controls, img);
+    mlx_hook(img->mlx_win, 4, 0, controls, img);
+    mlx_hook(img->mlx_win, 4, 0, mouse_pressed, img);
+    mlx_hook(img->mlx_win, 5, 0, mouse_unpressed, img);
+    mlx_hook(img->mlx_win, 6, 0, mouse_move, img);
 }
