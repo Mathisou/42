@@ -6,7 +6,7 @@
 /*   By: maroly <maroly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/23 15:57:51 by maroly            #+#    #+#             */
-/*   Updated: 2022/01/25 16:42:45 by maroly           ###   ########.fr       */
+/*   Updated: 2022/01/27 16:00:47 by maroly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,5 +26,11 @@
 # define X 7
 # define CARTESIAN 8
 # define ISO 34
+# define NUM_1 18
+# define NUM_2 19
+# define NUM_3 20
+# define NUM_4 21
+# define NUM_5 22
+# define NUM_6 23
 
 #endif

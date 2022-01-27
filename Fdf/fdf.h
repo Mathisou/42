@@ -6,7 +6,7 @@
 /*   By: maroly <maroly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/13 14:41:02 by maroly            #+#    #+#             */
-/*   Updated: 2022/01/26 19:17:39 by maroly           ###   ########.fr       */
+/*   Updated: 2022/01/27 17:10:16 by maroly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,10 @@
 # define COLOR_SAFFRON		0xF3AF3D
 
 # include <stdbool.h>
+# include "libft/libft.h"
+# include "keyboard.h"
+# include <mlx.h>
+# include <math.h>
 
 typedef struct s_mouse
 {
@@ -82,16 +86,8 @@ typedef struct	s_data {
     t_pos      *pos;
 }	t_data;
 
-
-# include "libft/libft.h"
-# include "keyboard.h"
-# include <mlx.h>
-# include <math.h>
-# include <stdbool.h>
-
 char            *get_next_line(int fd);
 int             ft_atoi_base(char *str, char *base);
-//t_pos   iso(int x, int y, int z, t_var s);
 void	iso(int *x, int *y, int z);
 void	bersenham(t_pos beg, t_pos end, t_data *mlx, int sgn);
 void    background(t_data *img);
@@ -123,5 +119,6 @@ int	get_color(t_pos current, t_pos start, t_pos end, t_pos delta);
 void    main_hook(t_data *img);
 void    add_text(t_data *img);
 int controls(int keycode, void *param);
+int rotation(int keycode, t_data *img);
 
 #endif

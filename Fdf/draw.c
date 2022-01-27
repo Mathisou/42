@@ -6,7 +6,7 @@
 /*   By: maroly <maroly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/22 18:48:14 by maroly            #+#    #+#             */
-/*   Updated: 2022/01/26 19:35:12 by maroly           ###   ########.fr       */
+/*   Updated: 2022/01/27 17:29:26 by maroly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,18 +36,18 @@ void	iso(int *x, int *y, int z)
 	*y = -z + (previous_x + previous_y) * sin(0.523599);
 }
 
-t_pos		project(t_pos p, t_data *img) //pb avec loriginev et commandes inverse avc la souris
+t_pos		project(t_pos p, t_data *img)
 {
-    int relief;
-
-    relief = img->camera->zoom / img->camera->relief;
-    if (relief < 1)
-        relief = 1;
+    if (img->camera->relief < 1)
+        img->camera->relief = 1;
     if (img->camera->zoom < 3)
         img->camera->zoom = 3;
 	p.x *= img->camera->zoom;
 	p.y *= img->camera->zoom;
-	p.z *= relief;
+	p.z *= img->camera->zoom / img->camera->relief;
+    //p.z *= relief;
+    //printf("%d %f\n", img->camera->zoom, img->camera->relief);
+     //   printf("%d\n", p.z);
 	p.x -= (img->camera->count_x * img->camera->zoom) / 2;
 	p.y -= (img->camera->count_y * img->camera->zoom) / 2;
 	rotate_x(&p.y, &p.z, img->camera->alpha);
@@ -92,22 +92,22 @@ void	bersenham(t_pos beg, t_pos end, t_data *mlx, int sgn)
 	sign.signy = ter_dw(beg.y, end.y);
 	error[0] = delta.dx - delta.dy;
     cur = beg;
-    while (beg.x != end.x || beg.y != end.y)
+    while (cur.x != end.x || cur.y != end.y)
 	{
         if (sgn == 0)
-            put_pixel(mlx, beg.x, beg.y, get_color(beg, cur, end, delta));
+            put_pixel(mlx, cur.x, cur.y, get_color(cur, beg, end, delta));
         else if (sgn == 1)
-            put_pixel(mlx, beg.x, beg.y, 0x222222);
+            put_pixel(mlx, cur.x, cur.y, 0x222222);
         error[1] = error[0] * 2;
         if (error[1] > -delta.dy)
 		{
 			error[0] -= delta.dy;
-			beg.x += sign.signx;
+			cur.x += sign.signx;
 		}
 		if (error[1] < delta.dx)
 		{
 			error[0] += delta.dx;
-			beg.y += sign.signy;
+			cur.y += sign.signy;
 		}
 	}
 }

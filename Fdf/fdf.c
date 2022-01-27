@@ -6,7 +6,7 @@
 /*   By: maroly <maroly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/19 23:20:45 by maroly            #+#    #+#             */
-/*   Updated: 2022/01/26 19:17:05 by maroly           ###   ########.fr       */
+/*   Updated: 2022/01/27 17:28:48 by maroly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,9 @@ int controls(int keycode, void *param)
         relief(keycode, param);
     else if (keycode == CARTESIAN || keycode == ISO)
         plan(keycode, param);
+    else if (keycode == NUM_1 || keycode == NUM_2 || keycode == NUM_3
+        || keycode == NUM_4 || keycode == NUM_5 || keycode == NUM_6)
+        rotation(keycode, param);
     return (0);
 }
 
@@ -43,7 +46,11 @@ int main(int ac, char **av)
         return (1);
     if (check_map(&s) == 1)
         return (1);
+    /*s.relief = (s.zmax - s.zmin) / 5;
+    if (s.relief < 1)
+        s.relief = 1;*/
     s.relief = 6;
+    s.projection = ISO;
     s.originx = 0;
     s.originy = 0;
     if ((WIDTH - (LEFT * 2)) / s.count_x < (HEIGHT - (Y_MARGIN * 2)) / s.count_y)
@@ -52,12 +59,10 @@ int main(int ac, char **av)
         s.zoom = ((HEIGHT - (Y_MARGIN * 2)) / s.count_y) / 3 * 2;
     if (s.zoom == 0)
         s.zoom = 1;
-    s.projection = ISO;
     img->mlx = mlx_init();
     img->mlx_win = mlx_new_window(img->mlx, WIDTH, HEIGHT, "FDF");
     img->img = mlx_new_image(img->mlx_win, WIDTH, HEIGHT);
     img->addr = mlx_get_data_addr(img->img, &img->bits_per_pixel, &img->line_length, &img->endian);
-    find_origin(&s);
     img->pos = &pos;
     img->mouse = &is_pressed;
     img->camera = &s;

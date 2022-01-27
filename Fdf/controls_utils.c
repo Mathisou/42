@@ -6,7 +6,7 @@
 /*   By: maroly <maroly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/23 16:11:08 by maroly            #+#    #+#             */
-/*   Updated: 2022/01/26 19:23:19 by maroly           ###   ########.fr       */
+/*   Updated: 2022/01/27 16:32:14 by maroly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,27 @@ int    destroy_window(void *param)
 {
     (void)param;
     exit (0);
+}
+
+int rotation(int keycode, t_data *img)
+{
+    if (keycode == NUM_1)
+        img->camera->beta += 0.01;
+    else if (keycode == NUM_2)
+        img->camera->beta -= 0.01;
+    else if (keycode == NUM_3)
+        img->camera->alpha += 0.01;
+    else if (keycode == NUM_4)
+        img->camera->alpha -= 0.01;
+    else if (keycode == NUM_5)
+        img->camera->gamma += 0.01;
+    else if (keycode == NUM_6)
+        img->camera->gamma -= 0.01;
+    img->img = mlx_new_image(img->mlx_win, WIDTH, HEIGHT);
+    img->addr = mlx_get_data_addr(img->img, &img->bits_per_pixel, &img->line_length, &img->endian);
+    draw(img->camera, img, img->pos);
+    add_text(img);
+    return (0);
 }
 
 int plan(int keycode, t_data *img)

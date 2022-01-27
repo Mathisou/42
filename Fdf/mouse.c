@@ -6,7 +6,7 @@
 /*   By: maroly <maroly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/25 15:18:54 by maroly            #+#    #+#             */
-/*   Updated: 2022/01/26 19:18:37 by maroly           ###   ########.fr       */
+/*   Updated: 2022/01/27 17:07:37 by maroly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,6 @@ void	rotate_z(int *x, int *y, double gamma)
 
 int mouse_pressed(int button, int x, int y, t_data *img)
 {
-    (void)button;
     (void)x;
     (void)y;
     if (button == 1)

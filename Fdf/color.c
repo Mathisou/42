@@ -6,7 +6,7 @@
 /*   By: maroly <maroly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/21 16:40:54 by maroly            #+#    #+#             */
-/*   Updated: 2022/01/26 19:28:22 by maroly           ###   ########.fr       */
+/*   Updated: 2022/01/27 16:54:54 by maroly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,23 @@ double	percent(int start, int end, int current)
 	return ((distance == 0) ? 1.0 : (placement / distance));
 }
 
+/*int	get_default_color(int z, t_var *s)
+{
+	double	percentage;
+
+	percentage = percent(s->zmin, s->zmax, z);
+	if (percentage < 0.2)
+		return (0xFFFF00);
+	else if (percentage < 0.4)
+		return (0x00FF00);
+	else if (percentage < 0.6)
+		return (0xFF4A7C);
+	else if (percentage < 0.8)
+		return (0x00F7FF);
+	else
+		return (0xC500FF);
+}*/
+
 int	get_default_color(int z, t_var *s)
 {
 	double	percentage;
@@ -32,9 +49,9 @@ int	get_default_color(int z, t_var *s)
 	else if (percentage < 0.4)
 		return (COLOR_BRICK_RED);
 	else if (percentage < 0.6)
-		return (COLOR_FLAMINGO);
-	else if (percentage < 0.8)
 		return (COLOR_JAFFA);
+	else if (percentage < 0.8)
+		return (COLOR_FLAMINGO);
 	else
 		return (COLOR_SAFFRON);
 }
@@ -66,5 +83,6 @@ int	get_color(t_pos current, t_pos start, t_pos end, t_pos delta)
 	blue = get_light(start.color & 0xFF,
 					end.color & 0xFF,
 					percentage);
+    //printf("rgb = %X%X%X\n", red, green, blue);
 	return ((red << 16) | (green << 8) | blue);
 }

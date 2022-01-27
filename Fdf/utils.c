@@ -6,7 +6,7 @@
 /*   By: maroly <maroly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/22 18:49:50 by maroly            #+#    #+#             */
-/*   Updated: 2022/01/26 19:17:56 by maroly           ###   ########.fr       */
+/*   Updated: 2022/01/27 16:14:08 by maroly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,8 @@ void    add_text(t_data *img)
     mlx_string_put(img->mlx, img->mlx_win, 10, 30, 0x00FFFFFF, "Relief : 'z' 'x'");
     mlx_string_put(img->mlx, img->mlx_win, 10, 50, 0x00FFFFFF, "Plan : 'c' 'i'");
     mlx_string_put(img->mlx, img->mlx_win, 10, 70, 0x00FFFFFF, "Move : 'left' 'right'");
-    mlx_string_put(img->mlx, img->mlx_win, 10, 90, 0x00FFFFFF, "       'top' 'down'");
+    mlx_string_put(img->mlx, img->mlx_win, 10, 90, 0x00FFFFFF, "        'top' 'down'");
+    mlx_string_put(img->mlx, img->mlx_win, 10, 110, 0x00FFFFFF, "Rot : mouse / 1-6");
 }
 
 void    main_hook(t_data *img)
