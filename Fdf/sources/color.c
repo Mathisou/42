@@ -6,11 +6,11 @@
 /*   By: maroly <maroly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/21 16:40:54 by maroly            #+#    #+#             */
-/*   Updated: 2022/01/27 16:54:54 by maroly           ###   ########.fr       */
+/*   Updated: 2022/01/28 15:27:14 by maroly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "fdf.h"
+#include "../includes/fdf.h"
 
 double	percent(int start, int end, int current)
 {
@@ -19,7 +19,10 @@ double	percent(int start, int end, int current)
 
 	placement = current - start;
 	distance = end - start;
-	return ((distance == 0) ? 1.0 : (placement / distance));
+	if (distance == 0)
+		return (1.0);
+	else
+		return (placement / distance);
 }
 
 /*int	get_default_color(int z, t_var *s)
@@ -75,14 +78,14 @@ int	get_color(t_pos current, t_pos start, t_pos end, t_pos delta)
 	else
 		percentage = percent(start.y, end.y, current.y);
 	red = get_light((start.color >> 16) & 0xFF,
-					(end.color >> 16) & 0xFF,
-					percentage);
+			(end.color >> 16) & 0xFF,
+			percentage);
 	green = get_light((start.color >> 8) & 0xFF,
-					(end.color >> 8) & 0xFF,
-					percentage);
+			(end.color >> 8) & 0xFF,
+			percentage);
 	blue = get_light(start.color & 0xFF,
-					end.color & 0xFF,
-					percentage);
+			end.color & 0xFF,
+			percentage);
     //printf("rgb = %X%X%X\n", red, green, blue);
 	return ((red << 16) | (green << 8) | blue);
 }

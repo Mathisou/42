@@ -6,7 +6,7 @@
 /*   By: maroly <maroly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/20 15:59:48 by maroly            #+#    #+#             */
-/*   Updated: 2022/01/21 19:05:39 by maroly           ###   ########.fr       */
+/*   Updated: 2022/01/28 19:41:30 by maroly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 # include <stddef.h>
 # include <stdio.h>
 # include <stdlib.h>
-# define BUFFER_SIZE 10
+# define BUFFER_SIZE 2048
 
 char	*ft_strdup(char *str);
 char	*split(char *str, char *new);

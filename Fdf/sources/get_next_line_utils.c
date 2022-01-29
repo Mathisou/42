@@ -6,11 +6,11 @@
 /*   By: maroly <maroly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/02 11:56:38 by maroly            #+#    #+#             */
-/*   Updated: 2022/01/21 19:05:05 by maroly           ###   ########.fr       */
+/*   Updated: 2022/01/28 15:30:59 by maroly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "../includes/get_next_line.h"
 
 char	*value_to_return(char *new_line, char *buffer, int check)
 {
