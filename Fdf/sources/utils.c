@@ -6,7 +6,7 @@
 /*   By: maroly <maroly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/22 18:49:50 by maroly            #+#    #+#             */
-/*   Updated: 2022/01/29 03:00:47 by maroly           ###   ########.fr       */
+/*   Updated: 2022/01/29 03:25:58 by maroly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,10 +77,10 @@ void	clear_tab(t_data *img)
 	int	j;
 
 	i = -1;
-	while (++i < img->camera->count_y)
+	while (img->camera->tab[++i])
 	{
 		j = -1;
-		while (++j < img->camera->count_x)
+		while (img->camera->tab[i][++j])
 			free(img->camera->tab[i][j]);
 		free(img->camera->tab[i]);
 	}
