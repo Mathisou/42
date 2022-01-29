@@ -6,7 +6,7 @@
 /*   By: maroly <maroly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/22 18:53:17 by maroly            #+#    #+#             */
-/*   Updated: 2022/01/28 15:27:48 by maroly           ###   ########.fr       */
+/*   Updated: 2022/01/29 03:18:23 by maroly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 
 int	parsing_map(t_var *s, char *map)
 {
-	int	i;
+	int		i;
+	char	*str;
 
 	i = 0;
 	if (count_lines(s, map) == 1)
@@ -25,10 +26,16 @@ int	parsing_map(t_var *s, char *map)
 	s->tab = malloc(sizeof(char **) * (s->count_y + 1));
 	if (!s->tab)
 		return (1);
-	s->tab[i] = ft_split(get_next_line(s->fd), ' ');
+	str = get_next_line(s->fd);
+	s->tab[i] = ft_split(str, ' ');
+	free(str);
 	count_elem(s);
 	while (s->tab[i++])
-		s->tab[i] = ft_split(get_next_line(s->fd), ' ');
+	{
+		str = get_next_line(s->fd);
+		s->tab[i] = ft_split(str, ' ');
+		free(str);
+	}
 	close(s->fd);
 	return (0);
 }

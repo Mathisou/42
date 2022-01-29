@@ -6,7 +6,7 @@
 /*   By: maroly <maroly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/21 16:40:54 by maroly            #+#    #+#             */
-/*   Updated: 2022/01/28 15:27:14 by maroly           ###   ########.fr       */
+/*   Updated: 2022/01/29 03:18:32 by maroly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,23 +24,6 @@ double	percent(int start, int end, int current)
 	else
 		return (placement / distance);
 }
-
-/*int	get_default_color(int z, t_var *s)
-{
-	double	percentage;
-
-	percentage = percent(s->zmin, s->zmax, z);
-	if (percentage < 0.2)
-		return (0xFFFF00);
-	else if (percentage < 0.4)
-		return (0x00FF00);
-	else if (percentage < 0.6)
-		return (0xFF4A7C);
-	else if (percentage < 0.8)
-		return (0x00F7FF);
-	else
-		return (0xC500FF);
-}*/
 
 int	get_default_color(int z, t_var *s)
 {
@@ -86,6 +69,5 @@ int	get_color(t_pos current, t_pos start, t_pos end, t_pos delta)
 	blue = get_light(start.color & 0xFF,
 			end.color & 0xFF,
 			percentage);
-    //printf("rgb = %X%X%X\n", red, green, blue);
 	return ((red << 16) | (green << 8) | blue);
 }

@@ -6,7 +6,7 @@
 /*   By: maroly <maroly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/28 14:17:49 by maroly            #+#    #+#             */
-/*   Updated: 2022/01/28 19:54:11 by maroly           ###   ########.fr       */
+/*   Updated: 2022/01/29 03:19:06 by maroly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,12 +39,7 @@ void	main_hook(t_data *img)
 
 int	destroy_window(t_data *img)
 {
-	//mlx_destroy_image(img->mlx, img->img);
-	//mlx_destroy_window(img->mlx, img->mlx_win);
-	free(img->mlx);
-	clear_tab(*(&img));
-	//close(img->camera->fd);
-	//free(img);
+	(void)img;
 	exit (0);
 }
 

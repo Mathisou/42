@@ -6,7 +6,7 @@
 /*   By: maroly <maroly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/28 15:21:31 by maroly            #+#    #+#             */
-/*   Updated: 2022/01/28 15:21:51 by maroly           ###   ########.fr       */
+/*   Updated: 2022/01/29 03:03:46 by maroly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ typedef struct s_var
 	int		count_x;
 	int		zmin;
 	int		zmax;
-	int		size;
 	int		originx;
 	int		originy;
 	int		zoom;
@@ -64,8 +63,6 @@ typedef struct s_data
 	int		endian;
 	void	*mlx;
 	void	*mlx_win;
-	int		height;
-	int		width;
 	int		error[2];
 	t_var	*camera;
 	t_mouse	*mouse;

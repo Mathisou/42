@@ -6,7 +6,7 @@
 /*   By: maroly <maroly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/22 18:49:50 by maroly            #+#    #+#             */
-/*   Updated: 2022/01/28 19:39:04 by maroly           ###   ########.fr       */
+/*   Updated: 2022/01/29 03:00:47 by maroly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ int	count_lines(t_var *s, char *map)
 	str = get_next_line(s->fd);
 	while (str != NULL)
 	{
+		free(str);
 		str = get_next_line(s->fd);
 		s->count_y++;
 	}
