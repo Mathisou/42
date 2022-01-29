@@ -6,7 +6,7 @@
 /*   By: maroly <maroly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/19 23:20:45 by maroly            #+#    #+#             */
-/*   Updated: 2022/01/29 03:27:37 by maroly           ###   ########.fr       */
+/*   Updated: 2022/01/29 14:17:06 by maroly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,12 @@ int	main(int ac, char **av)
 	t_var	s;
 	t_mouse	is_pressed;
 
-	img = malloc(sizeof(t_data));
 	if (ac != 2)
+	{
+		ft_putstr_fd("Not enough arguments!\n", 2);
 		return (1);
+	}
+	img = malloc(sizeof(t_data));
 	img->pos = &pos;
 	img->mouse = &is_pressed;
 	img->camera = &s;
@@ -34,7 +37,5 @@ int	main(int ac, char **av)
 	add_text(img);
 	main_hook(img);
 	mlx_loop(img->mlx);
-	mlx_clear_window(img->mlx, img->mlx_win);
-	mlx_destroy_window(img->mlx, img->mlx_win);
 	return (0);
 }
