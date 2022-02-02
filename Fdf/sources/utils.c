@@ -6,7 +6,7 @@
 /*   By: maroly <maroly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/22 18:49:50 by maroly            #+#    #+#             */
-/*   Updated: 2022/01/29 03:25:58 by maroly           ###   ########.fr       */
+/*   Updated: 2022/01/31 13:04:37 by maroly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,10 @@ int	count_lines(t_var *s, char *map)
 int	count_elem(t_var *s)
 {
 	s->count_x = 0;
-	while (s->tab[0][s->count_x] && ft_strcmp(s->tab[0][s->count_x], "\n") == 1)
-		s->count_x++;
+	if (s->tab[0])
+		while (s->tab[0][s->count_x]
+				&& ft_strcmp(s->tab[0][s->count_x], "\n") == 1)
+			s->count_x++;
 	return (s->count_x);
 }
 

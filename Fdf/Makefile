@@ -6,7 +6,7 @@
 #    By: maroly <maroly@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/01/13 14:42:43 by maroly            #+#    #+#              #
-#    Updated: 2022/01/29 02:54:56 by maroly           ###   ########.fr        #
+#    Updated: 2022/01/31 13:16:01 by maroly           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -58,11 +58,13 @@ $(NAME)		:	$(OBJS) $(LIBFT)
 				@echo "\t\t\t\t \033[33;32mDONE.\033[33;32m"
 
 clean		:
-				@rm -rf $(OBJS)
+				@rm -f $(OBJS)
+				@make -C sources/libft clean
 				@echo "\t\t      \x1b[31mfiles .o deleted successfully.\x1b[31m"
 
 fclean		:	clean
 				@rm -f $(NAME)
+				@make -C sources/libft fclean
 				@echo "\t\t       \x1b[31m$(NAME) deleted sucessfully.\x1b[31m"
 
 re			:	fclean all

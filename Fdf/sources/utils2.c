@@ -6,7 +6,7 @@
 /*   By: maroly <maroly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/28 14:17:49 by maroly            #+#    #+#             */
-/*   Updated: 2022/01/29 03:24:02 by maroly           ###   ########.fr       */
+/*   Updated: 2022/01/31 13:10:07 by maroly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,12 +49,17 @@ void	init_struct(t_data *img, t_var *s)
 	s->projection = ISO;
 	s->originx = 0;
 	s->originy = 0;
-	if ((WIDTH - (LEFT * 2)) / s->count_x
-		< (HEIGHT - (Y_MARGIN * 2)) / s->count_y)
-		s->zoom = ((WIDTH - (X_MARGIN * 2)) / s->count_x) / 3 * 2;
+	if (s->count_y > 0)
+	{
+		if ((WIDTH - (LEFT * 2)) / s->count_x
+			< (HEIGHT - (Y_MARGIN * 2)) / s->count_y)
+			s->zoom = ((WIDTH - (X_MARGIN * 2)) / s->count_x) / 3 * 2;
+		else
+			s->zoom = ((HEIGHT - (Y_MARGIN * 2)) / s->count_y) / 3 * 2;
+		if (s->zoom == 0)
+			s->zoom = 1;
+	}
 	else
-		s->zoom = ((HEIGHT - (Y_MARGIN * 2)) / s->count_y) / 3 * 2;
-	if (s->zoom == 0)
 		s->zoom = 1;
 	img->mlx = mlx_init();
 	img->mlx_win = mlx_new_window(img->mlx, WIDTH, HEIGHT, "FDF");

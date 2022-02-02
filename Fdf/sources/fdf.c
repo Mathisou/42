@@ -6,7 +6,7 @@
 /*   By: maroly <maroly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/19 23:20:45 by maroly            #+#    #+#             */
-/*   Updated: 2022/01/29 14:17:06 by maroly           ###   ########.fr       */
+/*   Updated: 2022/01/31 13:10:22 by maroly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	main(int ac, char **av)
 
 	if (ac != 2)
 	{
-		ft_putstr_fd("Not enough arguments!\n", 2);
+		ft_putstr_fd("Wrong number of arguments!\n", 2);
 		return (1);
 	}
 	img = malloc(sizeof(t_data));
@@ -38,4 +38,4 @@ int	main(int ac, char **av)
 	main_hook(img);
 	mlx_loop(img->mlx);
 	return (0);
-}
+}	

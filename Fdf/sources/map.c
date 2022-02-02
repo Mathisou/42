@@ -6,7 +6,7 @@
 /*   By: maroly <maroly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/22 18:53:17 by maroly            #+#    #+#             */
-/*   Updated: 2022/01/29 03:18:23 by maroly           ###   ########.fr       */
+/*   Updated: 2022/01/30 14:55:02 by maroly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,8 @@ int	check_map(t_var *s)
 	int	ret;
 
 	i = -1;
-	s->zmin = ft_atoi(s->tab[0][0]);
+	if (s->tab[0])
+		s->zmin = ft_atoi(s->tab[0][0]);
 	s->zmax = s->zmin;
 	while (s->tab[++i])
 	{
