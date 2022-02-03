@@ -1,33 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strjoin.c                                       :+:      :+:    :+:   */
+/*   get_next_line.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: maroly <maroly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/10/18 18:17:20 by maroly            #+#    #+#             */
-/*   Updated: 2022/02/03 23:03:31 by maroly           ###   ########.fr       */
+/*   Created: 2021/10/20 15:59:48 by maroly            #+#    #+#             */
+/*   Updated: 2022/02/03 23:04:31 by maroly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#ifndef GET_NEXT_LINE_H
+# define GET_NEXT_LINE_H
 
-char	*ft_strjoin(char const *s1, char const *s2)
-{
-	char	*new;
+# include "libft.h"
+# define BUFFER_SIZE 2048
 
-	if (!s2)
-		return (NULL);
-	if (!s1)
-		return ((char *)s2);
-	else
-	{
-		new = malloc(sizeof(*new) * (ft_strlen(s2) + ft_strlen(s1) + 1));
-		if (!new)
-			return (NULL);
-		new[0] = '\0';
-		new = ft_strcat(new, (char *)s1);
-		free((char *)s1);
-		return (ft_strcat(new, (char *)s2));
-	}
-}
+char	*split(char *str, char *new);
+size_t	ft_strlen(const char *s);
+char	*value_to_return(char *new_line, char *buffer, int check);
+char	*get_next_line(int fd);
+void	*ft_calloc(size_t nmemb, size_t size);
+
+#endif

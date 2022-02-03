@@ -1,33 +1,51 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strjoin.c                                       :+:      :+:    :+:   */
+/*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: maroly <maroly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/10/18 18:17:20 by maroly            #+#    #+#             */
-/*   Updated: 2022/02/03 23:03:31 by maroly           ###   ########.fr       */
+/*   Created: 2021/12/02 11:56:38 by maroly            #+#    #+#             */
+/*   Updated: 2022/02/03 23:03:47 by maroly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "get_next_line.h"
 
-char	*ft_strjoin(char const *s1, char const *s2)
+char	*value_to_return(char *new_line, char *buffer, int check)
 {
-	char	*new;
-
-	if (!s2)
+	if (buffer)
+		free(buffer);
+	if (!new_line || check == -1)
 		return (NULL);
-	if (!s1)
-		return ((char *)s2);
+	return (new_line);
+}
+
+size_t	ft_strlen(const char *s)
+{
+	size_t	i;
+
+	i = 0;
+	if (!s)
+		return (0);
 	else
 	{
-		new = malloc(sizeof(*new) * (ft_strlen(s2) + ft_strlen(s1) + 1));
-		if (!new)
-			return (NULL);
-		new[0] = '\0';
-		new = ft_strcat(new, (char *)s1);
-		free((char *)s1);
-		return (ft_strcat(new, (char *)s2));
+		while (s[i])
+			i++;
 	}
+	return (i);
+}
+
+char	*split(char *str, char *new)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+	{
+		new[i] = str[i];
+		i++;
+	}
+	new[i] = '\0';
+	return (new);
 }

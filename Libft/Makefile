@@ -6,7 +6,7 @@
 #    By: maroly <maroly@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/10/19 13:36:30 by maroly            #+#    #+#              #
-#    Updated: 2021/11/28 16:41:17 by maroly           ###   ########.fr        #
+#    Updated: 2022/02/03 23:02:50 by maroly           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -44,8 +44,8 @@ SRCS		=	ft_isalpha.c				\
 	       		ft_putstr_fd.c				\
 	       		ft_putendl_fd.c				\
 	       		ft_putnbr_fd.c				\
-
-SRCS_BONUS 	=	ft_lstnew.c					\
+				get_next_line.c				\
+				ft_lstnew.c					\
 	       		ft_lstadd_front.c			\
 	       		ft_lstsize.c				\
 	       		ft_lstlast.c				\
@@ -54,7 +54,7 @@ SRCS_BONUS 	=	ft_lstnew.c					\
 	       		ft_lstclear.c				\
 	       		ft_lstiter.c				\
 	       		ft_lstmap.c					\
-	    	   	#ft_putchar_bonus.c			\
+	    	   	ft_putchar_bonus.c			\
 	    	    ft_putnbr_bonus.c			\
 	   	 	   	ft_swap_bonus.c				\
 	     	  	ft_putstr_bonus.c			\
@@ -90,8 +90,6 @@ SRCS_BONUS 	=	ft_lstnew.c					\
 
 OBJS		=  	$(SRCS:.c=.o)
 
-OBJS_BONUS	=	$(SRCS_BONUS:.c=.o)
-
 CC			= 	gcc
 
 FLAGS		= 	-Wall -Wextra -Werror
@@ -107,10 +105,6 @@ all			:	$(NAME)
 $(NAME)		:	$(OBJS)
 				@ar rc $(NAME) $(OBJS)
 				@ranlib $(NAME)
-				@echo "\t\t\t\t \033[33;32mDONE.\033[33;32m"
-
-bonus		:	$(OBJS_BONUS)
-				@ar rc $(NAME) $(OBJS_BONUS)
 				@echo "\t\t\t\t \033[33;32mDONE.\033[33;32m"
 
 clean		:

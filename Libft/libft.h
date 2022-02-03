@@ -6,9 +6,10 @@
 /*   By: maroly <maroly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/19 12:50:21 by maroly            #+#    #+#             */
-/*   Updated: 2021/11/25 16:48:20 by maroly           ###   ########.fr       */
+/*   Updated: 2022/02/03 23:00:46 by maroly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #ifndef LIBFT_H
 # define LIBFT_H
 
@@ -22,6 +23,7 @@
 # include <sys/types.h>
 # include <sys/uio.h>
 # include <libgen.h>
+# include "get_next_line.h"
 
 typedef struct s_list
 {
@@ -72,7 +74,7 @@ void	ft_lstdelone(t_list *lst, void (*del)(void *));
 void	ft_lstclear(t_list **lst, void (*del)(void *));
 void	ft_lstiter(t_list *lst, void (*f)(void *));
 t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *));
-/*void	ft_putchar(int c);
+void	ft_putchar(int c);
 void	ft_putnbr(int nb);
 void	ft_swap(int *a, int *b);
 void	ft_putstr(char *str);
@@ -104,6 +106,6 @@ void	ft_sort_string_tab(char **tab);
 int		ft_count_strings(char **tab);
 void	ft_sort_list(t_list *lst, int (*cmp)());
 void	ft_list_remove_if(t_list **begin_list, void *data_ref, int (*cmp)());
-int		ft_is_power_of_2(int nb);*/
+int		ft_is_power_of_2(int nb);
 
 #endif
