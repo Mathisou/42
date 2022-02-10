@@ -6,7 +6,7 @@
 /*   By: maroly <maroly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 15:25:14 by maroly            #+#    #+#             */
-/*   Updated: 2022/02/08 19:50:13 by maroly           ###   ########.fr       */
+/*   Updated: 2022/02/10 02:29:26 by maroly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,9 @@ typedef struct s_list
 	bool			is_fork_available;
 	bool			is_hungry;
 	bool			is_tired;
-	long long		time_of_eat;
+	long long		last_time_eat;
+	long long		old_last_time_eat;
+	bool			is_philo_dead;
 	pthread_mutex_t	fork;
 	struct s_list	*next;
 }	t_list;
@@ -42,7 +44,6 @@ typedef struct s_var
 	int	time_philo_must_eat;
 	int	eat_count;
 	int	digit;
-	bool is_dead;
 	long long old_time;
 	long long time;
 	t_list *tmp;

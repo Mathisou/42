@@ -6,7 +6,7 @@
 #    By: maroly <maroly@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/01/13 14:42:43 by maroly            #+#    #+#              #
-#    Updated: 2022/02/07 15:50:40 by maroly           ###   ########.fr        #
+#    Updated: 2022/02/09 18:28:17 by maroly           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,7 @@ OBJS		=  	$(SRCS:.c=.o)
 
 CC			= 	gcc
 
-FLAGS		=   -Werror -Wextra -Wall -g
+FLAGS		=   -Werror -Wextra -Wall -g3
 
 NAME		= 	philo
 
