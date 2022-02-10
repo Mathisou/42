@@ -6,7 +6,7 @@
 /*   By: maroly <maroly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 15:42:16 by maroly            #+#    #+#             */
-/*   Updated: 2022/02/10 02:23:29 by maroly           ###   ########.fr       */
+/*   Updated: 2022/02/10 16:20:32 by maroly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ t_list	*new_elem(int digit)
 	new_elem->old_last_time_eat = 0;
 	new_elem->is_fork_available = true;
 	new_elem->is_philo_dead = false;
-	pthread_mutex_init(&new_elem->fork, NULL);
 	new_elem->next = NULL;
 	return (new_elem);
 }

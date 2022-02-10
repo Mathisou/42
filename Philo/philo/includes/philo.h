@@ -6,7 +6,7 @@
 /*   By: maroly <maroly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 15:25:14 by maroly            #+#    #+#             */
-/*   Updated: 2022/02/10 02:29:26 by maroly           ###   ########.fr       */
+/*   Updated: 2022/02/10 18:42:47 by maroly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,19 @@
 #include <sys/time.h>
 #include <stdbool.h>
 
+typedef struct s_var
+{
+	int	number_of_philo;
+	int	time_to_die;
+	int	time_to_eat;
+	int	time_to_sleep;
+	int	time_philo_must_eat;
+	int	eat_count; // 
+	bool	is_dead;
+	long long first_time;
+	pthread_mutex_t print;
+}	t_var;
+
 typedef struct s_list
 {
 	pthread_t		t;
@@ -31,24 +44,10 @@ typedef struct s_list
 	long long		last_time_eat;
 	long long		old_last_time_eat;
 	bool			is_philo_dead;
+	t_var	*s;
 	pthread_mutex_t	fork;
 	struct s_list	*next;
 }	t_list;
-
-typedef struct s_var
-{
-	int	number_of_philo;
-	int	time_to_die;
-	int	time_to_eat;
-	int	time_to_sleep;
-	int	time_philo_must_eat;
-	int	eat_count;
-	int	digit;
-	long long old_time;
-	long long time;
-	t_list *tmp;
-	t_list *info;
-}	t_var;
 
 int		ft_atoi(const char *nptr);
 t_list	*new_elem(int digit);
