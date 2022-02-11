@@ -6,7 +6,7 @@
 /*   By: maroly <maroly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 15:39:22 by maroly            #+#    #+#             */
-/*   Updated: 2022/02/11 16:11:27 by maroly           ###   ########.fr       */
+/*   Updated: 2022/02/11 16:24:18 by maroly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ void	*routine(void *param)
 
 	lst = param;
 	i = -1;
-	while (lst->s->is_dead == false && ++i < lst->s->time_philo_must_eat)
+	while (lst->s->is_dead == false && ++i != lst->s->time_philo_must_eat)
 	{
 		if (lst->digit_philo % 2 == 0)
 			usleep(50);
@@ -129,13 +129,16 @@ void	init_routine(t_list *lst)
 	}
 }
 
-void	init_s(t_var *s, char **av)
+void	init_s(t_var *s, char **av, int ac)
 {
 	s->number_of_philo = ft_atoi(av[1]);
 	s->time_to_die = ft_atoi(av[2]);
 	s->time_to_eat = ft_atoi(av[3]);
 	s->time_to_sleep = ft_atoi(av[4]);
-	s->time_philo_must_eat = ft_atoi(av[5]);
+	if (ac == 6)
+		s->time_philo_must_eat = ft_atoi(av[5]);
+	else
+		s->time_philo_must_eat = -1;
 	s->first_time = 0;
 	s->is_dead = false;
 	pthread_mutex_init(&s->print, NULL);
@@ -173,14 +176,14 @@ int main(int ac, char **av)
 	t_var *s;
 	int i;
 
-	if (ac < 5 || ac >6)
+	if (ac < 5 || ac > 6)
 		return (1);
 	if (check_args(av) == 1)
 		return (2);
 	i = 0;
 	lst = NULL;
 	s = malloc(sizeof(t_var *) * 1);
-	init_s(s, av);
+	init_s(s, av, ac);
 	if (!s)
 		return (1);
 	while (++i <= ft_atoi(av[1]))
@@ -195,8 +198,9 @@ int main(int ac, char **av)
 	tmp2->s = s;
 	tmp2->next = lst;
 	init_routine(lst);
-	free(lst->s);
+	tmp2->next = NULL;
 	clear_lst(&lst);
+	free(lst->s);
 	pthread_mutex_destroy(&s->print);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: maroly <maroly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 15:42:16 by maroly            #+#    #+#             */
-/*   Updated: 2022/02/11 16:16:14 by maroly           ###   ########.fr       */
+/*   Updated: 2022/02/11 16:21:32 by maroly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ void	clear_lst(t_list **lst)
 	tmp = *lst;
 	if (lst)
 	{
-		while ((*lst)->next->digit_philo != 1)
+		while (*lst)
 		{
 			tmp = (*lst)->next;
 			free (*lst);
