@@ -6,7 +6,7 @@
 /*   By: maroly <maroly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 15:39:22 by maroly            #+#    #+#             */
-/*   Updated: 2022/02/11 16:24:18 by maroly           ###   ########.fr       */
+/*   Updated: 2022/02/11 16:29:38 by maroly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -199,8 +199,8 @@ int main(int ac, char **av)
 	tmp2->next = lst;
 	init_routine(lst);
 	tmp2->next = NULL;
-	clear_lst(&lst);
 	free(lst->s);
+	clear_lst(&lst);
 	pthread_mutex_destroy(&s->print);
 	return (0);
 }
