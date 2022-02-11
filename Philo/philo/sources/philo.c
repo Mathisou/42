@@ -6,7 +6,7 @@
 /*   By: maroly <maroly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 15:39:22 by maroly            #+#    #+#             */
-/*   Updated: 2022/02/11 02:58:41 by maroly           ###   ########.fr       */
+/*   Updated: 2022/02/11 12:50:11 by maroly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,14 +30,14 @@ void	eat(t_list *lst)
 		printf("\033[34;01mPhilo %d has taken a fork.\033[00m🍴 %20lldms\n", lst->digit_philo, get_time() - lst->s->first_time);
 	}
 	pthread_mutex_unlock(&lst->s->print);
-	if (lst->s->time_to_eat + (lst->last_time_eat - lst->last_time_eat) < lst->s->time_to_die)
+	if (lst->s->time_to_eat + lst->last_time_eat < lst->s->time_to_die)
 	{
 		pthread_mutex_lock(&lst->s->print);
 		if (lst->s->is_dead == false)
 		{
 			lst->is_hungry = false;
 			lst->is_tired = true;
-			lst->old_last_time_eat = lst->last_time_eat + lst->s->time_to_eat;		
+			lst->old_last_time_eat = get_time() - lst->s->first_time;	
 			printf("\033[37;01mPhilo %d is eating...   😋🍗\033[00m %20lldms\n", lst->digit_philo, get_time() - lst->s->first_time);
 			usleep(lst->s->time_to_eat * 1000);
 		}
@@ -87,32 +87,47 @@ void	*routine(void *param)
 {
 	t_list *lst;
 
-	lst = param;
+	lst = (t_list *)param;
 	while (lst->s->is_dead == false)
 	{
 		//if (lst->digit_philo % 2 == 0)
 		//	usleep(25000);
-		lst->last_time_eat = get_time() - lst->s->first_time;
-		printf("%d %lld\n", lst->digit_philo,  lst->last_time_eat - lst->old_last_time_eat);
+		/*lst->last_time_eat = get_time() - lst->s->first_time;
+		printf("%d %lld %lld\n", lst->digit_philo,  lst->last_time_eat, lst->old_last_time_eat);
 		if (lst->last_time_eat - lst->old_last_time_eat >= lst->s->time_to_die)
 		{
-			//pthread_mutex_lock(&lst->s->print);
+			pthread_mutex_lock(&lst->s->print);
 			lst->is_philo_dead = true;
 			if (lst->s->is_dead == false)			
 				printf("\033[31;01mPhilo %d died.\033[00m %22lldms\n", lst->digit_philo, get_time() - lst->s->first_time);
 			lst->s->is_dead = true;
-			//pthread_mutex_unlock(&lst->s->print);
+			pthread_mutex_unlock(&lst->s->print);
+			break;
+		}*/
+		printf("mutex : philo %d et philo next : %d\n", lst->digit_philo,  lst->next->digit_philo);
+		pthread_mutex_lock(&lst->next->fork);
+		pthread_mutex_lock(&lst->fork);
+				lst->last_time_eat = get_time() - lst->s->first_time;
+		printf("%d %lld %lld\n", lst->digit_philo,  lst->last_time_eat, lst->old_last_time_eat);
+		if (lst->last_time_eat - lst->old_last_time_eat >= lst->s->time_to_die)
+		{
+			pthread_mutex_lock(&lst->s->print);
+			lst->is_philo_dead = true;
+			if (lst->s->is_dead == false)			
+				printf("\033[31;01mPhilo %d died.\033[00m %22lldms\n", lst->digit_philo, get_time() - lst->s->first_time);
+			lst->s->is_dead = true;
+			pthread_mutex_unlock(&lst->s->print);
+			pthread_mutex_unlock(&lst->fork);
+			pthread_mutex_unlock(&lst->next->fork);
 			break;
 		}
-		pthread_mutex_lock(&lst->fork);
-		pthread_mutex_lock(&lst->next->fork);
-		if (lst->s->is_dead == false && lst->is_hungry == true)
+		if (lst->s->is_dead == false)// && lst->is_hungry == true)
 			eat(lst);
 		pthread_mutex_unlock(&lst->next->fork);
 		pthread_mutex_unlock(&lst->fork);
-		if (lst->s->is_dead == false && lst->is_tired == true && lst->is_hungry == false)
+		if (lst->s->is_dead == false)// && lst->is_tired == true && lst->is_hungry == false)
 			sleeep(lst);
-		if (lst->s->is_dead == false && lst->is_tired == false && lst->is_hungry == false)
+		if (lst->s->is_dead == false )//&& lst->is_tired == false && lst->is_hungry == false)
 		{
 			pthread_mutex_lock(&lst->s->print);
 			if (lst->s->is_dead == false)
@@ -122,7 +137,7 @@ void	*routine(void *param)
 			}
 			pthread_mutex_unlock(&lst->s->print);
 		}
-		//usleep(25000);
+		usleep(5000);
 	}
 	return (NULL);
 }
@@ -140,7 +155,7 @@ void	init_routine(t_list *lst)
 	{
 		pthread_mutex_init(&lst->fork, NULL);
 		pthread_create(&tmp->t, NULL, routine, tmp);
-		//usleep(25000);
+		usleep(5000);
 		tmp = tmp->next;
 	}
 	tmp2 = lst;
@@ -160,7 +175,7 @@ void	init_s(t_var *s, char **av)
 	s->time_to_die = ft_atoi(av[2]);
 	s->time_to_eat = ft_atoi(av[3]);
 	s->time_to_sleep = ft_atoi(av[4]);
-	//s->old_time = 0;
+	s->first_time = 0;
 	s->is_dead = false;
 	pthread_mutex_init(&s->print, NULL);
 	//s->fork = malloc(sizeof(pthread_mutex_t) * s->number_of_philo); // todo: check le retour si erreur
