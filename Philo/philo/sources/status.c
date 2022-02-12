@@ -6,7 +6,7 @@
 /*   By: maroly <maroly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/12 02:53:04 by maroly            #+#    #+#             */
-/*   Updated: 2022/02/12 02:55:15 by maroly           ###   ########.fr       */
+/*   Updated: 2022/02/12 13:59:15 by maroly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,13 +28,14 @@ void	eat2(t_list *lst)
 
 void	eat(t_list *lst)
 {
-	if (lst->last_has_eaten == false)
+	if (last_has_eaten(lst))
 	{
 		if (lst->s->time_to_eat < lst->s->time_to_die)
 		{
 			print(PURPLE"is eating.", lst, false);
 			usleep(lst->s->time_to_eat * 1000);
-			lst->next->last_has_eaten = true;
+			if (last_has_eaten(lst))
+				lst->next->last_has_eaten = true;
 		}
 		else
 		{

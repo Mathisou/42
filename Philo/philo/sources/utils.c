@@ -6,7 +6,7 @@
 /*   By: maroly <maroly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 15:37:49 by maroly            #+#    #+#             */
-/*   Updated: 2022/02/12 02:57:29 by maroly           ###   ########.fr       */
+/*   Updated: 2022/02/12 14:01:54 by maroly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,8 @@ void	init_s(t_var *s, char **av, int ac)
 		s->time_philo_must_eat = -1;
 	s->first_time = 0;
 	s->is_dead = false;
+	pthread_mutex_init(&s->dead, NULL);
+	pthread_mutex_init(&s->has_eaten, NULL);
 	pthread_mutex_init(&s->print, NULL);
 }
 

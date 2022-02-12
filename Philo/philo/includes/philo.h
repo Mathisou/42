@@ -6,7 +6,7 @@
 /*   By: maroly <maroly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 15:25:14 by maroly            #+#    #+#             */
-/*   Updated: 2022/02/12 02:53:56 by maroly           ###   ########.fr       */
+/*   Updated: 2022/02/12 14:00:32 by maroly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,8 @@ typedef struct s_var
 	long long		time_philo_must_eat;
 	bool			is_dead;
 	long long		first_time;
+	pthread_mutex_t	has_eaten;
+	pthread_mutex_t	dead;
 	pthread_mutex_t	print;
 }	t_var;
 
@@ -70,5 +72,7 @@ void		print(char *s, t_list *lst, bool will_die);
 void		create_lst(t_list **lst, t_var *s);
 void		eat(t_list *lst);
 void		sleeep(t_list *lst);
+bool		is_dead(t_list *lst, int i);
+bool		last_has_eaten(t_list *lst);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: maroly <maroly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 15:39:22 by maroly            #+#    #+#             */
-/*   Updated: 2022/02/12 02:56:46 by maroly           ###   ########.fr       */
+/*   Updated: 2022/02/12 13:57:53 by maroly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	*routine(void *param)
 	if (lst->digit_philo % 2 == 0
 		|| lst->digit_philo == lst->s->number_of_philo)
 		usleep(50);
-	while (lst->s->is_dead == false && ++i != lst->s->time_philo_must_eat)
+	while (is_dead(lst, ++i))
 	{
 		pthread_mutex_lock(&lst->fork);
 		print(BLUE"has taken a fork.", lst, false);
@@ -88,6 +88,7 @@ int	main(int ac, char **av)
 	create_lst(&lst, s);
 	init_routine(lst);
 	clear_lst(&lst);
+	free(s);
 	pthread_mutex_destroy(&s->print);
 	return (0);
 }
