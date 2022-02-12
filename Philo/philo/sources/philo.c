@@ -6,7 +6,7 @@
 /*   By: maroly <maroly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 15:39:22 by maroly            #+#    #+#             */
-/*   Updated: 2022/02/12 13:57:53 by maroly           ###   ########.fr       */
+/*   Updated: 2022/02/12 14:12:31 by maroly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,9 @@ int	main(int ac, char **av)
 	create_lst(&lst, s);
 	init_routine(lst);
 	clear_lst(&lst);
-	free(s);
+	pthread_mutex_destroy(&s->dead);
 	pthread_mutex_destroy(&s->print);
+	pthread_mutex_destroy(&s->has_eaten);
+	free(s);
 	return (0);
 }
