@@ -6,7 +6,7 @@
 /*   By: maroly <maroly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 15:42:16 by maroly            #+#    #+#             */
-/*   Updated: 2022/02/11 16:21:32 by maroly           ###   ########.fr       */
+/*   Updated: 2022/02/12 02:55:07 by maroly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,8 @@ t_list	*new_elem(int digit)
 	if (new_elem == NULL)
 		return (NULL);
 	new_elem->digit_philo = digit;
-	new_elem->is_hungry = true;
-	new_elem->is_tired = false;
-	new_elem->last_time_eat = 0;
-	new_elem->old_last_time_eat = 0;
+	new_elem->last_has_eaten = false;
 	new_elem->is_fork_available = true;
-	new_elem->is_philo_dead = false;
 	new_elem->next = NULL;
 	return (new_elem);
 }
@@ -45,20 +41,39 @@ void	lst_add_back(t_list **lst, int digit)
 	}
 }
 
-void	lst_add_front(t_list **lst, t_list *new)
+void	create_lst(t_list **lst, t_var *s)
 {
-	if (new)
+	int		i;
+	t_list	*tmp2;
+
+	i = 0;
+	tmp2 = NULL;
+	while (++i <= s->number_of_philo)
+		lst_add_back(lst, i);
+	tmp2 = *lst;
+	if (tmp2)
 	{
-		new->next = *lst;
-		*lst = new;
+		while (tmp2->next)
+		{
+			tmp2->s = s;
+			tmp2 = tmp2->next;
+		}
 	}
+	tmp2->s = s;
+	tmp2->next = *lst;
 }
 
 void	clear_lst(t_list **lst)
 {
 	t_list	*tmp;
+	t_list	*tmp2;
 
+	tmp2 = *lst;
+	while (tmp2->digit_philo != tmp2->s->number_of_philo)
+		tmp2 = tmp2->next;
+	tmp2->next = NULL;
 	tmp = *lst;
+	free((*lst)->s);
 	if (lst)
 	{
 		while (*lst)
@@ -68,19 +83,4 @@ void	clear_lst(t_list **lst)
 			(*lst) = tmp;
 		}
 	}
-}
-
-int	lst_size(t_list **lst)
-{
-	int		i;
-	t_list	*tmp;
-
-	i = 0;
-	tmp = *lst;
-	while (tmp != NULL)
-	{
-		tmp = tmp->next;
-		i++;
-	}
-	return (i);
 }
