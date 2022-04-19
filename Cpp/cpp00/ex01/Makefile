@@ -1,10 +1,12 @@
-SRCS = megaphone.cpp
+SRCS = PhoneBook.cpp Contact.cpp main.cpp
 
-NAME = megaphone
+INCS = 
+
+NAME = PhoneBook
 
 CC = g++
 
-FLAGS = -Wall -Werror -Wextra -std=c++98
+FLAGS = -Wall -Werror -Wextra -g -std=c++98 -fsanitize=address
 
 OBJS = $(SRCS:.cpp=.o)
 
