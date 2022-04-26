@@ -5,6 +5,6 @@ then
     exit $?
 fi
 for i; do
-    mkdir $i
+    mkdir ex$i
 done
 exit 0
