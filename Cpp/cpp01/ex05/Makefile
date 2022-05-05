@@ -1,6 +1,6 @@
-SRCS = main.cpp
+SRCS = main.cpp Harl.cpp
 
-NAME = ex04
+NAME = harl
 
 CC = c++
 

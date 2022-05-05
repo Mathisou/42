@@ -1,3 +1,6 @@
+#include <iostream>
+#include <functional>
+
 #ifndef HARL_HPP
 # define HARL_HPP
 
@@ -12,6 +15,8 @@ class Harl{
     void complain(std::string level);
     Harl(void);
     ~Harl(void);
-}
+};
+
+typedef void (Harl::*MemFuncPtr)();
 
 #endif
