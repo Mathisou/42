@@ -1,6 +1,6 @@
 SRCS = main.cpp Fixed.cpp Point.cpp bsp.cpp
 
-NAME = Fixed
+NAME = bsp
 
 CC = c++
 
