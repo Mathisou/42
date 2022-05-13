@@ -8,7 +8,6 @@ int main( void ) {
 	Fixed const d( Fixed( 5.05f ) / Fixed( 2 ) );
 	Fixed const e( Fixed( 5.05f ) * Fixed( 2 ) );
 
-
 	std::cout << a << std::endl << std::endl;
 
 	std::cout << "pre incrementation : " << ++a << std::endl;
