@@ -8,6 +8,8 @@
 # include <limits>
 # include <string.h>
 
+class Data;
+
 class Convert
 {
     private:
@@ -27,6 +29,8 @@ class Convert
     void toInt();
     void toFloat();
     void toDouble();
+    uintptr_t serialize(Data* ptr);
+    Data* deserialize(uintptr_t raw);
 };
 
 #endif

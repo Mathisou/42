@@ -197,3 +197,12 @@ void    Convert::toDouble(){
             std::cout << std::fixed << std::setprecision(count_after_comma(_litteral, "double")) << atof(_litteral.c_str()) << std::endl;
     }
 }
+
+uintptr_t Convert::serialize(Data* ptr){
+    return (static_cast<uintptr_t>(ptr));
+}
+
+Data* Convert::deserialize(uintptr_t raw){
+    return (static_cast<Data*>(raw));
+}
+
