@@ -6,4 +6,6 @@ int main(int ac, char **av)
         return (1);
     Convert test(av[1]);
     test.toChar();
+    test.toInt();
+    test.toFloat();
 }

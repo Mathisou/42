@@ -36,11 +36,18 @@ int count_point(std::string str){
     return (count);
 }
 
-int isLitteralValid(std::string litteral){
-    if (litteral.length() == 1 && !isprint(litteral[0])){
+int isLitteralValid(std::string litteral, std::string type){
+    if (litteral.length() == 0)
+    {
+        std::cout << "Impossible" << std::endl;
+        return (0);
+    }
+    else if (type.compare("char") == 0 && !isprint(atoi(litteral.c_str()))){
         std::cout << "Non displayable" << std::endl;
         return (0);
     }
+    else if (litteral.length() == 1 && isprint(litteral[0]))
+        return (1);
     for (unsigned long i = 0;litteral[i];i++)
     {
         if (litteral[i] == '.' && count_point(litteral) != 1)
@@ -63,14 +70,52 @@ int isLitteralValid(std::string litteral){
             std::cout << "Impossible" << std::endl;
             return (0);
         }
-}
+    }
     return (1);
 }
 
 void    Convert::toChar(){
-    std::cout << "char: ";
-    if (isLitteralValid(_litteral))
+    std::cout << "Char: ";
+    if (isLitteralValid(_litteral, "char"))
     {
-        std::cout << (char)atoi(_litteral.c_str()) << std::endl;
+        if (_litteral.length() == 1 && isalpha(_litteral[0]))
+            std::cout << _litteral << std::endl;
+        else
+            std::cout << (char)atoi(_litteral.c_str()) << std::endl;
+    }
+}
+
+void    Convert::toInt(){
+    std::cout << "Int: ";
+    if (isLitteralValid(_litteral, "int"))
+    {
+        if (_litteral.length() == 1 && isalpha(_litteral[0]))
+            std::cout << (int)_litteral[0] << std::endl;
+        else
+            std::cout << atoi(_litteral.c_str()) << std::endl;
+    }
+}
+
+void    Convert::toFloat(){
+    // double d = strtod(_litteral.c_str(), NULL);
+    double d = atoi(_litteral.c_str());
+    std::cout << "Float: ";
+    if (isLitteralValid(_litteral, "float"))
+    {
+        if (_litteral.length() == 1 && isalpha(_litteral[0]))
+            std::cout << (float)_litteral[0] << std::endl;
+        else
+            std::cout << d << std::endl;
+    }
+}
+
+void    Convert::toDouble(){
+    std::cout << "Double: ";
+    if (isLitteralValid(_litteral, "double"))
+    {
+        if (_litteral.length() == 1 && isalpha(_litteral[0]))
+            std::cout << (int)_litteral[0] << std::endl;
+        else
+            std::cout << atoi(_litteral.c_str()) << std::endl;
     }
 }
