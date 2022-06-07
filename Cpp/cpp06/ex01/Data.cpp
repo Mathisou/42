@@ -1,17 +1,9 @@
 #include "Data.hpp"
 
-Data::Data(){
-    std::cout << "Data default constructor called" << std::endl;
-    _name = "null";
-    _age = 0;
+uintptr_t serialize(Data* ptr){
+    return (reinterpret_cast<uintptr_t>(ptr));
 }
 
-Data::Data(std::string name, int age) : _name(name), _age(age){
-    std::cout << "Data default constructor called" << std::endl;
-
-}
-
-Data::Data(){
-    std::cout << "Data destructor called" << std::endl;
-
+Data* deserialize(uintptr_t raw){
+    return (reinterpret_cast<Data*>(raw));
 }

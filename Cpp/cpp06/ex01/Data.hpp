@@ -1,17 +1,21 @@
 #ifndef DATA_HPP
 # define DATA_HPP
 
-#include "Convert.hpp"
+# include <stdint.h>
+# include <iostream>
+# include <string>
+# include <stdlib.h>
+# include <iomanip>
+# include <limits>
+# include <string.h>
 
-class Data{
-    private:
-    std::string _name;
-    int _age;
-
-    public:
-    Data();
-    Data(std::string name, int age);
-    ~Data();
+struct Data{
+    std::string name;
+    int age;
 };
+
+uintptr_t serialize(Data* ptr);
+
+Data* deserialize(uintptr_t raw);
 
 #endif

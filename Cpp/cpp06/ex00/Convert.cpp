@@ -113,7 +113,7 @@ int isLitteralValid(std::string litteral, std::string type){
             std::cout << "Impossible" << std::endl;
             return (0);
         }
-        else if (litteral.length() > 1 && !isdigit(litteral[i]) && litteral[i] != '.' && litteral[i] != 'f' && (i == 0 && litteral[i] != '-'))
+        else if (litteral.length() > 1 && !isdigit(litteral[i]) && litteral[i] != '.' && litteral[i] != 'f' && !(i == 0 && litteral[i] == '-'))
         {
             std::cout << "Impossible" << std::endl;
             return (0);

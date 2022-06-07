@@ -1,6 +1,6 @@
-SRCS = main.cpp Data.cpp
+SRCS = main.cpp
 
-NAME = Reinterpret_cast
+NAME = Dynamic_cast
 
 CC = c++
 

@@ -1,12 +1,12 @@
-#include "Convert.hpp"
+#include "Data.hpp"
 
-int main(int ac, char **av)
+int main()
 {
-    if (ac != 2)
-        return (1);
-    Convert test(av[1]);
-    test.toChar();
-    test.toInt();
-    test.toFloat();
-    test.toDouble();
+    Data lol;
+    lol.name = "Mathis";
+    lol.age = 20;
+    Data *ret;
+    std::cout << lol.age << " " << lol.name << std::endl;
+    ret = deserialize(serialize(&lol));
+    std::cout << ret->age << " " << ret->name << std::endl;
 }
