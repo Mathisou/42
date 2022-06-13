@@ -1,6 +1,6 @@
 SRCS = main.cpp AAnimal.cpp Cat.cpp Dog.cpp AWrongAnimal.cpp WrongCat.cpp Brain.cpp
 
-NAME = Brain
+NAME = Abstract
 
 CC = c++
 

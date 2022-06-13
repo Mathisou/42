@@ -14,7 +14,7 @@ void	HumanB::setWeapon(Weapon &club){
 
 void	HumanB::attack(){
 	if (this->_weapon)
-		std::cout << this->_name << " attacks with their " << _weapon->getType() << std::endl;
+		std::cout << this->_name << " attacks with " << _weapon->getType() << std::endl;
 	else
-		std::cout << this->_name << " can't attack cuz he doesnt have any weapons lmao." << std::endl;
+		std::cout << this->_name << " can't attack cuz he doesnt have any weapons." << std::endl;
 }

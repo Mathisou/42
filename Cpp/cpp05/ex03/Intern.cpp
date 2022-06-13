@@ -7,6 +7,9 @@
 Intern::Intern()
 {
 	std::cout << "Intern default constructor" << std::endl;
+	_typeForm[0] = "presidential pardon";
+	_typeForm[1] = "robotomy request";
+	_typeForm[2] = "shrubbery creation";
 }
 
 Intern::Intern( const Intern & src )
@@ -55,7 +58,7 @@ AForm* Intern::makeForm(std::string name, std::string target){
 			return (form); 
 		}
 	}
-	// throw Intern::BadNameException();
+	throw Intern::BadNameException();
 	return (NULL);
 }
 

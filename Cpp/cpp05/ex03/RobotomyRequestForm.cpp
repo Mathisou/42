@@ -1,4 +1,5 @@
 #include "RobotomyRequestForm.hpp"
+#include <cstdlib>
 
 /*
 ** ------------------------------- CONSTRUCTOR --------------------------------
@@ -53,8 +54,8 @@ void RobotomyRequestForm::execute(Bureaucrat const & executor) const{
 	else if (_grade_to_exec < executor.getGrade())
 		throw RobotomyRequestForm::GradeTooLowException();
 	std::cout << "brbrbrbr la perceuse" << std::endl;
-	std::srand(std::time(0));
-	int alea = std::rand() % 2;
+	srand(time(0));
+	int alea = rand() % 2;
 	if (alea)
 		std::cout << _target << " got robotomized." << std::endl;
 	else

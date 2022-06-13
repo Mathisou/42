@@ -1,6 +1,6 @@
-SRCS = main.cpp Bureaucrat.cpp Form.cpp
+SRCS = main.cpp
 
-NAME = Form
+NAME = Easyfind
 
 CC = c++
 

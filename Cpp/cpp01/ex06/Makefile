@@ -1,10 +1,10 @@
-SRCS = main.cpp Bureaucrat.cpp Form.cpp
+SRCS = main.cpp Harl.cpp
 
-NAME = Form
+NAME = harlFilter
 
 CC = c++
 
-FLAGS = -Wall -Werror -Wextra -g -std=c++98 -fsanitize=address -g3
+FLAGS = -Wall -Werror -Wextra -g -std=c++98
 
 OBJS = $(SRCS:.cpp=.o)
 

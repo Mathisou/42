@@ -47,12 +47,13 @@ ShrubberyCreationForm &				ShrubberyCreationForm::operator=( ShrubberyCreationFo
 ** -------------------------- MEMBER FUNCTION ---------------------------------
 */
 void ShrubberyCreationForm::execute(Bureaucrat const & executor) const{
-
+	std::string newstr(_target + "_shrubbery");
 	if (_is_signed == false)
 		throw ShrubberyCreationForm::FormNotSignedException();
 	else if (_grade_to_exec < executor.getGrade())
 		throw ShrubberyCreationForm::GradeTooLowException();
-	std::ofstream new_file(_target + "_shrubbery");
+	std::ofstream new_file;
+	new_file.open(newstr.c_str());
 	if (!new_file.is_open())
 		std::cerr << "Failed to open Shrubbery file" << std::endl;
 

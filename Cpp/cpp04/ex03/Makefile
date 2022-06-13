@@ -1,10 +1,10 @@
-SRCS = main.cpp Bureaucrat.cpp Form.cpp
+SRCS = main.cpp AMateria.cpp Character.cpp Cure.cpp Ice.cpp MateriaSource.cpp
 
-NAME = Form
+NAME = Materia
 
 CC = c++
 
-FLAGS = -Wall -Werror -Wextra -g -std=c++98 -fsanitize=address -g3
+FLAGS = -Wall -Werror -Wextra -g -std=c++98
 
 OBJS = $(SRCS:.cpp=.o)
 

@@ -24,6 +24,7 @@ WrongCat::WrongCat( const WrongCat & src )
 
 WrongCat::~WrongCat()
 {
+	delete _brain;
 	std::cout << "WrongCat destructor called" << std::endl;
 }
 

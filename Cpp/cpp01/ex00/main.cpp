@@ -12,5 +12,4 @@ int main(int ac,char **av)
     zb = newZombie("yo");
     zb->announce();
     delete zb;
-    zb = zombieHorde
 }

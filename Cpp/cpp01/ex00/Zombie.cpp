@@ -1,7 +1,7 @@
 #include "Zombie.hpp"
 
 Zombie::Zombie(std::string const name) : _name(name){
-    std::cout << "Constructer called." << std::endl;
+    std::cout << this->_name << "Constructer called." << std::endl;
 }
 
 Zombie::~Zombie(void){

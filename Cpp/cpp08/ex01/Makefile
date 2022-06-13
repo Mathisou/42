@@ -1,6 +1,6 @@
-SRCS = main.cpp Bureaucrat.cpp Form.cpp
+SRCS = main.cpp Span.cpp
 
-NAME = Form
+NAME = Span
 
 CC = c++
 

@@ -5,13 +5,15 @@
 int main(int ac, char **av)
 {
 	size_t index = 0;
-	std::string ntm(av[1]);
+	int pos = 0;
+	std::string tmp;
 
 	if (ac != 4)
 		return 1;
-	std::ifstream in(ntm.c_str());
-	ntm += ".replace";
-	std::ofstream out(ntm.c_str(), std::ios::out);
+	std::string str(av[1]);
+	std::ifstream in(str.c_str());
+	str += ".replace";
+	std::ofstream out(str.c_str(), std::ios::out);
 	std::string line;
 
 	if (!in.is_open()){
@@ -27,21 +29,30 @@ int main(int ac, char **av)
 	{
 		std::getline(in, line);
 		while (true){
-			index = line.find(av[2]);
+			tmp = &line[pos];
+			index = tmp.find(av[2]);
 			if (index == std::string::npos)
 				break;
-			line.erase(index, strlen(av[2]));
-			line.insert(index, av[3]);
+			line.erase(pos, line.length());
+			tmp.erase(index, strlen(av[2]));
+			tmp.insert(index, av[3]);
+			pos = index + line.length() + strlen(av[3]);
+			line += tmp;
 		}
    		while (!in.eof()) {
+			pos = 0;
 			out << line << std::endl;
 			std::getline(in, line);
 			while (true){
-				index = line.find(av[2]);
+				tmp = &line[pos];
+				index = tmp.find(av[2]);
 				if (index == std::string::npos)
 					break;
-				line.erase(index, strlen(av[2]));
-				line.insert(index, av[3]);
+				line.erase(pos, line.length());
+				tmp.erase(index, strlen(av[2]));
+				tmp.insert(index, av[3]);
+				pos = index + line.length() + strlen(av[3]);
+				line += tmp;
 			}
 		}
 	}
