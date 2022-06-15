@@ -7,9 +7,9 @@
 Intern::Intern()
 {
 	std::cout << "Intern default constructor" << std::endl;
-	_typeForm[0] = "presidential pardon";
+	_typeForm[0] = "shrubbery creation";
 	_typeForm[1] = "robotomy request";
-	_typeForm[2] = "shrubbery creation";
+	_typeForm[2] = "presidential pardon";
 }
 
 Intern::Intern( const Intern & src )

@@ -3,12 +3,21 @@
 
 #include <iostream>
 #include <set>
+#define RED                "\x1b[31m"
+#define GREEN              "\x1b[32m"
+#define YELLOW             "\x1b[33m"
+#define BLUE               "\x1b[34m"
+#define MAGENTA            "\x1b[35m"
+#define CYAN               "\x1b[36m"
+#define WHITE              "\x1b[37m"
 
 class Span{
     public :
     Span();
     Span(unsigned int nb);
+	Span( Span const & src );
     ~Span();
+    Span & operator=( Span const & rhs );
     void addNumber(int nb);
     int shortestSpan();
     int longestSpan();
@@ -24,7 +33,7 @@ class Span{
     {
         public:
             virtual const char* what() const throw(){
-                return ("The span is already full.");
+                return ("The span is full.");
             }
     };
 

@@ -9,13 +9,41 @@ int main(){
         test.addNumber(0);
         test.addNumber(12);
         test.addNumber(1);
-        std::cout << test.longestSpan() << std::endl;
-        std::cout << test.shortestSpan() << std::endl;
+        try{
+            int ret = test.longestSpan();
+            std::cout << GREEN << "The longest distance in the Span is : " << ret << std::endl;
+        }
+        catch(const std::exception& e)
+        {
+            std::cerr << RED << e.what() << std::endl;
+        }
+        try{
+            int ret = test.shortestSpan();
+            std::cout << GREEN << "The shortest distance in the Span is : " << ret << std::endl;
+        }
+        catch(const std::exception& e)
+        {
+            std::cerr << RED << e.what() << std::endl;
+        }
     }
     {
         Span test(1);
         test.addNumber(2);
-        std::cout << test.longestSpan() << std::endl;
-        std::cout << test.shortestSpan() << std::endl;
+        try{
+            int ret = test.longestSpan();
+            std::cout << GREEN << "The longest distance in the Span is : " << ret << std::endl;
+        }   
+        catch(const std::exception& e)
+        {
+            std::cerr << RED << e.what() << std::endl;
+        }
+        try{
+            int ret = test.shortestSpan();
+            std::cout << GREEN << "The shortest distance in the Span is : " << ret << std::endl;
+        }
+        catch(const std::exception& e)
+        {
+            std::cerr << RED << e.what() << std::endl;
+        }
     }
 }
