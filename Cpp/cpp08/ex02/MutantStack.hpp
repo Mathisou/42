@@ -16,7 +16,7 @@ class MutantStack : public std::stack<T>{
 
         MutantStack & operator=(MutantStack const & rhs){
             this->c = rhs->c();
-            return *this; 
+            return *this;
         }
         iterator begin(){
             return this->c.begin();

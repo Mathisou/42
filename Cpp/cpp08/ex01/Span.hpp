@@ -3,6 +3,8 @@
 
 #include <iostream>
 #include <set>
+#include <algorithm>
+#include <vector>
 #define RED                "\x1b[31m"
 #define GREEN              "\x1b[32m"
 #define YELLOW             "\x1b[33m"
@@ -19,6 +21,7 @@ class Span{
     ~Span();
     Span & operator=( Span const & rhs );
     void addNumber(int nb);
+    void addNumber(std::vector<int> span);
     int shortestSpan();
     int longestSpan();
 
@@ -38,7 +41,7 @@ class Span{
     };
 
     private:
-    std::set<int> _span;
+    std::vector<int> _span;
     unsigned int _N;
 };
 

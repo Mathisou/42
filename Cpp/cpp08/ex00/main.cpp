@@ -2,31 +2,40 @@
 
 int main(){
     {
-        std::string lol("Hello bro");
-        int nb = 114;
-        int ret = easyfind(lol, nb);
-        if (ret != -1)
-            std::cout << GREEN << "'" << static_cast<char>(nb) << "' is in \"" << lol << "\" at index " << ret << "." << std::endl;
-        else
-            std::cout << RED << "We cannot find '" << static_cast<char>(nb) << "' in \"" << lol << "\"." << std::endl;
+        try{
+            std::string lol("Hello bro");
+            int nb = 114;
+            easyfind(lol, nb);
+            std::cout << GREEN << "'" << static_cast<char>(nb) << "' is in \"" << lol << "\"" << std::endl;
+        }
+    	catch (std::exception & e)
+		{
+			std::cout << RED << e.what() << std::endl;
+		}
     }
     {
-        std::string lol("Hello bro");
-        int nb = 75;
-        int ret = easyfind(lol, nb);
-        if (ret != -1)
-            std::cout << GREEN << "'" << static_cast<char>(nb) << "' is in \"" << lol << "\" at index " << ret << "." << std::endl;
-        else
-            std::cout << RED << "We cannot find '" << static_cast<char>(nb) << "' in \"" << lol << "\"." << std::endl;
+        try{
+            std::string lol("Hello bro");
+            int nb = 75;
+            easyfind(lol, nb);
+            std::cout << GREEN << "'" << static_cast<char>(nb) << "' is in \"" << lol << "\"" << std::endl;
+        }
+        catch (std::exception & e)
+		{
+			std::cout << RED << e.what() << std::endl;
+		}
     }
     {
-        std::string lol("");
-        int nb = 75;
-        int ret = easyfind(lol, nb);
-        if (ret != -1)
-            std::cout << GREEN << "'" << static_cast<char>(nb) << "' is in \"" << lol << "\" at index " << ret << "." << std::endl;
-        else
-            std::cout << RED << "We cannot find '" << static_cast<char>(nb) << "' in \"" << lol << "\"." << std::endl;
+        try{
+            std::string lol("");
+            int nb = 75;
+            easyfind(lol, nb);
+            std::cout << GREEN << "'" << static_cast<char>(nb) << "' is in \"" << lol << "\"" << std::endl;
+        }
+		catch (std::exception & e)
+		{
+			std::cout << RED << e.what() << std::endl;
+		}
     }
 	{
 		std::vector<int> vect;
@@ -35,19 +44,25 @@ int main(){
 		vect.push_back(2);
 		vect.push_back(0);
 		vect.push_back(2);
-        int nb = 2;
-        int ret = easyfind(vect, nb);
-        if (ret != -1)
-            std::cout << GREEN << "'" << nb << "' is in the vector at index " << ret << "." << std::endl;
-        else
-            std::cout << RED << "We cannot find '" << nb << "' in the vector." << std::endl;
-		nb = 22;
-        ret = easyfind(vect, nb);
-        if (ret != -1)
-            std::cout << GREEN << "'" << nb << "' is in the vector at index " << ret << "." << std::endl;
-        else
-            std::cout << RED << "We cannot find '" << nb << "' in the vector." << std::endl;
-	}
+        try{
+            int nb = 2;
+            easyfind(vect, nb);
+            std::cout << GREEN << "'" << nb << "' found in the vector." << std::endl;
+        }
+        catch (std::exception & e)
+		{
+			std::cout << RED << e.what() << std::endl;
+		}
+		try{
+            int nb = 22;
+            easyfind(vect, nb);
+            std::cout << GREEN << "'" << nb << "' found in the vector." << std::endl;
+        }
+		catch (std::exception & e)
+		{
+			std::cout << RED << e.what() << std::endl;
+		}
+    }
 	{
 		std::set<int> cont;
 		cont.insert(3);
@@ -55,17 +70,23 @@ int main(){
 		cont.insert(5);
 		cont.insert(0);
 		cont.insert(2);
-        int nb = 0;
-        int ret = easyfind(cont, nb);
-        if (ret != -1)
-            std::cout << GREEN << "'" << nb << "' is in cont at index " << ret << "." << std::endl;
-        else
-            std::cout << RED << "We cannot find '" << nb << "' in cont." << std::endl;
-		nb = 22;
-        ret = easyfind(cont, nb);
-        if (ret != -1)
-            std::cout << GREEN << "'" << nb << "' is in cont at index " << ret << "." << std::endl;
-        else
-            std::cout << RED << "We cannot find '" << nb << "' in cont." << std::endl;
-	}
+        try{
+            int nb = 0;
+            easyfind(cont, nb);
+            std::cout << GREEN << "'" << nb << "' found in the set." << std::endl;
+        }
+		catch (std::exception & e)
+		{
+			std::cout << RED << e.what() << std::endl;
+		}
+        try{
+            int nb = 22;
+            easyfind(cont, nb);
+            std::cout << GREEN << "'" << nb << "' found in the set." << std::endl;
+        }
+		catch (std::exception & e)
+		{
+			std::cout << RED << e.what() << std::endl;
+		}
+    }
 }
