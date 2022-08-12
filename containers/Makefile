@@ -1,10 +1,12 @@
-SRCS = vector.hpp
+SRCS = main.cpp
+
+SRCS_HPP = vector.hpp VectorIterator.hpp reverse_iterator.hpp
 
 NAME = containers
 
 CC = c++
 
-FLAGS = -Wall -Werror -Wextra -g -std=c++98 -fsanitize=address -g3
+FLAGS = -Wall -Werror -Wextra -g -std=c++98 -fsanitize=address -g3 -ferror-limit=40
 
 OBJS = $(SRCS:.cpp=.o)
 
@@ -14,8 +16,8 @@ $(NAME): $(OBJS)
 		@echo $(OBJS)
 			$(CC) $(FLAGS) -o $(NAME) $(OBJS)
 
-$(OBJS): $(SRCS)
-	$(CC) $(FLAGS) -c $(SRCS)
+$(OBJS): $(SRCS) $(SRCS_HPP)
+	$(CC) $(FLAGS) -c $(SRCS) $(SRCS_HPP)
 
 clean:
 		rm -rf $(OBJS)
