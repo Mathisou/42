@@ -2,7 +2,7 @@
 # define VECTOR_HPP
 
 #include "VectorIterator.hpp"
-#include "reverse_iterator.hpp"
+// #include "reverse_iterator.hpp"
 
 namespace ft
 {
@@ -21,9 +21,8 @@ namespace ft
             typedef size_t size_type;
 		    typedef ft::VectorIterator<value_type>				iterator;
             typedef ft::VectorIterator<const value_type>        const_iterator;
-            typedef ft::reverse_iterator<iterator>         reverse_iterator;
-            typedef ft::reverse_iterator<const_iterator>   const_reverse_iterator;
-            // typedef typename std::stack<T>::container_type::difference_type difference_type;
+            // typedef ft::reverse_iterator<iterator>         reverse_iterator;
+            // typedef ft::reverse_iterator<const_iterator>   const_reverse_iterator;
 
 
         public:
@@ -33,15 +32,13 @@ namespace ft
                 _start(0),
                 _size(0),
                 _capacity(0){}
+            
             explicit vector (size_type n, const value_type& val = value_type(), const allocator_type& alloc = allocator_type()) :
                 _alloc(alloc),
                 _start(0),
                 _size(n),
                 _capacity(n)
             {
-                // _start = _alloc.allocate(n);
-                // for (size_type i = 0;i<n;i++)
-                //     _alloc.construct(&_start[i], val);
                 assign(n, val);
             }
             template <class InputIterator>
@@ -51,12 +48,6 @@ namespace ft
                 _size(0),
                 _capacity(0)
             {
-                // alloc.allocate(last - first);
-                // for (size_type i = 0;i < last - first + i;i++){
-                //     alloc.construct(&_start[i], *first);                //Tres probablement faux
-                //     first++;
-                // }
-                // appeler directement assign().
                 assign(first, last);
             }
             vector (const vector& x) :
@@ -78,10 +69,10 @@ namespace ft
             vector& operator= (const vector& x){
                 if (*this == x)
                     return (*this);
-                _capacity = x._capacity;
-                _size = x._size;
                 clear();
                 _alloc.deallocate(_start, _capacity);
+                _capacity = x._capacity;
+                _size = x._size;
                 _start = _alloc.allocate(_size);
                 for (size_type i = 0;i < _size;i++)
                     _alloc.construct(&_start[i],x._start[i]);
@@ -105,22 +96,22 @@ namespace ft
                 return const_iterator(_start + _size);
             }
 
-            reverse_iterator rbegin(){
-                return reverse_iterator(_start + _size);
-            }
+            // reverse_iterator rbegin(){
+            //     return reverse_iterator(_start + _size);
+            // }
 
-            const_reverse_iterator rbegin() const{
-                return const_reverse_iterator(_start + _size);
-            }
+            // const_reverse_iterator rbegin() const{
+            //     return const_reverse_iterator(_start + _size);
+            // }
 
-            reverse_iterator rend(){
-                return reverse_iterator(_start);
+            // reverse_iterator rend(){
+            //     return reverse_iterator(_start);
 
-            }
+            // }
 
-            const_reverse_iterator rend() const{
-                return const_reverse_iterator(_start);
-            }
+            // const_reverse_iterator rend() const{
+            //     return const_reverse_iterator(_start);
+            // }
 
     /////////////////////////////// CAPACITY \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\/
 
@@ -156,20 +147,16 @@ namespace ft
 
             void reserve (size_type n){
                 if (n > _capacity){
+                    size_type tmp_size;
                     value_type *tmp = _alloc.allocate(n);
-                    for (int i = 0;i<_size;i++)
+                    for (size_type i = 0;i<_size;i++)
                         _alloc.construct(&tmp[i], _start[i]);
+                    tmp_size = _size;
                     clear();
                     _alloc.deallocate(_start, _capacity);
                     _capacity = n;
                     _start = tmp;
-                    // _start = _alloc.allocate(n);
-                    // for (int i = 0;i<_size;i++)
-                    //     _alloc.construct(&_start[i], tmp[i]);
-                    // for (int i = 0;i<_size,i++){
-                    //     _alloc.destroy(tmp[i]);
-                    // }
-                    // _alloc.deallocate(tmp, _capacity);
+                    _size = tmp_size;
                 }
             }
 
@@ -257,7 +244,10 @@ namespace ft
 
             void push_back (const value_type& val){
                 if (_size >= _capacity){
-                    reserve(_capacity + 1);
+                    if (_size == 0)
+                        reserve(1);
+                    else
+                        reserve(_size * 2);
                 }
                 _alloc.construct(&_start[_size], val);
                 _size++;
@@ -265,29 +255,105 @@ namespace ft
 
             void pop_back(){
                 if (_size > 0)
-                    _alloc.destroy(_start[_size - 1]);
+                    _alloc.destroy(&_start[_size - 1]);
                 _size--;
             }
 
             iterator insert (iterator position, const value_type& val){
+                size_type pos;
 
+                pos = position - this->begin();
+                insert(position, 1, val);
+                return iterator(position + pos);
             }
 
-            void insert (iterator position, size_type n, const value_type& val){
-
+            void insert (iterator position, size_type n, const value_type& val){ // tres bancal, a tester
+                if (!(n > 0))
+                    return;
+                size_type pos = 0;
+                pos = this->begin() - position;
+                if (pos <= _size){
+                    this->reserve(_size + n);
+                    int tmp_size = 0;
+                    value_type *tmp = _alloc.allocate(pos + _size);
+                    for (size_type i = 0;i<_size - pos;i++){
+                        _alloc.construct(&tmp[i], _start[pos + i]);
+                        tmp_size++;
+                    }
+                    for (size_type i = 0;i < tmp_size ;i++)
+                        this->pop_back();
+                    for (size_type i = 0;i < n;i++){
+                        _alloc.construct(&_start[_size], val);
+                        _size++;
+                    }
+                    for (size_type i = 0; i < tmp_size; i++){
+                        _alloc.construct(&_start[_size], tmp[i]);
+                        _size++;
+                    }
+                    for (size_type i = 0;i<tmp_size;i++)
+                        _alloc.destroy(&tmp[i]);
+                    _alloc.deallocate(tmp, tmp_size);
+                }
+                return ;
             }
 
             template <class InputIterator>
             void insert (iterator position, InputIterator first, InputIterator last){
-
+                if (!(first - last > 0))
+                    return;
+                size_type n = first - last;
+                size_type pos = position - begin();
+                if (pos <= _size){
+                    this->reserve(_size + n);
+                    int tmp_size = 0;
+                    value_type *tmp = _alloc.allocate(pos + _size);
+                    for (size_type i = 0;i<_size - pos;i++){
+                        _alloc.construct(&tmp[i], _start[pos + i]);
+                        tmp_size++;
+                    }
+                    for (size_type i = 0;i < tmp_size ;i++)
+                        this->pop_back();
+                    for (size_type i = 0;first != last;i++){
+                        _alloc.construct(&_start[_size], *first);
+                        _size++;
+                        first++;
+                    }
+                    for (size_type i = 0; i < tmp_size; i++){
+                        _alloc.construct(&_start[_size], tmp[i]);
+                        _size++;
+                    }
+                    for (size_type i = 0;i<tmp_size;i++)
+                        _alloc.destroy(&tmp[i]);
+                    _alloc.deallocate(tmp, tmp_size);
+                }
+                return ;
             }
 
             iterator erase (iterator position){
-
+                return (this->erase(position, position + 1));
             }
 
             iterator erase (iterator first, iterator last){
-
+                if (!(first - last > 0))
+                    return first;
+                size_type n = first - last;
+                int tmp_size = 0;
+                value_type *tmp = _alloc.allocate(last - end());
+                for (size_type i = 0;i<last - end();i++){
+                    _alloc.construct(&tmp[i], _start[_size - 1 - i]);
+                    tmp_size++;
+                }
+                for (size_type i = 0;i<tmp_size + n;i++){
+                    pop_back();
+                }
+                for (size_type i = 0;i < tmp_size;i++){
+                    _alloc.construct(&_start[_size + i], tmp[i]);
+                    _size++;
+                }
+                for (size_type i = 0;i<tmp_size;i++)
+                    _alloc.destroy(&tmp[i]);
+                _alloc.deallocate(tmp, tmp_size);
+                return first;
             }
 
             void swap (vector& x){
@@ -301,21 +367,21 @@ namespace ft
                 tmp_size = _size;
                 tmp_capacity = _capacity;
 
-                _alloc = x.alloc;
-                _start = x.start;
-                _size = x.size;
-                _capacity = x.capacity;
+                _alloc = x._alloc;
+                _start = x._start;
+                _size = x._size;
+                _capacity = x._capacity;
                 
                 x._alloc = tmp_alloc;
                 x._start = tmp_start;
-                x._size = _size;
+                x._size = tmp_size;
                 x._capacity = tmp_capacity;
 
             }
 
             void clear(){
                 for (size_type i = 0;i<_size;i++)
-                    _alloc.destroy(_start[i]);
+                    _alloc.destroy(&_start[i]);
                 _size = 0;
             }
 

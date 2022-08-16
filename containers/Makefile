@@ -1,6 +1,6 @@
 SRCS = main.cpp
 
-SRCS_HPP = vector.hpp VectorIterator.hpp reverse_iterator.hpp
+SRCS_HPP = vector.hpp VectorIterator.hpp #reverse_iterator.hpp
 
 NAME = containers
 
