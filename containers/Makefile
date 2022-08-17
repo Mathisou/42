@@ -1,4 +1,4 @@
-SRCS = main.cpp
+SRCS = vector_main.cpp
 
 SRCS_HPP = vector.hpp VectorIterator.hpp #reverse_iterator.hpp
 

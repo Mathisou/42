@@ -85,10 +85,7 @@ namespace ft
 
             value_type operator*() const {return *_ptr;}
 
-            value_type &operator [] (int n) const
-            {
-                return _ptr[n];
-            }
+            value_type &operator [] (int n) const{return _ptr[n];}
 
             // value_type operator->() const {return _ptr;}
 

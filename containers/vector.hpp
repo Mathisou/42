@@ -2,7 +2,7 @@
 # define VECTOR_HPP
 
 #include "VectorIterator.hpp"
-// #include "reverse_iterator.hpp"
+#include "reverse_iterator.hpp"
 
 namespace ft
 {
@@ -21,8 +21,8 @@ namespace ft
             typedef size_t size_type;
 		    typedef ft::VectorIterator<value_type>				iterator;
             typedef ft::VectorIterator<const value_type>        const_iterator;
-            // typedef ft::reverse_iterator<iterator>         reverse_iterator;
-            // typedef ft::reverse_iterator<const_iterator>   const_reverse_iterator;
+            typedef ft::reverse_iterator<iterator>         reverse_iterator;
+            typedef ft::reverse_iterator<const_iterator>   const_reverse_iterator;
 
 
         public:
@@ -96,22 +96,22 @@ namespace ft
                 return const_iterator(_start + _size);
             }
 
-            // reverse_iterator rbegin(){
-            //     return reverse_iterator(_start + _size);
-            // }
+            reverse_iterator rbegin(){
+                return reverse_iterator(_start + _size);
+            }
 
-            // const_reverse_iterator rbegin() const{
-            //     return const_reverse_iterator(_start + _size);
-            // }
+            const_reverse_iterator rbegin() const{
+                return const_reverse_iterator(_start + _size);
+            }
 
-            // reverse_iterator rend(){
-            //     return reverse_iterator(_start);
+            reverse_iterator rend(){
+                return reverse_iterator(_start);
 
-            // }
+            }
 
-            // const_reverse_iterator rend() const{
-            //     return const_reverse_iterator(_start);
-            // }
+            const_reverse_iterator rend() const{
+                return const_reverse_iterator(_start);
+            }
 
     /////////////////////////////// CAPACITY \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\/
 
@@ -185,22 +185,22 @@ namespace ft
             }
 
             reference front(){
-                if (_size > 0)
+                // if (_size > 0)
                     return (*_start);
             }
 
             const_reference front() const{
-                if (_size > 0)
+                // if (_size > 0)
                     return (*_start);
             }
 
             reference back(){
-                if (_size > 0)
+                // if (_size > 0)
                     return (_start[_size - 1]);
             }
 
             const_reference back() const{
-                if (_size > 0)
+                // if (_size > 0)
                     return (_start[_size - 1]);
             }
 
@@ -282,14 +282,10 @@ namespace ft
                     }
                     for (size_type i = 0;i < tmp_size ;i++)
                         this->pop_back();
-                    for (size_type i = 0;i < n;i++){
-                        _alloc.construct(&_start[_size], val);
-                        _size++;
-                    }
-                    for (size_type i = 0; i < tmp_size; i++){
-                        _alloc.construct(&_start[_size], tmp[i]);
-                        _size++;
-                    }
+                    for (size_type i = 0;i < n;i++)
+                        push_back(val);
+                    for (size_type i = 0; i < tmp_size; i++)
+                        push_back(tmp[i]);
                     for (size_type i = 0;i<tmp_size;i++)
                         _alloc.destroy(&tmp[i]);
                     _alloc.deallocate(tmp, tmp_size);
@@ -313,15 +309,10 @@ namespace ft
                     }
                     for (size_type i = 0;i < tmp_size ;i++)
                         this->pop_back();
-                    for (size_type i = 0;first != last;i++){
-                        _alloc.construct(&_start[_size], *first);
-                        _size++;
-                        first++;
-                    }
-                    for (size_type i = 0; i < tmp_size; i++){
-                        _alloc.construct(&_start[_size], tmp[i]);
-                        _size++;
-                    }
+                    for (;first != last;first++)
+                        push_back(*first);
+                    for (size_type i = 0; i < tmp_size; i++)
+                        push_back(tmp[i]);
                     for (size_type i = 0;i<tmp_size;i++)
                         _alloc.destroy(&tmp[i]);
                     _alloc.deallocate(tmp, tmp_size);
@@ -343,13 +334,10 @@ namespace ft
                     _alloc.construct(&tmp[i], _start[_size - 1 - i]);
                     tmp_size++;
                 }
-                for (size_type i = 0;i<tmp_size + n;i++){
+                for (size_type i = 0;i<tmp_size + n;i++)
                     pop_back();
-                }
-                for (size_type i = 0;i < tmp_size;i++){
-                    _alloc.construct(&_start[_size + i], tmp[i]);
-                    _size++;
-                }
+                for (int i = tmp_size - 1;i >= 0;i--)
+                    push_back(tmp[i]);
                 for (size_type i = 0;i<tmp_size;i++)
                     _alloc.destroy(&tmp[i]);
                 _alloc.deallocate(tmp, tmp_size);
