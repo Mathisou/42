@@ -76,15 +76,15 @@ int main()
     
     
     std::cout << std::endl << "\\\\\\\\\\\\\\\\ MY VECTOR //////////////////" << std::endl << std::endl;
-    for (ft::vector<std::string>::reverse_iterator it = myvec1.rbegin(); it != myvec1.rend(); it--){
-        if (it < myvec1.rend() + 1)
+    for (ft::vector<std::string>::reverse_iterator it = myvec1.rbegin(); it != myvec1.rend(); it++){
+        if (it < myvec1.rend() - 1)
             std::cout << *it <<  " | ";
         else
             std::cout << *it << std::endl;
     }
     std::cout << std::endl << "\\\\\\\\\\\\\\\\ REAL VECTOR //////////////////" << std::endl << std::endl;
-    for (std::vector<std::string>::reverse_iterator it = vec1.rbegin(); it != vec1.rend(); it--){
-        if (it < vec1.rend() + 1)
+    for (std::vector<std::string>::reverse_iterator it = vec1.rbegin(); it != vec1.rend(); it++){
+        if (it < vec1.rend() - 1)
             std::cout << *it <<  " | ";
         else
             std::cout << *it << std::endl;

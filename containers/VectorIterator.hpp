@@ -21,7 +21,7 @@ namespace ft
             typedef Pointer pointer;
             typedef Reference reference;
             
-        protected:
+        private:
 
             pointer _ptr;
 
@@ -39,7 +39,7 @@ namespace ft
 
             operator VectorIterator<const T>(void) const{return VectorIterator<const T>(this->_ptr);}
 
-            VectorIterator &operator=(const VectorIterator<const T> &other){if (this != &other)_ptr = other.get_internal_pointer();return *this;}
+            VectorIterator &operator=(const VectorIterator<const T> &other){if (this != &other)_ptr = other.get_ptr();return *this;}
 
             VectorIterator& operator++() {_ptr++; return *this;}
 
@@ -59,16 +59,9 @@ namespace ft
 
             VectorIterator &operator-=(int n){_ptr -= n;return *this;}
 
-            difference_type operator-( VectorIterator const & x )
-            {
-                return x._ptr - _ptr;
-            }
+            difference_type operator-( VectorIterator const & x ){return x._ptr - _ptr;}
 
-            difference_type operator+( VectorIterator const & x )
-            {
-                return x._ptr + _ptr;
-            }
-
+            difference_type operator+( VectorIterator const & x ){return x._ptr + _ptr;}
             
             bool operator == (const VectorIterator<const T> &other) const {return (_ptr == other.get_ptr());}
 

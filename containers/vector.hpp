@@ -391,7 +391,7 @@ namespace ft
         template <class T, class Alloc>
         bool operator== (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs){
 
-            if (lhs._size != rhs._size)
+            if (lhs.size() != rhs.size())
                 return false;
             typename ft::vector<T>::const_iterator first;
             typename ft::vector<T>::const_iterator second;
@@ -399,7 +399,7 @@ namespace ft
             first = lhs.begin();
             second = rhs.begin();
 
-            for (int i = 0;i < lhs._size;i++){
+            for (int i = 0;i < lhs.size();i++){
                 if (*first != *second)
                     return false;
                 first++;
@@ -440,7 +440,7 @@ namespace ft
 
         template <class T, class Alloc>
         bool operator>  (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs){
-            return (rhs>lhs);
+            return (rhs<lhs);
         }
 
         template <class T, class Alloc>

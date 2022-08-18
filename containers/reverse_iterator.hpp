@@ -19,18 +19,18 @@ namespace ft
             typedef typename ft::iterator_traits<iterator>::pointer				pointer;
             typedef typename ft::iterator_traits<iterator>::difference_type		difference_type;
 
-        protected:
+        private:
             iterator_type _rit;
         
         public:
-            reverse_iterator(): _rit(NULL){}
+            reverse_iterator(): _rit(){}
             explicit reverse_iterator( iterator_type x ): _rit(x){}
             template< class U >
             reverse_iterator( const reverse_iterator<U>& other ): _rit(other.base()){}
 
             iterator_type get_rit() const{return _rit;}
 
-            iterator_type base() const{return iterator_type(_rit);}
+            iterator_type base() const{return _rit;}
 
             reverse_iterator &operator ++ (){_rit--;return *this;}
 
@@ -40,7 +40,7 @@ namespace ft
 
             reverse_iterator  operator -- (int){reverse_iterator tmp = *this;--(*this);return tmp;}
 
-            reference operator * () const{return *_rit;}
+            value_type operator * () const {iterator_type tmp = _rit; return (*(--tmp));}
 
             pointer operator -> () const{return &(operator*());}
 
@@ -52,7 +52,7 @@ namespace ft
 
             reverse_iterator &operator -= (difference_type n){_rit += n;return *this;}
 
-            reference operator [] (difference_type n) const{return _rit[-n - 1];}
+            value_type operator [] (difference_type n) const{return _rit[-n - 1];}
 
     };
 
