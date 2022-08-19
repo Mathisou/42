@@ -307,13 +307,13 @@ namespace ft
                         _alloc.construct(&tmp[i], _start[pos + i]);
                         tmp_size++;
                     }
-                    for (size_type i = 0;i < tmp_size ;i++)
+                    for (int i = 0;i < tmp_size ;i++)
                         this->pop_back();
                     for (;first != last;first++)
                         push_back(*first);
-                    for (size_type i = 0; i < tmp_size; i++)
+                    for (int i = 0; i < tmp_size; i++)
                         push_back(tmp[i]);
-                    for (size_type i = 0;i<tmp_size;i++)
+                    for (int i = 0;i<tmp_size;i++)
                         _alloc.destroy(&tmp[i]);
                     _alloc.deallocate(tmp, tmp_size);
                 }
@@ -330,7 +330,7 @@ namespace ft
                 size_type n = first - last;
                 int tmp_size = 0;
                 value_type *tmp = _alloc.allocate(last - end());
-                for (size_type i = 0;i<last - end();i++){
+                for (int i = 0;i<last - end();i++){
                     _alloc.construct(&tmp[i], _start[_size - 1 - i]);
                     tmp_size++;
                 }
@@ -338,7 +338,7 @@ namespace ft
                     pop_back();
                 for (int i = tmp_size - 1;i >= 0;i--)
                     push_back(tmp[i]);
-                for (size_type i = 0;i<tmp_size;i++)
+                for (int i = 0;i<tmp_size;i++)
                     _alloc.destroy(&tmp[i]);
                 _alloc.deallocate(tmp, tmp_size);
                 return first;
@@ -399,7 +399,7 @@ namespace ft
             first = lhs.begin();
             second = rhs.begin();
 
-            for (int i = 0;i < lhs.size();i++){
+            for (size_t i = 0;i < lhs.size();i++){
                 if (*first != *second)
                     return false;
                 first++;
