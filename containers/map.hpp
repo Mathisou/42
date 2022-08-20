@@ -7,7 +7,7 @@
 namespace ft
 {
     template<class Key, class T, class Compare = std::less<Key>, class Allocator = std::allocator<std::pair<const Key, T> >
->   class map
+    class map
     {
 
         typedef Key 													    key_type;
@@ -27,36 +27,48 @@ namespace ft
 		typedef ft::reverse_iterator<const_iterator>					    const_reverse_iterator;
 		typedef BSTNode<value_type>										    map_node;
 		typedef typename Alloc::template rebind<map_node>::other		    node_allocator_type;
-	private:
-		key_compare			_compare;
-		allocator_type		_alloc;
-		node_allocator_type	_node_alloc;
-		map_node			*_root;
-		map_node			*_end;
-		map_node			*_rend;
-		size_type			_size;
+
+		private:
+
+			key_compare									_compare;
+			allocator_type								_alloc;
+			Binary_search_tree<value_type, Compare>  	_bst;
 
         public:
-        class value_compare
-        {
-            friend class map;
-            
-            protected:
 
-                Compare _comp;
+			class value_compare
+			{
+				friend class map;
+				
+				protected:
 
-            public:
+					Compare _comp;
 
-                typedef bool result_type;
-                typedef value_type first_argument_type;
-                typedef value_type second_argument_type;
+				public:
 
-                value_compare(Compare c): _comp(c){}
+					typedef bool result_type;
+					typedef value_type first_argument_type;
+					typedef value_type second_argument_type;
 
-                bool operator()( const value_type& lhs, const value_type& rhs ) const{return _comp(lhs.first, rhs.first)}
+					value_compare(Compare c): _comp(c){}
 
+					bool operator()( const value_type& lhs, const value_type& rhs ) const{return _comp(lhs.first, rhs.first)}
 
-        }
+			}
+
+		map(): _compare(), _alloc(), _bst(){}
+
+		explicit map( const Compare& comp, const Allocator& alloc = Allocator() ): _compare(comp), _alloc(alloc), _bst(){}
+
+		template< class InputIt >
+		map( InputIt first, InputIt last, const Compare& comp = Compare(), const Allocator& alloc = Allocator() ): _compare(comp), _alloc(alloc), _bst(){
+			insert(first, last);
+		}
+
+		map( const map& other ): _compare(other._comp), _alloc(other._comp), _bst(other._bst){}
+
+		~map(){/*to fill*/}
+
     };
 }
 
