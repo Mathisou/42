@@ -3,6 +3,7 @@
 
 # include <stdexcept>
 # include "reverse_iterator.hpp"
+# include "RBT.hpp"
 
 namespace ft
 {
@@ -25,14 +26,14 @@ namespace ft
 		typedef ft::ConstMapIterator<map_node, const value_type, iterator>	const_iterator;
 		typedef ft::reverse_iterator<iterator> 							    reverse_iterator;
 		typedef ft::reverse_iterator<const_iterator>					    const_reverse_iterator;
-		typedef BSTNode<value_type>										    map_node;
+		typedef RBT<value_type>										    	map_node;
 		typedef typename Alloc::template rebind<map_node>::other		    node_allocator_type;
 
 		private:
 
 			key_compare									_compare;
 			allocator_type								_alloc;
-			Binary_search_tree<value_type, Compare>  	_bst;
+			RBT<value_type, Compare>  		_rbt;
 
         public:
 
@@ -40,7 +41,7 @@ namespace ft
 			{
 				friend class map;
 				
-				protected:
+				private:
 
 					Compare _comp;
 
@@ -56,18 +57,94 @@ namespace ft
 
 			}
 
-		map(): _compare(), _alloc(), _bst(){}
+		map(): _compare(), _alloc(), _rdb(){}
 
-		explicit map( const Compare& comp, const Allocator& alloc = Allocator() ): _compare(comp), _alloc(alloc), _bst(){}
+		explicit map( const Compare& comp, const Allocator& alloc = Allocator() ): _compare(comp), _alloc(alloc), _rdb(){}
 
 		template< class InputIt >
-		map( InputIt first, InputIt last, const Compare& comp = Compare(), const Allocator& alloc = Allocator() ): _compare(comp), _alloc(alloc), _bst(){
+		map( InputIt first, InputIt last, const Compare& comp = Compare(), const Allocator& alloc = Allocator() ): _compare(comp), _alloc(alloc), _rdb(){
 			insert(first, last);
 		}
 
-		map( const map& other ): _compare(other._comp), _alloc(other._comp), _bst(other._bst){}
+		map( const map& other ): _compare(other._comp), _alloc(other._comp), _rdb(other._rdb){}
 
-		~map(){/*to fill*/}
+		~map(){clear();}
+
+		map& operator=( const map& other ){
+			if (*this == other)
+				return *this;
+			clear();
+			insert(other.begin(), other.end());
+			return *this;
+		}
+
+		allocator_type get_allocator() const{return _alloc;}
+
+		///////////////////////////// ELEMENT ACCESS \\\\\\\\\\\\\\\\\\\\\\\\\\\\/
+
+		T& at( const Key& key ){
+			iterator it = find(key);
+			if (it == end())
+				throw std::out_of_range("map");
+			else
+				return (*it).second;
+		}
+
+		const T& at( const Key& key ) const{
+			const_iterator it = find(key);
+			if (it == end())
+				throw std::out_of_range("map");
+			else
+				return (*it).second;
+		}
+
+		T& operator[]( const Key& key ){
+			return insert(std::make_pair(key, T())).first->second;
+		}
+
+		T& operator[]( Key&& key ){
+			return insert(std::make_pair(key, T())).first->second;
+		}
+
+        /////////////////////////////// ITERATORS \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\/
+
+		iterator begin(){return iterator()}
+
+		const_iterator begin() const{}
+
+		iterator end(){}
+
+		const_iterator end() const{}
+
+		reverse_iterator rbegin(){}
+
+		const_reverse_iterator rbegin() const{}
+
+		reverse_iterator rend(){}
+
+		const_reverse_iterator rend() const{}
+
+
+        /////////////////////////////// CAPACITY \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\/
+
+
+
+        /////////////////////////////// MODIFIERS \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\/
+
+
+
+        //////////////////////////////// LOOKUP \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\/
+
+
+
+        /////////////////////////////// OBSERVERS \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\/
+
+
+
+        ////////////////////////// NON-MEMBER FUNCTIONS \\\\\\\\\\\\\\\\\\\\\\\\\/
+
+
+
 
     };
 }
