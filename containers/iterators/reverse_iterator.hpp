@@ -2,6 +2,7 @@
 # define REVERSE_ITERATOR_HPP
 
 #include <stdlib.h>
+#include <iterator>
 #include "iterator_traits.hpp"
 
 namespace ft

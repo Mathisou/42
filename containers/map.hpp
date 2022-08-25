@@ -2,14 +2,16 @@
 # define MAP_HPP
 
 # include <stdexcept>
-# include "reverse_iterator.hpp"
-# include "RBT.hpp"
+# include "iterators/reverse_iterator.hpp"
+# include "iterators/MapIterator.hpp"
+# include "utils/BST.hpp"
 
 namespace ft
 {
-    template<class Key, class T, class Compare = std::less<Key>, class Allocator = std::allocator<std::pair<const Key, T> >
+    template <class Key, class T, class Compare = std::less<Key>, class Allocator = std::allocator<ft::pair<const Key, T> >
+
     class map
-    {
+	{
 
         typedef Key 													    key_type;
 		typedef T 														    mapped_type;
@@ -26,14 +28,15 @@ namespace ft
 		typedef ft::ConstMapIterator<map_node, const value_type, iterator>	const_iterator;
 		typedef ft::reverse_iterator<iterator> 							    reverse_iterator;
 		typedef ft::reverse_iterator<const_iterator>					    const_reverse_iterator;
-		typedef RBT<value_type>										    	map_node;
+		typedef BST<value_type>										    	map_node;
 		typedef typename Alloc::template rebind<map_node>::other		    node_allocator_type;
 
 		private:
 
 			key_compare									_compare;
 			allocator_type								_alloc;
-			RBT<value_type, Compare>  		_rbt;
+			BST<value_type, Compare>  					_BST;
+			_BST.insertion()
 
         public:
 
@@ -99,11 +102,11 @@ namespace ft
 		}
 
 		T& operator[]( const Key& key ){
-			return insert(std::make_pair(key, T())).first->second;
+			return insert(ft::make_pair(key, T())).first->second;
 		}
 
 		T& operator[]( Key&& key ){
-			return insert(std::make_pair(key, T())).first->second;
+			return insert(ft::make_pair(key, T())).first->second;
 		}
 
         /////////////////////////////// ITERATORS \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\/

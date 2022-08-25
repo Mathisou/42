@@ -1,8 +1,8 @@
 #ifndef VECTOR_HPP
 # define VECTOR_HPP
 
-#include "VectorIterator.hpp"
-#include "reverse_iterator.hpp"
+#include "iterators/VectorIterator.hpp"
+#include "iterators/reverse_iterator.hpp"
 
 namespace ft
 {
