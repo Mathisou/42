@@ -6,7 +6,7 @@
 
 namespace ft
 {
- template <class T, class U, class Category = std::bidirectional_iterator_tag, class Distance = ptrdiff_t, class Pointer = U*, class Reference = U&>
+ template <class T, class U, class Category = std::bidirectional_iterator_tag, class Distance = std::ptrdiff_t, class Pointer = U*, class Reference = U&>
 
     class MapIterator
     {

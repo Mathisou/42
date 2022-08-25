@@ -35,13 +35,13 @@ namespace ft
           4. Return a pointer on the root
         */
 
-       BST *CreateNewNode(int value){
-         RootPTR = new(BST);
-         RootPTR->value = value;
-         RootPTR->left = NULL;
-         RootPTR->right = NULL;
-         return (RootPTR);
-       }
+        BST *CreateNewNode(int value){
+          RootPTR = new(BST);
+          RootPTR->value = value;
+          RootPTR->left = NULL;
+          RootPTR->right = NULL;
+          return (RootPTR);
+        }
 
         BST *insertion(BST *root, int value)
         {
@@ -68,11 +68,11 @@ namespace ft
           5. Return a pointer on the root
         */
 
-       BST *FindMin(BST *root){
-         while (root->left != NULL)
+        BST *FindMin(BST *root){
+          while (root->left != NULL)
           root = root->left;
           return root;
-       }
+        }
 
         BST *deletion(BST *root, int value)
         {
