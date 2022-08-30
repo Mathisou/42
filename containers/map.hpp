@@ -4,8 +4,8 @@
 # include <stdexcept>
 # include "iterators/reverse_iterator.hpp"
 # include "iterators/MapIterator.hpp"
+# include "utils.hpp"
 # include "utils/BST.hpp"
-# include "utils/pair.hpp"
 
 namespace ft
 {
@@ -36,6 +36,7 @@ namespace ft
 			key_compare									_compare;
 			allocator_type								_alloc;
 			map_node 									_BST;
+			map_node									*_root;
 
         public:
 
@@ -59,16 +60,16 @@ namespace ft
 
 			};
 
-			map(): _compare(), _alloc(), _BST(){}
+			map(): _compare(), _alloc(), _BST(), _root(){}
 
-			explicit map( const Compare& comp, const Allocator& alloc = Allocator() ): _compare(comp), _alloc(alloc), _BST(){}
+			explicit map( const Compare& comp, const Allocator& alloc = Allocator() ): _compare(comp), _alloc(alloc), _BST(), _root(){}
 
 			template< class InputIt >
-			map( InputIt first, InputIt last, const Compare& comp = Compare(), const Allocator& alloc = Allocator() ): _compare(comp), _alloc(alloc), _BST(){
+			map( InputIt first, InputIt last, const Compare& comp = Compare(), const Allocator& alloc = Allocator() ): _compare(comp), _alloc(alloc), _BST(), _root(){
 				insert(first, last);
 			}
 
-			map( const map& other ): _compare(other._comp), _alloc(other._comp), _BST(other._BST){}
+			map( const map& other ): _compare(other._comp), _alloc(other._comp), _BST(other._BST), _root(other._root){}
 
 			~map(){clear();}
 
@@ -110,21 +111,21 @@ namespace ft
 
 			/////////////////////////////// ITERATORS \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\/
 
-			iterator begin(){}
+			iterator begin(){return _BST.FindMin(_root)->value;}
 
-			const_iterator begin() const{}
+			const_iterator begin() const{return _BST.FindMin(_root)->value;}
 
-			iterator end(){}
+			iterator end(){return _BST.FindMax(_root)->value;}
 
-			const_iterator end() const{}
+			const_iterator end() const{return _BST.FindMax(_root)->value;}
 
-			reverse_iterator rbegin(){}
+			reverse_iterator rbegin(){return _BST.FindMax(_root)->value;}
 
-			const_reverse_iterator rbegin() const{}
+			const_reverse_iterator rbegin() const{return _BST.FindMax(_root)->value;}
 
-			reverse_iterator rend(){}
+			reverse_iterator rend(){return _BST.FindMin(_root)->value;}
 
-			const_reverse_iterator rend() const{}
+			const_reverse_iterator rend() const{return _BST.FindMin(_root)->value;}
 
 
 			/////////////////////////////// CAPACITY \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\/
@@ -136,25 +137,118 @@ namespace ft
 			}
 
 			size_type size() const{
-				return 
+
+			}
+
+			size_type max_size() const{
+
 			}
 
 			/////////////////////////////// MODIFIERS \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\/
 
+			void clear(){ 
 
+			}
+
+			ft::pair<iterator, bool> insert( const value_type& value ){
+				_BST.insertion(_root, value);
+			}
+
+			iterator insert( iterator hint, const value_type& value ){
+				(void)hint;
+				_BST.insertion(_root, value);
+			}
+
+			void erase( iterator pos ){
+				_BST.deletion(_root, *pos);
+			}
+
+			void erase( iterator first, iterator last ){
+				for (;first != last;first++)
+					_BST.deletion(_root, *first);
+			}
+
+			void swap( map& other ){
+				_BST.swap(other);
+			}
 
 			//////////////////////////////// LOOKUP \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\/
 
+			size_type count( const Key& key ) const{
 
+			}
+
+			iterator find( const Key& key ){
+
+			}
+
+			const_iterator find( const Key& key ) const{
+
+			}
+
+			ft::pair<iterator,iterator> equal_range( const Key& key ){
+
+			}
+
+			ft::pair<const_iterator,const_iterator> equal_range( const Key& key ) const{
+
+			}
+
+			iterator lower_bound( const Key& key ){
+
+			}
+
+			const_iterator lower_bound( const Key& key ) const{
+
+			}
+
+			iterator upper_bound( const Key& key ){
+
+			}
+
+			const_iterator upper_bound( const Key& key ) const{
+
+			}
 
 			/////////////////////////////// OBSERVERS \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\/
 
+			key_compare key_comp() const{
 
+			}
+
+			value_compare value_comp() const{
+
+			}
 
 			////////////////////////// NON-MEMBER FUNCTIONS \\\\\\\\\\\\\\\\\\\\\\\\\/
 
+			friend bool operator==( const ft::map<Key,T,Compare,Allocator>& lhs, const ft::map<Key,T,Compare,Allocator>& rhs ){
+				return (ft::equal(lhs.begin(), lhs.end(), rhs.begin()));
+			}
 
+			friend bool operator!=( const ft::map<Key,T,Compare,Allocator>& lhs, const ft::map<Key,T,Compare,Allocator>& rhs ){
+				return !(lhs == rhs);
+			}
 
+			friend bool operator<( const ft::map<Key,T,Compare,Allocator>& lhs, const ft::map<Key,T,Compare,Allocator>& rhs ){
+				return ft::lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(), rhs.end());
+			}
+
+			friend bool operator<=( const ft::map<Key,T,Compare,Allocator>& lhs, const ft::map<Key,T,Compare,Allocator>& rhs ){
+				return !(rhs < lhs);
+			}
+
+			friend bool operator>( const ft::map<Key,T,Compare,Allocator>& lhs, const ft::map<Key,T,Compare,Allocator>& rhs ){
+				return (rhs < lhs);
+			}
+
+			friend bool operator>=( const ft::map<Key,T,Compare,Allocator>& lhs, const ft::map<Key,T,Compare,Allocator>& rhs ){
+				return !(rhs > lhs);
+			}
+
+			void swap( ft::map<Key,T,Compare,Allocator>& lhs, ft::map<Key,T,Compare,Allocator>& rhs ){
+				lhs.swap(rhs);
+			}
 
     };
 }

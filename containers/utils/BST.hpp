@@ -17,7 +17,6 @@ namespace ft
         //   leaf has the same black-depth (the number of black nodes).
 
         // *RBT parent;
-        BST *RootPTR;
         BST *left; //child 1
         BST *right;//child 2
         int value;
@@ -36,11 +35,11 @@ namespace ft
         */
 
         BST *CreateNewNode(int value){
-          RootPTR = new(BST);
-          RootPTR->value = value;
-          RootPTR->left = NULL;
-          RootPTR->right = NULL;
-          return (RootPTR);
+          BST* newNode = new(BST); // a modif (use alloc)
+          newNode->value = value;
+          newNode->left = NULL;
+          newNode->right = NULL;
+          return (newNode);
         }
 
         BST *insertion(BST *root, int value)
@@ -70,7 +69,25 @@ namespace ft
 
         BST *FindMin(BST *root){
           while (root->left != NULL)
-          root = root->left;
+            root = root->left;
+          return root;
+        }
+        
+        BST *FindMin(BST *root) const{
+          while (root->left != NULL)
+            root = root->left;
+          return root;
+        }
+
+        BST *FindMax(BST *root){
+          while (root->right != NULL)
+            root = root->right;
+          return root;
+        }
+
+        BST *FindMax(BST *root) const{
+          while (root->right != NULL)
+            root = root->right;
           return root;
         }
 
@@ -114,6 +131,15 @@ namespace ft
         // {
 
         // }
+
+        void swap(BST& x){
+          if (&x == this)
+            return ;
+          
+          BST* save = this;
+          *this = x;
+          x = *save;
+        }
 
         // *BST next()
         // {

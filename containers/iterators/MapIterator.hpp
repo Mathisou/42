@@ -1,89 +1,99 @@
 #ifndef MAP_ITERATOR_HPP
 # define MAP_ITERATOR_HPP
 
-# include <iterator>
-# include <iostream>
+#include "../utils.hpp"
 
 namespace ft
 {
- template <class T, class U, class Category = std::bidirectional_iterator_tag, class Distance = std::ptrdiff_t, class Pointer = U*, class Reference = U&>
+	template <typename T, class Compare >
 
-    class MapIterator
+    class MapIterator : ft::iterator<ft::bidirectional_iterator_tag, T>
     {
         public:
 
-            typedef Category    iterator_category;
-            typedef T           value_type;
-            typedef Distance    difference_type;
-            typedef Pointer     pointer;
-            typedef Reference   reference;
+			typedef typename T::value_type                                                                  value_type;
+			typedef typename ft::iterator<ft::bidirectional_iterator_tag, value_type>::iterator_category    iterator_category;
+			typedef typename ft::iterator<ft::bidirectional_iterator_tag, value_type>::difference_type      difference_type;
+			typedef typename ft::iterator<ft::bidirectional_iterator_tag, value_type>::pointer              pointer;
+			typedef typename ft::iterator<ft::bidirectional_iterator_tag, value_type>::reference            reference;
             
-        private:
+			T *         _node;
+			T *         _last_node;
+			Compare     _comp;
 
-            T *_ptr;
+            MapIterator(const Compare& comp = Compare()) : _node(), _last_node(), _comp(comp){}
 
-        public:
+            MapIterator(T * node_p, T * last_node, const Compare& comp = Compare()): _node(node_p), _last_node(last_node), _comp(comp){}
 
-            MapIterator() : _ptr(NULL){}
-
-            MapIterator(const MapIterator &other){_ptr = other.get_ptr();}
-
-            MapIterator(pointer ptr): _ptr(ptr){}
+            MapIterator(const MapIterator& other) : _node(other._node), _last_node(other._last_node), _comp(){}
 
             ~MapIterator(){}
 
-            pointer get_ptr() const {return _ptr;}
+            // operator MapIterator<const T, const U>(void) const{return MapIterator<const T, const U>(this->_ptr);}
 
-            operator MapIterator<const T, const U>(void) const{return MapIterator<const T, const U>(this->_ptr);}
+            MapIterator &operator=(const MapIterator &other){
+                if (this == &other)
+                    return *this;
+                _node = other._node;
+                _last_node = other._last_node;
+                _comp = other._comp;
+                return *this;
+            }
 
-            MapIterator &operator=(const MapIterator<const T, const U> &other){if (this != &other)_ptr = other.get_ptr();return *this;}
+            MapIterator& operator++(){
 
-            MapIterator& operator++() {_ptr++; return *this;}
+            }
 
-            MapIterator operator++(int) {MapIterator retval = *this; ++(*this); return retval;}
+            MapIterator operator++(int){
 
-            MapIterator& operator--() {_ptr--; return *this;}
+            }
 
-            MapIterator operator--(int) {MapIterator retval = *this; --(*this); return retval;}
+            MapIterator& operator--() {
 
-            MapIterator operator+(int n) const {MapIterator tmp(*this); tmp += n; return tmp;}
+            }
 
-            // friend MapIterator	operator + (std::ptrdiff_t n, MapIterator it){MapIterator tmp(it.get_ptr());tmp += n;return (tmp);}
+            MapIterator operator--(int) {
 
-            MapIterator operator-(int n) const {MapIterator tmp(*this); tmp -= n; return tmp;}
+            }
+
+            // MapIterator operator+(int n) const {MapIterator tmp(*this); tmp += n; return tmp;}
+
+            // // friend MapIterator	operator + (std::ptrdiff_t n, MapIterator it){MapIterator tmp(it.get_ptr());tmp += n;return (tmp);}
+
+            // MapIterator operator-(int n) const {MapIterator tmp(*this); tmp -= n; return tmp;}
             
-            MapIterator &operator+=(int n){_ptr += n;return *this;}
+            // MapIterator &operator+=(int n){_node += n;return *this;}
 
-            MapIterator &operator-=(int n){_ptr -= n;return *this;}
+            // MapIterator &operator-=(int n){_node -= n;return *this;}
 
-            difference_type operator-( MapIterator const & x ){return x._ptr - _ptr;}
+            // difference_type operator-( MapIterator const & x ){return x._node - _node;}
 
-            difference_type operator+( MapIterator const & x ){return x._ptr + _ptr;}
+            // difference_type operator+( MapIterator const & x ){return x._node + _node;}
             
-            bool operator == (const MapIterator<const T, const U> &other) const {return (_ptr == other.get_ptr());}
+            bool operator == (const MapIterator &other) const {return (_node == other.get_node());}
 
-            bool operator != (const MapIterator<const T, const U> &other) const {return (_ptr != other.get_ptr());}
+            bool operator != (const MapIterator &other) const {return (_node != other.get_node());}
 
-            bool operator>(const MapIterator<const T, const U> &other) const {return _ptr > other.get_ptr();}
+            bool operator>(const MapIterator &other) const {return _node > other.get_node();}
 
-            bool operator>=(const MapIterator<const T, const U> &other) const {return _ptr >= other.get_ptr();}
+            bool operator>=(const MapIterator &other) const {return _node >= other.get_node();}
 
-            bool operator<(const MapIterator<const T, const U> &other) const {return _ptr < other.get_ptr();}
+            bool operator<(const MapIterator &other) const {return _node < other.get_node();}
 
-            bool operator<=(const MapIterator<const T, const U> &other) const {return _ptr <= other.get_ptr();}
+            bool operator<=(const MapIterator &other) const {return _node <= other.get_node();}
 
 
-            value_type operator*() const {return *_ptr;}
+            reference operator*() const {return _node->value;}
 
-            value_type &operator [] (int n) const{return _ptr[n];}
+            // value_type &operator [] () const{return &_node->value;}
 
-            // value_type operator->() const {return _ptr;}
+            pointer operator->() const {return &_node->value;}
 
 
     };
     template<class T, class U>
 
-    std::ostream& operator<<( std::ostream & o, MapIterator<T, U> const & i ){o << i.get_ptr();return o;}
+    std::ostream& operator<<( std::ostream & o, MapIterator<T, U> const & i ){o << i.get_node();return o;}
 
     template <class T, class U, class MapIterator, class Category = std::bidirectional_iterator_tag, class Distance = std::ptrdiff_t,
         class Pointer = U*, class Reference = U&>
@@ -106,7 +116,7 @@ namespace ft
 
             ConstMapIterator() : _ptr(NULL){}
 
-            ConstMapIterator(const ConstMapIterator &other){_ptr = other.get_ptr();}
+            ConstMapIterator(const ConstMapIterator &other){_ptr = other._node;}
 
             ConstMapIterator(pointer ptr): _ptr(ptr){}
 
@@ -116,7 +126,7 @@ namespace ft
 
             operator ConstMapIterator<const T, const U, const MapIterator>(void) const{return ConstMapIterator<const T, const U, const MapIterator>(this->_ptr);}
 
-            ConstMapIterator &operator=(const ConstMapIterator<const T, const U, const MapIterator> &other){if (this != &other)_ptr = other.get_ptr();return *this;}
+            ConstMapIterator &operator=(const ConstMapIterator<const T, const U, const MapIterator> &other){if (this != &other)_ptr = other._node;return *this;}
 
             ConstMapIterator& operator++() {_ptr++; return *this;}
 
@@ -140,17 +150,17 @@ namespace ft
 
             difference_type operator+( ConstMapIterator const & x ){return x._ptr + _ptr;}
             
-            bool operator == (const ConstMapIterator<const T, const U, const MapIterator> &other) const {return (_ptr == other.get_ptr());}
+            bool operator == (const ConstMapIterator<const T, const U, const MapIterator> &other) const {return (_ptr == other._node);}
 
-            bool operator != (const ConstMapIterator<const T, const U, const MapIterator> &other) const {return (_ptr != other.get_ptr());}
+            bool operator != (const ConstMapIterator<const T, const U, const MapIterator> &other) const {return (_ptr != other._node);}
 
-            bool operator>(const ConstMapIterator<const T, const U, const MapIterator> &other) const {return _ptr > other.get_ptr();}
+            bool operator>(const ConstMapIterator<const T, const U, const MapIterator> &other) const {return _ptr > other._node;}
 
-            bool operator>=(const ConstMapIterator<const T, const U, const MapIterator> &other) const {return _ptr >= other.get_ptr();}
+            bool operator>=(const ConstMapIterator<const T, const U, const MapIterator> &other) const {return _ptr >= other._node;}
 
-            bool operator<(const ConstMapIterator<const T, const U, const MapIterator> &other) const {return _ptr < other.get_ptr();}
+            bool operator<(const ConstMapIterator<const T, const U, const MapIterator> &other) const {return _ptr < other._node;}
 
-            bool operator<=(const ConstMapIterator<const T, const U, const MapIterator> &other) const {return _ptr <= other.get_ptr();}
+            bool operator<=(const ConstMapIterator<const T, const U, const MapIterator> &other) const {return _ptr <= other._node;}
 
 
             value_type operator*() const {return *_ptr;}
