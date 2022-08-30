@@ -16,7 +16,7 @@ namespace ft
 			typedef T 														    mapped_type;
 			typedef ft::pair<const key_type, mapped_type>					    value_type;
 			typedef Compare 												    key_compare;
-			typedef Allocator 													    allocator_type;
+			typedef Allocator 													allocator_type;
 			typedef typename allocator_type::reference 						    reference;
 			typedef typename allocator_type::const_reference				    const_reference;
 			typedef typename allocator_type::pointer 						    pointer;
@@ -129,7 +129,15 @@ namespace ft
 
 			/////////////////////////////// CAPACITY \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\/
 
+			bool empty() const{
+				if (size() == 0)
+					return true;
+				return false;
+			}
 
+			size_type size() const{
+				return 
+			}
 
 			/////////////////////////////// MODIFIERS \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\/
 
