@@ -16,7 +16,7 @@ namespace ft
         //5. Depth Property: For each node, any simple path from this node to any of its descendant
         //   leaf has the same black-depth (the number of black nodes).
 
-        // *RBT parent;
+        BST *parent;
         BST *left; //child 1
         BST *right;//child 2
         int value;
@@ -39,6 +39,7 @@ namespace ft
           newNode->value = value;
           newNode->left = NULL;
           newNode->right = NULL;
+          newNode->parent = NULL;
           return (newNode);
         }
 
@@ -47,9 +48,14 @@ namespace ft
           if (root == NULL)
             root = CreateNewNode(value);
           else if (value <= root->value)
+          {
+            parent = root;
             root->left = insertion(root->left, value);
-          else
+          }
+          else{
+            parent = root;
             root->right = insertion(root->right, value);
+          }
           return root;
         }
 
@@ -102,20 +108,20 @@ namespace ft
           else
           {
             if (root->right == NULL && root->left == NULL){ // no child
-              delete root;
+              delete root; //
               root = NULL;
               return root;
             }
             else if (root->right == NULL){ // 1 child
               BST *tmp = root;
               root = root->left;
-              delete tmp;
+              delete tmp; //
               return root;
             }
             else if (root->left == NULL){
               BST *tmp = root;
               root = root->right;
-              delete tmp;
+              delete tmp; //
               return root;
             }
             else{ // 2 children
@@ -141,13 +147,19 @@ namespace ft
           x = *save;
         }
 
-        // *BST next()
-        // {
+        // void next(){
+        //   if (right == NULL && parent->value <= value)
+        //     return ;
+        //   else if (right)
 
+        //   else if (parent->right)
+        //   {
+
+        //   }
+        //   return ;
         // }
 
-        // *BST prev()
-        // {
+        // void prev(){
 
         // }
     };

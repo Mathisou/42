@@ -111,21 +111,21 @@ namespace ft
 
 			/////////////////////////////// ITERATORS \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\/
 
-			iterator begin(){return _BST.FindMin(_root)->value;}
+			iterator begin(){return iterator(_BST.FindMin(_root), _BST.FindMin(_root)->value);}
 
-			const_iterator begin() const{return _BST.FindMin(_root)->value;}
+			const_iterator begin() const{return const_iterator(_BST.FindMin(_root), _BST.FindMin(_root)->value);}
 
-			iterator end(){return _BST.FindMax(_root)->value;}
+			iterator end(){return iterator(_BST.FindMin(_root), _BST.FindMax(_root)->value);}
 
-			const_iterator end() const{return _BST.FindMax(_root)->value;}
+			const_iterator end() const{return const_iterator(_BST.FindMin(_root), _BST.FindMax(_root)->value);}
 
-			reverse_iterator rbegin(){return _BST.FindMax(_root)->value;}
+			reverse_iterator rbegin(){return reverse_iterator(end());}
 
-			const_reverse_iterator rbegin() const{return _BST.FindMax(_root)->value;}
+			const_reverse_iterator rbegin() const{return const_reverse_iterator(end());}
 
-			reverse_iterator rend(){return _BST.FindMin(_root)->value;}
+			reverse_iterator rend(){return reverse_iterator(begin());}
 
-			const_reverse_iterator rend() const{return _BST.FindMin(_root)->value;}
+			const_reverse_iterator rend() const{return const_reverse_iterator(begin());}
 
 
 			/////////////////////////////// CAPACITY \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\/
@@ -137,7 +137,10 @@ namespace ft
 			}
 
 			size_type size() const{
-
+				int count = 0;
+				for (ft::MapIterator<T, Compare> it = begin(); it != end(); it++)
+					count++;
+				return count;
 			}
 
 			size_type max_size() const{
@@ -174,41 +177,41 @@ namespace ft
 
 			//////////////////////////////// LOOKUP \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\/
 
-			size_type count( const Key& key ) const{
+			// size_type count( const Key& key ) const{
 
-			}
+			// }
 
-			iterator find( const Key& key ){
+			// iterator find( const Key& key ){
 
-			}
+			// }
 
-			const_iterator find( const Key& key ) const{
+			// const_iterator find( const Key& key ) const{
 
-			}
+			// }
 
-			ft::pair<iterator,iterator> equal_range( const Key& key ){
+			// ft::pair<iterator,iterator> equal_range( const Key& key ){
 
-			}
+			// }
 
-			ft::pair<const_iterator,const_iterator> equal_range( const Key& key ) const{
+			// ft::pair<const_iterator,const_iterator> equal_range( const Key& key ) const{
 
-			}
+			// }
 
-			iterator lower_bound( const Key& key ){
+			// iterator lower_bound( const Key& key ){
 
-			}
+			// }
 
-			const_iterator lower_bound( const Key& key ) const{
+			// const_iterator lower_bound( const Key& key ) const{
 
-			}
+			// }
 
-			iterator upper_bound( const Key& key ){
+			// iterator upper_bound( const Key& key ){
 
-			}
+			// }
 
-			const_iterator upper_bound( const Key& key ) const{
+			// const_iterator upper_bound( const Key& key ) const{
 
-			}
+			// }
 
 			/////////////////////////////// OBSERVERS \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\/
 
@@ -222,9 +225,9 @@ namespace ft
 
 			////////////////////////// NON-MEMBER FUNCTIONS \\\\\\\\\\\\\\\\\\\\\\\\\/
 
-			friend bool operator==( const ft::map<Key,T,Compare,Allocator>& lhs, const ft::map<Key,T,Compare,Allocator>& rhs ){
-				return (ft::equal(lhs.begin(), lhs.end(), rhs.begin()));
-			}
+			// friend bool operator==( const ft::map<Key,T,Compare,Allocator>& lhs, const ft::map<Key,T,Compare,Allocator>& rhs ){
+			// 	return (ft::equal(lhs.begin(), lhs.end(), rhs.begin()));
+			// }
 
 			friend bool operator!=( const ft::map<Key,T,Compare,Allocator>& lhs, const ft::map<Key,T,Compare,Allocator>& rhs ){
 				return !(lhs == rhs);

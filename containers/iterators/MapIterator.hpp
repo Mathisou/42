@@ -2,6 +2,7 @@
 # define MAP_ITERATOR_HPP
 
 #include "../utils.hpp"
+#include "../utils/BST.hpp"
 
 namespace ft
 {
@@ -17,15 +18,14 @@ namespace ft
 			typedef typename ft::iterator<ft::bidirectional_iterator_tag, value_type>::pointer              pointer;
 			typedef typename ft::iterator<ft::bidirectional_iterator_tag, value_type>::reference            reference;
             
-			T *         _node;
-			T *         _last_node;
+			T          *_node;
 			Compare     _comp;
 
-            MapIterator(const Compare& comp = Compare()) : _node(), _last_node(), _comp(comp){}
+            MapIterator(const Compare& comp = Compare()) : _node(), _comp(comp){}
 
-            MapIterator(T * node_p, T * last_node, const Compare& comp = Compare()): _node(node_p), _last_node(last_node), _comp(comp){}
+            MapIterator(T * node_p, const Compare& comp = Compare()): _node(node_p), _comp(comp){}
 
-            MapIterator(const MapIterator& other) : _node(other._node), _last_node(other._last_node), _comp(){}
+            MapIterator(const MapIterator& other) : _node(other._node), _comp(){}
 
             ~MapIterator(){}
 
@@ -35,25 +35,110 @@ namespace ft
                 if (this == &other)
                     return *this;
                 _node = other._node;
-                _last_node = other._last_node;
                 _comp = other._comp;
                 return *this;
             }
 
             MapIterator& operator++(){
-
+                BST *tmp_p = NULL;
+                BST *tmp_r = _node;
+                BST *check = _node;
+                if (check->right == NULL)
+                {
+                    while (check){
+                        if (check->value <= _node->value)
+                            check = check->parent;
+                        else
+                            break;
+                        if (check == NULL)
+                            return *this;
+                    }
+                }
+                while (1)
+                {
+                    if (tmp_r->right)
+                    {
+                        tmp_r = tmp_r->right;
+                        while (tmp_r->left)
+                            tmp_r = tmp_r->left;
+                        if (tmp_p && tmp_p->value < tmp_r->value)
+                            _node = tmp_p;
+                        else
+                            _node = tmp_r;
+                        return *this;
+                    }
+                    else
+                    {
+                        tmp_p = _node;
+                        while (_node->value > tmp_p->parent->value)
+                            tmp_p = tmp_p->parent;
+                        tmp_p = tmp_p->parent;
+                        if (tmp_p->right == NULL)
+                        {
+                            _node = tmp_p;
+                            return *this;
+                        }
+                        tmp_r = tmp_p;
+                    }
+                }
+                return *this;
             }
 
             MapIterator operator++(int){
-
+                MapIterator tmp(*this);
+				operator++();
+				return (tmp);
             }
 
             MapIterator& operator--() {
-
+                BST *tmp_p = NULL;
+                BST *tmp_l = _node;
+                BST *check = _node;
+                if (check->left == NULL)
+                {
+                    while (check){
+                        if (check->value >= _node->value)
+                            check = check->parent;
+                        else
+                            break;
+                        if (check == NULL)
+                            return *this;
+                    }
+                }
+                while (1)
+                {
+                    if (tmp_l->left)
+                    {
+                        tmp_l = tmp_l->left;
+                        while (tmp_l->right)
+                            tmp_l = tmp_l->right;
+                        if (tmp_p && tmp_p->value > tmp_l->value)
+                            _node = tmp_p;
+                        else
+                            _node = tmp_l;
+                        return *this;
+                    }
+                    else
+                    {
+                        tmp_p = _node;
+                        while (_node->value < tmp_p->parent->value)
+                            tmp_p = tmp_p->parent;
+                        tmp_p = tmp_p->parent;
+                        if (tmp_p->left == NULL)
+                        {
+                            _node = tmp_p;
+                            return *this;
+                        }
+                        tmp_l = tmp_p;
+                    }
+                }
+                return *this;
             }
 
             MapIterator operator--(int) {
-
+                MapIterator tmp(*this);
+				operator--();
+				return (tmp);
             }
 
             // MapIterator operator+(int n) const {MapIterator tmp(*this); tmp += n; return tmp;}
@@ -70,17 +155,17 @@ namespace ft
 
             // difference_type operator+( MapIterator const & x ){return x._node + _node;}
             
-            bool operator == (const MapIterator &other) const {return (_node == other.get_node());}
+            bool operator == (const MapIterator &other) const {return (_node == other._node);}
 
-            bool operator != (const MapIterator &other) const {return (_node != other.get_node());}
+            bool operator != (const MapIterator &other) const {return (_node != other._node);}
 
-            bool operator>(const MapIterator &other) const {return _node > other.get_node();}
+            bool operator>(const MapIterator &other) const {return _node > other._node;}
 
-            bool operator>=(const MapIterator &other) const {return _node >= other.get_node();}
+            bool operator>=(const MapIterator &other) const {return _node >= other._node;}
 
-            bool operator<(const MapIterator &other) const {return _node < other.get_node();}
+            bool operator<(const MapIterator &other) const {return _node < other._node;}
 
-            bool operator<=(const MapIterator &other) const {return _node <= other.get_node();}
+            bool operator<=(const MapIterator &other) const {return _node <= other._node;}
 
 
             reference operator*() const {return _node->value;}
@@ -93,7 +178,7 @@ namespace ft
     };
     template<class T, class U>
 
-    std::ostream& operator<<( std::ostream & o, MapIterator<T, U> const & i ){o << i.get_node();return o;}
+    std::ostream& operator<<( std::ostream & o, MapIterator<T, U> const & i ){o << i._node;return o;}
 
     template <class T, class U, class MapIterator, class Category = std::bidirectional_iterator_tag, class Distance = std::ptrdiff_t,
         class Pointer = U*, class Reference = U&>
