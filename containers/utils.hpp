@@ -98,7 +98,7 @@ namespace ft
 		else
 			return false;
 	}
-    //////// ENABLE_IF \\\\\\\/
+    //////// Pair \\\\\\\/
     template<class T1, class T2>
 
 	struct pair
@@ -145,7 +145,7 @@ namespace ft
 	}
 
 	template< class T1, class T2 >
-	bool operator>( const pair<T1,T2>& lhs, const pair<T1,T2>& rhs ){
+	bool operator>( const ft::pair<T1,T2>& lhs, const ft::pair<T1,T2>& rhs ){
 		return (lhs > rhs);
 	}
 
