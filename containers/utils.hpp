@@ -166,7 +166,7 @@ namespace ft
     class output_iterator_tag { };
 
     //////// ITERATOR \\\\\\\/
-    template <class Category, class T, class Distance = std::ptrdiff_t, class Pointer = T*, class Reference = T&>
+    template <class Category, class T, class Distance = ptrdiff_t, class Pointer = T*, class Reference = T&>
         class iterator
         {
             public:
@@ -189,6 +189,22 @@ namespace ft
             private:
                 pointer _elem;
         };
+    
+    template <class Arg1, class Arg2, class Result>
+    struct binary_function
+    {
+        typedef Arg1 first_argument_type;
+
+        typedef Arg2 second_argument_type;
+
+        typedef Result result_type;
+    };
+
+    template <class T>
+    struct less : binary_function<T, T, bool>
+    {
+        bool operator() (const T& x, const T& y) const { return (x < y); }
+    };
 }
 
 #endif

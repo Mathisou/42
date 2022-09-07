@@ -1,8 +1,9 @@
 #ifndef VECTOR_HPP
 # define VECTOR_HPP
 
-#include "iterators/VectorIterator.hpp"
-#include "iterators/reverse_iterator.hpp"
+# include "iterators/VectorIterator.hpp"
+# include "iterators/reverse_iterator.hpp"
+# include <stdexcept>
 
 namespace ft
 {
@@ -62,7 +63,7 @@ namespace ft
             }
             ~vector()
             {
-                clear(); // destroy all objects
+                clear();
                 _alloc.deallocate(_start, _capacity);
             }
 
@@ -171,37 +172,33 @@ namespace ft
             }
 
             reference at (size_type n){
-                if (n <= _size)
+                if (n < _size)
                     return _start[n];
                 else
                     throw std::out_of_range("vector");
             }
 
             const_reference at (size_type n) const{
-                if (n <= _size)
+                if (n < _size)
                     return _start[n];
                 else
                     throw std::out_of_range("vector");
             }
 
             reference front(){
-                // if (_size > 0)
-                    return (*_start);
+                return (*_start);
             }
 
             const_reference front() const{
-                // if (_size > 0)
-                    return (*_start);
+                return (*_start);
             }
 
             reference back(){
-                // if (_size > 0)
-                    return (_start[_size - 1]);
+                return (_start[_size - 1]);
             }
 
             const_reference back() const{
-                // if (_size > 0)
-                    return (_start[_size - 1]);
+                return (_start[_size - 1]);
             }
 
     /////////////////////////////// MODIFIERS \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\/
@@ -221,7 +218,7 @@ namespace ft
                 }
                 _capacity = range;
                 for (size_type i = 0;i < last - first + i;i++){
-                    _alloc.construct(&_start[i], *first);   //Tres probablement faux
+                    _alloc.construct(&_start[i], *first);
                     first++;
                     _size = i;
                 }
@@ -237,7 +234,7 @@ namespace ft
                 }
                 _capacity = n;
                 for (size_type i = 0;i < n;i++){
-                    _alloc.construct(&_start[i], val[i]);   //Tres probablement faux
+                    _alloc.construct(&_start[i], val[i]);
                     _size = i;
                 }
             }
@@ -274,7 +271,7 @@ namespace ft
                 pos = this->begin() - position;
                 if (pos <= _size){
                     this->reserve(_size + n);
-                    int tmp_size = 0;
+                    size_type tmp_size = 0;
                     value_type *tmp = _alloc.allocate(pos + _size);
                     for (size_type i = 0;i<_size - pos;i++){
                         _alloc.construct(&tmp[i], _start[pos + i]);

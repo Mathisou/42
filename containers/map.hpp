@@ -4,12 +4,10 @@
 # include <stdexcept>
 # include "iterators/reverse_iterator.hpp"
 # include "iterators/MapIterator.hpp"
-# include "utils.hpp"
-# include "utils/BST.hpp"
 
 namespace ft
 {
-	template <class Key, class T, class Compare = std::less<Key>, class Allocator = std::allocator<ft::pair<const Key,T> > >
+	template <class Key, class T, class Compare = ft::less<Key>, class Allocator = std::allocator<ft::pair<const Key,T> > >
     class map
 	{
 		public: 
@@ -24,12 +22,12 @@ namespace ft
 			typedef typename allocator_type::const_pointer 					    const_pointer;
 			typedef BST<value_type, key_compare>								map_node;
 
-			typedef ft::MapIterator<map_node, Compare>					    iterator;
-			typedef ft::ConstMapIterator<map_node, const Compare>			const_iterator;
+			typedef ft::MapIterator<map_node, Compare>					    	iterator;
+			typedef ft::ConstMapIterator<map_node, const Compare>				const_iterator;
 			typedef ft::reverse_iterator<iterator> 							    reverse_iterator;
 			typedef ft::reverse_iterator<const_iterator>					    const_reverse_iterator;
 
-			typedef std::ptrdiff_t 											    difference_type;
+			typedef ptrdiff_t 											    difference_type;
 			typedef size_t 													    size_type;
 
 		private:
@@ -42,9 +40,8 @@ namespace ft
         public:
 
 			class value_compare
-			{
-				// friend class map;
-				
+			{				
+
 				private:
 
 					Compare _comp;
@@ -118,7 +115,7 @@ namespace ft
 
 			iterator end(){return iterator(_BST.FindMax(_root), _compare);}
 
-			const_iterator end() const{return const_iterator(_BST.FindMax(_root) + 1, _compare);}
+			const_iterator end() const{return const_iterator(_BST.FindMax(_root), _compare);}
 
 			reverse_iterator rbegin(){return reverse_iterator(end());}
 
@@ -145,36 +142,42 @@ namespace ft
 			}
 
 			size_type max_size() const{
-
+				return _alloc.max_size();
 			}
 
 			/////////////////////////////// MODIFIERS \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\/
 
 			void clear(){ 
-
+				erase(begin(), end());
 			}
 
-			void insert( const value_type& value ){
-				_root = _BST.insertion(_root, value);
-				// std::cout << _root->value.first << std::endl;
-				// if (_root->right)
-				// 	std::cout << _root->right->parent->value.first << std::endl;
-				return ;
+			ft::pair<iterator, bool> insert( const value_type& value ){
+				ft::pair <map_node*, bool> ret = _BST.insertion(_root, value);
+				_root = ret.first;
+				return ft::make_pair(iterator(ret.first), ret.second);
 			}
 
-			void insert( iterator hint, const value_type& value ){
+			iterator insert( iterator hint, const value_type& value ){
 				(void)hint;
-				_root = _BST.insertion(_root, value);
-				return ;
+				ft::pair <map_node*, bool> ret = _BST.insertion(_root, value);
+				_root = ret.first;
+				return iterator(ret.first);
 			}
 
 			void erase( iterator pos ){
-				_BST.deletion(_root, *pos);
+				_root = _BST.deletion(_root, *pos);
 			}
 
 			void erase( iterator first, iterator last ){
-				for (;first != last;first++)
-					_BST.deletion(_root, *first);
+				while (first != last)
+					erase(first++);
+			}
+
+			size_type erase( const Key& key ){
+				if (find(key) == end())
+					return (0);
+				_root = _BST.deletion(_root, ft::make_pair(key, mapped_type()));
+				return (1);
 			}
 
 			void swap( map& other ){
@@ -183,57 +186,87 @@ namespace ft
 
 			//////////////////////////////// LOOKUP \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\/
 
-			// size_type count( const Key& key ) const{
+			size_type count( const Key& key ) {
+				if (find(key) == end())
+					return 0;
+				return 1;
+			}
 
-			// }
+			iterator find( const Key& key ){
+				iterator it = begin();
+				for (; it != end() && it->first != key;it++)
+					;
+				return it;
+			}
 
-			// iterator find( const Key& key ){
+			const_iterator find( const Key& key ) const{
+				const_iterator it = begin();
+				for (; it != end() && it->first != key;it++)
+					;
+				return it;
+			}
 
-			// }
+			ft::pair<iterator,iterator> equal_range( const Key& key ){
+				iterator not_less = begin();
+				for (; not_less != end() && not_less->first < key;not_less++)
+					;
+				if (not_less == end())
+					return (ft::make_pair(end(), end()));
+				iterator greater = not_less;
+				for (; greater != end() && greater->first <= key;greater++)
+					;
+				if (greater == end())
+					return (ft::make_pair(not_less, end()));
+				return (ft::make_pair(not_less, greater));
+			}
 
-			// const_iterator find( const Key& key ) const{
+			ft::pair<const_iterator,const_iterator> equal_range( const Key& key ) const{
+				return (ft::make_pair(lower_bound(key), upper_bound(key)));
+			}
 
-			// }
+			iterator lower_bound( const Key& key ){
+				iterator not_less = begin();
+				for (; not_less != end() && not_less->first < key;not_less++)
+					;
+				return not_less;
+			}
 
-			// ft::pair<iterator,iterator> equal_range( const Key& key ){
+			const_iterator lower_bound( const Key& key ) const{
+				const_iterator not_less = begin();
+				for (; not_less != end() && not_less->first < key;not_less++)
+					;
+				return not_less;
+			}
 
-			// }
+			iterator upper_bound( const Key& key ){
+				iterator greater = begin();
+				for (; greater != end() && greater->first <= key;greater++)
+					;
+				return (greater);
+			}
 
-			// ft::pair<const_iterator,const_iterator> equal_range( const Key& key ) const{
-
-			// }
-
-			// iterator lower_bound( const Key& key ){
-
-			// }
-
-			// const_iterator lower_bound( const Key& key ) const{
-
-			// }
-
-			// iterator upper_bound( const Key& key ){
-
-			// }
-
-			// const_iterator upper_bound( const Key& key ) const{
-
-			// }
+			const_iterator upper_bound( const Key& key ) const{
+				const_iterator greater = begin();
+				for (; greater != end() && greater->first <= key;greater++)
+					;
+				return (greater);
+			}
 
 			/////////////////////////////// OBSERVERS \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\/
 
 			key_compare key_comp() const{
-
+				return key_compare();
 			}
 
 			value_compare value_comp() const{
-
+				return value_compare(key_compare());
 			}
 
 			////////////////////////// NON-MEMBER FUNCTIONS \\\\\\\\\\\\\\\\\\\\\\\\\/
 
-			// friend bool operator==( const ft::map<Key,T,Compare,Allocator>& lhs, const ft::map<Key,T,Compare,Allocator>& rhs ){
-			// 	return (ft::equal(lhs.begin(), lhs.end(), rhs.begin()));
-			// }
+			friend bool operator==( const ft::map<Key,T,Compare,Allocator>& lhs, const ft::map<Key,T,Compare,Allocator>& rhs ){
+				return (lhs == rhs);
+			}
 
 			friend bool operator!=( const ft::map<Key,T,Compare,Allocator>& lhs, const ft::map<Key,T,Compare,Allocator>& rhs ){
 				return !(lhs == rhs);

@@ -68,9 +68,28 @@ int main()
         
         
         std::cout << std::endl << "\\\\\\\\\\\\\\\\ MY VECTOR //////////////////" << std::endl << std::endl;
-        std::cout << "size : " << myvec1.size() << ", max_size : " << myvec1.max_size() << ", at : " << myvec1.at(1) << ", back : " << myvec1.back() << ", empty : " << myvec1.empty() << ", front : " << myvec1.front() << std::endl;
+        std::cout << "size : " << myvec1.size() << ", max_size : " << myvec1.max_size() << ", at : ";
+        try
+        {
+          std::cout << myvec1.at(1);  
+        }
+        catch (std::exception e)
+        {
+            std::cout << e.what();
+        }
+        std::cout << ", back : " << myvec1.back() << ", empty : " << myvec1.empty() << ", front : " << myvec1.front() << std::endl;
+        
         std::cout << std::endl << "\\\\\\\\\\\\\\\\ REAL VECTOR //////////////////" << std::endl << std::endl;
-        std::cout << "size : " << vec1.size() << ", max_size : " << vec1.max_size() << ", at : " << vec1.at(1) << ", back : " << vec1.back() << ", empty : " << vec1.empty() << ", front : " << vec1.front() << std::endl;
+        std::cout << "size : " << vec1.size() << ", max_size : " << vec1.max_size() << ", at : ";
+        try
+        {
+          std::cout << vec1.at(1);  
+        }
+        catch (std::exception e)
+        {
+            std::cout << e.what();
+        }
+        std::cout << ", back : " << vec1.back() << ", empty : " << vec1.empty() << ", front : " << vec1.front() << std::endl;
 
 
         std::cout << std::endl << std::endl << "TEST REVERSE ITERATORS" << std::endl;
@@ -197,9 +216,28 @@ int main()
         
         
         std::cout << std::endl << "\\\\\\\\\\\\\\\\ MY VECTOR //////////////////" << std::endl << std::endl;
-        std::cout << "size : " << myvec1.size() << ", max_size : " << myvec1.max_size() << ", at : " << myvec1.at(1) << ", back : " << myvec1.back() << ", empty : " << myvec1.empty() << ", front : " << myvec1.front() << std::endl;
+        std::cout << "size : " << myvec1.size() << ", max_size : " << myvec1.max_size() << ", at : ";
+        try
+        {
+          std::cout << myvec1.at(20);  
+        }
+        catch (std::exception e)
+        {
+            std::cout << e.what();
+        }
+        std::cout << ", back : " << myvec1.back() << ", empty : " << myvec1.empty() << ", front : " << myvec1.front() << std::endl;
+        
         std::cout << std::endl << "\\\\\\\\\\\\\\\\ REAL VECTOR //////////////////" << std::endl << std::endl;
-        std::cout << "size : " << vec1.size() << ", max_size : " << vec1.max_size() << ", at : " << vec1.at(1) << ", back : " << vec1.back() << ", empty : " << vec1.empty() << ", front : " << vec1.front() << std::endl;
+        std::cout << "size : " << vec1.size() << ", max_size : " << vec1.max_size() << ", at : ";
+        try
+        {
+          std::cout << vec1.at(20);  
+        }
+        catch (std::exception e)
+        {
+            std::cout << e.what();
+        }
+        std::cout << ", back : " << vec1.back() << ", empty : " << vec1.empty() << ", front : " << vec1.front() << std::endl;
 
 
         std::cout << std::endl << std::endl << "TEST REVERSE ITERATORS" << std::endl;

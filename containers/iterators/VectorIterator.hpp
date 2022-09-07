@@ -1,14 +1,12 @@
 #ifndef VECTORITERATOR_HPP
 # define VECTORITERATOR_HPP
 
-# include <cstddef>
-# include <iterator>
-# include <iostream>
-# include <string>
+# include "../utils.hpp"
+# include <ostream>
 
 namespace ft
 {
-    template <class T, class Category = std::random_access_iterator_tag, class Distance = ptrdiff_t,
+    template <class T, class Category = ft::random_access_iterator_tag, class Distance = ptrdiff_t,
     	    class Pointer = T*, class Reference = T&>
 
     class VectorIterator
@@ -51,7 +49,7 @@ namespace ft
 
             VectorIterator operator+(int n) const {VectorIterator tmp(*this); tmp += n; return tmp;}
 
-            // friend VectorIterator	operator + (std::ptrdiff_t n, VectorIterator it){VectorIterator tmp(it.get_ptr());tmp += n;return (tmp);}
+            // friend VectorIterator	operator + (ptrdiff_t n, VectorIterator it){VectorIterator tmp(it.get_ptr());tmp += n;return (tmp);}
 
             VectorIterator operator-(int n) const {VectorIterator tmp(*this); tmp -= n; return tmp;}
             

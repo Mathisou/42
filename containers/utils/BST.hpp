@@ -1,43 +1,19 @@
 #ifndef BST_HPP
 # define BST_HPP
 
-#include <stdlib.h>
 #include <iostream>
 
 namespace ft
 {
-    // template <class BST>
-    template <class T, class Compare = std::less<T> >
-    // template <class T, class Compare = std::less<T>, class Node = ft::BST<T>,
-		// 	class Type_Alloc = std::allocator<T>, class Node_Alloc = std::allocator<Node> >
+    template <class T, class Compare = ft::less<T> >
     struct BST
     {
-          //RBT properties :
-          //1. Red/Black Property: Every node is colored, either red or black.
-          //2. Root Property: The root is black.
-          //3. Leaf Property: Every leaf (NIL) is black.
-          //4. Red Property: If a red node has children then, the children are always black.
-          //5. Depth Property: For each node, any simple path from this node to any of its descendant
-          //   leaf has the same black-depth (the number of black nodes).
           typedef T   value_type;
 
           BST *parent;
-          BST *left; //child 1
-          BST *right;//child 2
+          BST *left;
+          BST *right;
           value_type value;
-          // int color; //1=red  0=black
-
-          // RBT() : parent(), left(), right(){}
-
-          // ~RBT(){}
-
-          /*
-            Insert
-            1. Find the good path to put the key
-            2. Insert it.
-            3. If properties violated, fix it
-            4. Return a pointer on the root
-          */
 
           BST *CreateNewNode(value_type value){
             BST* newNode = new(BST); // a modif (use alloc)
@@ -49,7 +25,7 @@ namespace ft
             return (newNode);
           }
 
-          BST *insertion(BST *root, value_type value)
+          ft::pair<BST*, bool> insertion(BST *root, value_type value)
           {
             if (root == NULL){
               parent = NULL;
@@ -57,29 +33,17 @@ namespace ft
             }
             else if (value.first < root->value.first)
             {
-              root->left = insertion(root->left, value);
+              root->left = insertion(root->left, value).first;
               root->left->parent = root;
             }
             else if (value.first > root->value.first){
-              root->right = insertion(root->right, value);
+              root->right = insertion(root->right, value).first;
               root->right->parent = root;
             }
-            return root;
+            else
+              return ft::make_pair(root, false);
+            return ft::make_pair(root, true);
           }
-
-          // void fixInsert()
-          // {
-
-          // }
-
-          /*
-            Delete
-            1. Search for the key in the BST
-            2. Delete it
-            3. Replace it by another key (not understand which one yet)
-            4. If properties violated, fix it
-            5. Return a pointer on the root
-          */
 
           BST *FindMin(BST *root){
             if (root)
@@ -97,16 +61,22 @@ namespace ft
 
           BST *FindMax(BST *root){
             if (root)
+            {
               while (root->right != NULL)
                 root = root->right;
-            return root->right;
+              return root->right;
+            }
+            return root;
           }
 
           BST *FindMax(BST *root) const{
             if (root)
+            {
               while (root->right != NULL)
                 root = root->right;
-            return root->right;
+              return root->right;
+            }
+            return root;
           }
 
           BST *deletion(BST *root, value_type value)
@@ -119,24 +89,32 @@ namespace ft
               root->right = deletion(root->right, value);
             else
             {
-              if (root->right == NULL && root->left == NULL){ // no child
+              if (root->right == NULL && root->left == NULL){
                 delete root; //
                 root = NULL;
                 return root;
               }
-              else if (root->right == NULL){ // 1 child
+              else if (root->right == NULL){
                 BST *tmp = root;
+                if (root->parent)
+                  root->left->parent = root->parent;
+                else
+                  root->left->parent = NULL;
                 root = root->left;
                 delete tmp; //
                 return root;
               }
               else if (root->left == NULL){
                 BST *tmp = root;
+                if (root->parent)
+                  root->right->parent = root->parent;
+                else
+                  root->right->parent = NULL;
                 root = root->right;
                 delete tmp; //
                 return root;
               }
-              else{ // 2 children
+              else{
                 BST *tmp = FindMin(root->right);
                 root->value = tmp->value;
                 root->right = deletion(root->right, tmp->value);
@@ -144,11 +122,6 @@ namespace ft
             }
             return root;
           }
-
-          // void fixDeletion()
-          // {
-
-          // }
 
           void swap(BST& x){
             if (&x == this)
@@ -158,22 +131,6 @@ namespace ft
             *this = x;
             x = *save;
           }
-
-          // void next(){
-          //   if (right == NULL && parent->value <= value)
-          //     return ;
-          //   else if (right)
-
-          //   else if (parent->right)
-          //   {
-
-          //   }
-          //   return ;
-          // }
-
-          // void prev(){
-
-          // }
     };
 
 }
