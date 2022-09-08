@@ -15,6 +15,8 @@ namespace ft
           BST *right;
           value_type value;
 
+          // BST() : parent(), left(), right(){}
+
           BST *CreateNewNode(value_type value){
             BST* newNode = new(BST); // a modif (use alloc)
             // BST *newNode = Node_Alloc.allocate(1);
@@ -27,10 +29,8 @@ namespace ft
 
           ft::pair<BST*, bool> insertion(BST *root, value_type value)
           {
-            if (root == NULL){
-              parent = NULL;
+            if (root == NULL)
               root = CreateNewNode(value);
-            }
             else if (value.first < root->value.first)
             {
               root->left = insertion(root->left, value).first;
@@ -102,6 +102,7 @@ namespace ft
                   root->left->parent = NULL;
                 root = root->left;
                 delete tmp; //
+                tmp = NULL;
                 return root;
               }
               else if (root->left == NULL){
@@ -112,6 +113,7 @@ namespace ft
                   root->right->parent = NULL;
                 root = root->right;
                 delete tmp; //
+                tmp = NULL;
                 return root;
               }
               else{

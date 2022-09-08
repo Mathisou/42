@@ -32,9 +32,8 @@ namespace ft
 
 		private:
 
-			key_compare									_compare;
+			key_compare									_comp;
 			allocator_type								_alloc;
-			map_node 									_BST;
 			map_node									*_root;
 
         public:
@@ -58,21 +57,23 @@ namespace ft
 
 			};
 
-			map(): _compare(), _alloc(), _BST(), _root(){}
+			map(): _comp(), _alloc(), _root(){}
 
-			explicit map( const Compare& comp, const Allocator& alloc = Allocator() ): _compare(comp), _alloc(alloc), _BST(), _root(){}
+			explicit map( const Compare& comp, const Allocator& alloc = Allocator() ): _comp(comp), _alloc(alloc), _root(){}
 
 			template< class InputIt >
-			map( InputIt first, InputIt last, const Compare& comp = Compare(), const Allocator& alloc = Allocator() ): _compare(comp), _alloc(alloc), _BST(), _root(){
+			map( InputIt first, InputIt last, const Compare& comp = Compare(), const Allocator& alloc = Allocator() ): _comp(comp), _alloc(alloc), _root(){
 				insert(first, last);
 			}
 
-			map( const map& other ): _compare(other._comp), _alloc(other._comp), _BST(other._BST), _root(other._root){}
+			map( const map& other ): _comp(other._comp), _alloc(other._alloc), _root(){insert(other.begin(), other.end());}
 
 			~map(){clear();}
 
-			map& operator=( const map& other ){
-				if (*this == other)
+			map& operator=( const map& other )
+			{
+				std::cout << "operator=" << std::endl;
+				if (&other == this)
 					return *this;
 				clear();
 				insert(other.begin(), other.end());
@@ -108,14 +109,14 @@ namespace ft
 			}
 
 			/////////////////////////////// ITERATORS \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\/
+			#include <iostream>
+			iterator begin(){return iterator(_root->FindMin(_root), _comp);}
 
-			iterator begin(){return iterator(_BST.FindMin(_root), _compare);}
+			const_iterator begin() const{return const_iterator(_root->FindMin(_root), _comp);}
 
-			const_iterator begin() const{return const_iterator(_BST.FindMin(_root), _compare);}
+			iterator end(){return iterator(_root->FindMax(_root), _comp);}
 
-			iterator end(){return iterator(_BST.FindMax(_root), _compare);}
-
-			const_iterator end() const{return const_iterator(_BST.FindMax(_root), _compare);}
+			const_iterator end() const{return const_iterator(_root->FindMax(_root), _comp);}
 
 			reverse_iterator rbegin(){return reverse_iterator(end());}
 
@@ -136,7 +137,7 @@ namespace ft
 
 			size_type size() const{
 				int count = 0;
-				for (ft::MapIterator<T, Compare> it = begin(); it != end(); it++)
+				for (const_iterator it = begin(); it != end(); it++)
 					count++;
 				return count;
 			}
@@ -148,24 +149,33 @@ namespace ft
 			/////////////////////////////// MODIFIERS \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\/
 
 			void clear(){ 
-				erase(begin(), end());
+				erase(this->begin(), this->end());
 			}
 
 			ft::pair<iterator, bool> insert( const value_type& value ){
-				ft::pair <map_node*, bool> ret = _BST.insertion(_root, value);
+				ft::pair <map_node*, bool> ret = _root->insertion(_root, value);
 				_root = ret.first;
 				return ft::make_pair(iterator(ret.first), ret.second);
 			}
 
 			iterator insert( iterator hint, const value_type& value ){
 				(void)hint;
-				ft::pair <map_node*, bool> ret = _BST.insertion(_root, value);
+				ft::pair <map_node*, bool> ret = _root->insertion(_root, value);
 				_root = ret.first;
 				return iterator(ret.first);
 			}
 
+			template< class InputIt >
+			void insert( InputIt first, InputIt last ){
+				ft::pair <map_node*, bool> ret;
+				for (;first != last;first++){
+					ret = _root->insertion(_root, *first);
+					_root = ret.first;
+				}
+			}
+
 			void erase( iterator pos ){
-				_root = _BST.deletion(_root, *pos);
+				_root = _root->deletion(_root, *pos);
 			}
 
 			void erase( iterator first, iterator last ){
@@ -176,12 +186,12 @@ namespace ft
 			size_type erase( const Key& key ){
 				if (find(key) == end())
 					return (0);
-				_root = _BST.deletion(_root, ft::make_pair(key, mapped_type()));
+				_root = _root->deletion(_root, ft::make_pair(key, mapped_type()));
 				return (1);
 			}
 
 			void swap( map& other ){
-				_BST.swap(other);
+				_root->swap(other);
 			}
 
 			//////////////////////////////// LOOKUP \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\/

@@ -19,7 +19,7 @@ namespace ft
             typedef typename Container::reference           reference;
             typedef typename Container::const_reference     const_reference;
 
-        private:
+        protected:
 
             container_type _c;
 
