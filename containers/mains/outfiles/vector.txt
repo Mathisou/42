@@ -1,0 +1,65 @@
+
+TEST WITH STRINGS
+
+je | t' | aime | . | jtm
+
+|||||||||||||||||
+
+je | jtm
+
+|||||||||||||||||
+
+size : 2, max_size : 768614336404564650, at : jtm, back : jtm, empty : 0, front : je
+
+
+TEST REVERSE ITERATORS
+jtm | je
+
+SAME CONTENT
+'==' : 1
+'!=' : 0
+'<' : 0
+'<=' : 1
+'>' : 0
+'>=' : 1
+
+DIFFERENT CONTENT
+'==' : 0
+'!=' : 1
+'<' : 1
+'<=' : 1
+'>' : 0
+'>=' : 0
+
+
+TEST WITH INTS
+
+1 | 2 | 3 | 4 | 6
+
+|||||||||||||||||
+
+1 | 6
+
+|||||||||||||||||
+
+size : 2, max_size : 4611686018427387903, at : std::exception, back : 6, empty : 0, front : 1
+
+
+TEST REVERSE ITERATORS
+6 | 1
+
+SAME CONTENT
+'==' : 1
+'!=' : 0
+'<' : 0
+'<=' : 1
+'>' : 0
+'>=' : 1
+
+DIFFERENT CONTENT
+'==' : 0
+'!=' : 1
+'<' : 1
+'<=' : 1
+'>' : 0
+'>=' : 0
