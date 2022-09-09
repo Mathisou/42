@@ -28,8 +28,6 @@ namespace ft
 
             ~MapIterator(){}
 
-            // operator MapIterator<const T, const U>(void) const{return MapIterator<const T, const U>(this->_ptr);}
-
             MapIterator &operator=(const MapIterator &other){
                 if (this == &other)
                     return *this;

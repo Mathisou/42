@@ -2,24 +2,23 @@
 # define BST_HPP
 
 #include <iostream>
+#include "utils.hpp"
 
 namespace ft
 {
     template <class T, class Compare = ft::less<T> >
     struct BST
     {
-          typedef T   value_type;
+          typedef T value_type;
 
           BST *parent;
           BST *left;
           BST *right;
-          value_type value;
-
-          // BST() : parent(), left(), right(){}
+          value_type value;   
+          std::allocator<BST> alloc;       
 
           BST *CreateNewNode(value_type value){
-            BST* newNode = new(BST); // a modif (use alloc)
-            // BST *newNode = Node_Alloc.allocate(1);
+            BST *newNode = alloc.allocate(1);
             newNode->value = value;
             newNode->left = NULL;
             newNode->right = NULL;
@@ -90,7 +89,8 @@ namespace ft
             else
             {
               if (root->right == NULL && root->left == NULL){
-                delete root; //
+                alloc.destroy(root);
+                alloc.deallocate(root, 1);
                 root = NULL;
                 return root;
               }
@@ -101,7 +101,8 @@ namespace ft
                 else
                   root->left->parent = NULL;
                 root = root->left;
-                delete tmp; //
+                alloc.destroy(tmp);
+                alloc.deallocate(tmp, 1);
                 tmp = NULL;
                 return root;
               }
@@ -112,7 +113,8 @@ namespace ft
                 else
                   root->right->parent = NULL;
                 root = root->right;
-                delete tmp; //
+                alloc.destroy(tmp);
+                alloc.deallocate(tmp, 1);
                 tmp = NULL;
                 return root;
               }

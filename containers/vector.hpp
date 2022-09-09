@@ -264,7 +264,7 @@ namespace ft
                 return iterator(position + pos);
             }
 
-            void insert (iterator position, size_type n, const value_type& val){ // tres bancal, a tester
+            void insert (iterator position, size_type n, const value_type& val){
                 if (!(n > 0))
                     return;
                 size_type pos = 0;

@@ -87,7 +87,7 @@ namespace ft
 			T& at( const Key& key ){
 				iterator it = find(key);
 				if (it == end())
-					throw std::out_of_range("map");
+					throw std::out_of_range("map::at:  key not found");
 				else
 					return (*it).second;
 			}
@@ -95,17 +95,14 @@ namespace ft
 			const T& at( const Key& key ) const{
 				const_iterator it = find(key);
 				if (it == end())
-					throw std::out_of_range("map");
+					throw std::out_of_range("map::at:  key not found");
 				else
 					return (*it).second;
 			}
 
 			T& operator[]( const Key& key ){
-				return insert(ft::make_pair(key, T())).first->second;
-			}
-
-			T& operator[]( Key& key ){
-				return insert(ft::make_pair(key, T())).first->second;
+				insert(ft::make_pair(key, T()));
+				return find(key)->second;
 			}
 
 			/////////////////////////////// ITERATORS \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\/
@@ -275,11 +272,25 @@ namespace ft
 			////////////////////////// NON-MEMBER FUNCTIONS \\\\\\\\\\\\\\\\\\\\\\\\\/
 
 			friend bool operator==( const ft::map<Key,T,Compare,Allocator>& lhs, const ft::map<Key,T,Compare,Allocator>& rhs ){
-				return (lhs == rhs);
+				const_iterator it = lhs.begin();
+				const_iterator it2 = rhs.begin();
+				for (; it != lhs.end() && it2 != rhs.end(); it++, it2++)
+					if (it->first != it2->first)
+						return false;
+				if (it == lhs.end() && it2 == rhs.end())
+					return true;
+				return false;
 			}
 
 			friend bool operator!=( const ft::map<Key,T,Compare,Allocator>& lhs, const ft::map<Key,T,Compare,Allocator>& rhs ){
-				return !(lhs == rhs);
+				const_iterator it = lhs.begin();
+				const_iterator it2 = rhs.begin();
+				for (; it != lhs.end() && it2 != rhs.end(); it++, it2++)
+					if (it->first != it2->first)
+						return true;
+				if (it == lhs.end() && it2 == rhs.end())
+					return false;
+				return true;
 			}
 
 			friend bool operator<( const ft::map<Key,T,Compare,Allocator>& lhs, const ft::map<Key,T,Compare,Allocator>& rhs ){
@@ -287,18 +298,42 @@ namespace ft
 			}
 
 			friend bool operator<=( const ft::map<Key,T,Compare,Allocator>& lhs, const ft::map<Key,T,Compare,Allocator>& rhs ){
-				return !(rhs < lhs);
+				const_iterator first1 = lhs.begin();
+				const_iterator last1 = lhs.end();
+				const_iterator first2 = rhs.begin();
+				const_iterator last2 = rhs.end();
+				for (; first1!=last1 && first2!=last2; first1++, first2++){
+					if (*first1 <= *first2)
+						return true;
+					if (*first1 > *first2){}
+						return false;
+				}
+				if (first1 == last1 && first2 != last2)
+					return true;
+				return false;
 			}
 
 			friend bool operator>( const ft::map<Key,T,Compare,Allocator>& lhs, const ft::map<Key,T,Compare,Allocator>& rhs ){
-				return (rhs < lhs);
+				return ft::lexicographical_compare(rhs.begin(), rhs.end(), lhs.begin(), lhs.end());
 			}
 
 			friend bool operator>=( const ft::map<Key,T,Compare,Allocator>& lhs, const ft::map<Key,T,Compare,Allocator>& rhs ){
-				return !(rhs > lhs);
+				const_iterator first1 = rhs.begin();
+				const_iterator last1 = rhs.end();
+				const_iterator first2 = lhs.begin();
+				const_iterator last2 = lhs.end();
+				for (; first1!=last1 && first2!=last2; first1++, first2++){
+					if (*first1 <= *first2)
+						return true;
+					if (*first1 > *first2){}
+						return false;
+				}
+				if (first1 == last1 && first2 != last2)
+					return true;
+				return false;
 			}
 
-			void swap( ft::map<Key,T,Compare,Allocator>& lhs, ft::map<Key,T,Compare,Allocator>& rhs ){
+			friend void swap( ft::map<Key,T,Compare,Allocator>& lhs, ft::map<Key,T,Compare,Allocator>& rhs ){
 				lhs.swap(rhs);
 			}
 

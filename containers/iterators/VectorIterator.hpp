@@ -1,7 +1,7 @@
 #ifndef VECTORITERATOR_HPP
 # define VECTORITERATOR_HPP
 
-# include "../utils.hpp"
+# include "../utils/utils.hpp"
 # include <ostream>
 
 namespace ft
@@ -49,8 +49,6 @@ namespace ft
 
             VectorIterator operator+(int n) const {VectorIterator tmp(*this); tmp += n; return tmp;}
 
-            // friend VectorIterator	operator + (ptrdiff_t n, VectorIterator it){VectorIterator tmp(it.get_ptr());tmp += n;return (tmp);}
-
             VectorIterator operator-(int n) const {VectorIterator tmp(*this); tmp -= n; return tmp;}
             
             VectorIterator &operator+=(int n){_ptr += n;return *this;}
@@ -77,9 +75,6 @@ namespace ft
             value_type operator*() const {return *_ptr;}
 
             value_type &operator [] (int n) const{return _ptr[n];}
-
-            // value_type operator->() const {return _ptr;}
-
 
     };
     template<class T>
