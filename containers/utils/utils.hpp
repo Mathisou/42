@@ -115,7 +115,13 @@ namespace ft
 		template< class U1, class U2 >
 		pair( const pair<U1, U2>& p ): first(p.first), second(p.second){}
 
-		pair& operator=( const pair& other ){if (*this == other)return *this;first = other.first;second = other.second; return *this;}
+		pair& operator=( const pair& other ){
+            if (*this == other)
+                return *this;
+            first = other.first;
+            second = other.second;
+            return *this;
+            }
 	};
 
 	template< class T1, class T2 >

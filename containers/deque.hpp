@@ -1,5 +1,5 @@
-#ifndef VECTOR_HPP
-# define VECTOR_HPP
+#ifndef DEQUE_HPP
+# define DEQUE_HPP
 
 # include "iterators/VectorIterator.hpp"
 # include "iterators/reverse_iterator.hpp"
@@ -10,7 +10,7 @@ namespace ft
 
 	template <class T, class Alloc = std::allocator<T> >
 
-    class vector{
+    class deque{
         public:
 
             typedef T value_type;
@@ -27,14 +27,14 @@ namespace ft
 
 
         public:
-
-            explicit vector (const allocator_type& alloc = allocator_type()) : 
+            
+            explicit deque (const allocator_type& alloc = allocator_type()) : 
                 _alloc(alloc),
                 _start(0),
                 _size(0),
                 _capacity(0){}
             
-            explicit vector (size_type n, const value_type& val = value_type(), const allocator_type& alloc = allocator_type()) :
+            explicit deque (size_type n, const value_type& val = value_type(), const allocator_type& alloc = allocator_type()) :
                 _alloc(alloc),
                 _start(0),
                 _size(n),
@@ -43,7 +43,7 @@ namespace ft
                 assign(n, val);
             }
             template <class InputIterator>
-            vector (InputIterator first, InputIterator last, const allocator_type& alloc = allocator_type()) :
+            deque (InputIterator first, InputIterator last, const allocator_type& alloc = allocator_type()) :
                 _alloc(alloc),
                 _start(0),
                 _size(0),
@@ -51,7 +51,7 @@ namespace ft
             {
                 assign(first, last);
             }
-            vector (const vector& x) :
+            deque (const deque& x) :
                 _alloc(x._alloc),
                 _start(0),
                 _size(x._size),
@@ -61,13 +61,13 @@ namespace ft
                 for (size_type i = 0; i < x._size;i++)
                     _alloc.construct(&_start[i], x._start[i]);
             }
-            ~vector()
+            ~deque()
             {
                 clear();
                 _alloc.deallocate(_start, _capacity);
             }
 
-            vector& operator= (const vector& x){
+            deque& operator= (const deque& x){
                 if (*this == x)
                     return (*this);
                 clear();
@@ -124,41 +124,11 @@ namespace ft
                 return _alloc.max_size();
             }
 
-            void resize (size_type n, value_type val = value_type()){
-                if (n < _size){
-                    while (_size > n)
-                        pop_back();
-                }
-                else if (n > _size){
-                    for (int i = 0;_size < n;i++) // dans le cas ou val contient toujours assez d'element pour completer jusqua n
-                        push_back(val[i]);
-                }
-            }
-
-            size_type capacity() const{
-                return (_capacity);
-            }
-
             bool empty() const{
                 if (_size == 0)
                     return true;
                 else
                     return false;
-            }
-
-            void reserve (size_type n){
-                if (n > _capacity){
-                    size_type tmp_size;
-                    value_type *tmp = _alloc.allocate(n);
-                    for (size_type i = 0;i<_size;i++)
-                        _alloc.construct(&tmp[i], _start[i]);
-                    tmp_size = _size;
-                    clear();
-                    _alloc.deallocate(_start, _capacity);
-                    _capacity = n;
-                    _start = tmp;
-                    _size = tmp_size;
-                }
             }
 
     //////////////////////////// ELEMENT ACCESS \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\/
@@ -175,14 +145,14 @@ namespace ft
                 if (n < _size)
                     return _start[n];
                 else
-                    throw std::out_of_range("vector");
+                    throw std::out_of_range("deque");
             }
 
             const_reference at (size_type n) const{
                 if (n < _size)
                     return _start[n];
                 else
-                    throw std::out_of_range("vector");
+                    throw std::out_of_range("deque");
             }
 
             reference front(){
@@ -241,10 +211,34 @@ namespace ft
 
             void push_back (const value_type& val){
                 if (_size >= _capacity){
-                    if (_size == 0)
-                        reserve(1);
-                    else
-                        reserve(_size * 2);
+                    if (_size == 0){
+                        if (1 > _capacity){
+                            size_type tmp_size;
+                            value_type *tmp = _alloc.allocate(1);
+                            for (size_type i = 0;i<_size;i++)
+                                _alloc.construct(&tmp[i], _start[i]);
+                            tmp_size = _size;
+                            clear();
+                            _alloc.deallocate(_start, _capacity);
+                            _capacity = 1;
+                            _start = tmp;
+                            _size = tmp_size;
+                        }
+                    }
+                    else{
+                        if (_size * 2 > _capacity){
+                            size_type tmp_size;
+                            value_type *tmp = _alloc.allocate(_size * 2);
+                            for (size_type i = 0;i<_size;i++)
+                                _alloc.construct(&tmp[i], _start[i]);
+                            tmp_size = _size;
+                            clear();
+                            _alloc.deallocate(_start, _capacity);
+                            _capacity = tmp_size * 2;
+                            _start = tmp;
+                            _size = tmp_size;
+                        }
+                    }
                 }
                 _alloc.construct(&_start[_size], val);
                 _size++;
@@ -254,6 +248,65 @@ namespace ft
                 if (_size > 0)
                     _alloc.destroy(&_start[_size - 1]);
                 _size--;
+            }
+
+            void push_front( const T& value ){
+                if (_size >= _capacity){
+                    if (_size == 0){
+                        if (1 > _capacity){
+                            size_type tmp_size;
+                            value_type *tmp = _alloc.allocate(1);
+                            for (size_type i = 0;i<_size;i++)
+                                _alloc.construct(&tmp[i], _start[i]);
+                            tmp_size = _size;
+                            clear();
+                            _alloc.deallocate(_start, _capacity);
+                            _capacity = 1;
+                            _start = tmp;
+                            _size = tmp_size;
+                        }
+                    }
+                    else{
+                        if (_size * 2 > _capacity){
+                            size_type tmp_size;
+                            value_type *tmp = _alloc.allocate(_size * 2);
+                            for (size_type i = 0;i<_size;i++)
+                                _alloc.construct(&tmp[i], _start[i]);
+                            tmp_size = _size;
+                            clear();
+                            _alloc.deallocate(_start, _capacity);
+                            _capacity = tmp_size * 2;
+                            _start = tmp;
+                            _size = tmp_size;
+                        }
+                    }
+                }
+                value_type *tmp = _alloc.allocate(_capacity);
+                size_type tmp_size = _size;
+                _alloc.construct(&tmp[0], value);
+                for (size_type j = 0;j<_size;j++)
+                    _alloc.construct(&tmp[j + 1], _start[j]);
+                clear();
+                _alloc.deallocate(_start, _capacity);
+                _start = tmp;
+                _size = tmp_size + 1;
+            }
+
+            void pop_front(){
+                if (_size == 0)
+                    return;
+                else if (_size == 1)
+                    clear();
+                else{
+                    value_type *tmp = _alloc.allocate(_capacity);
+                    size_type tmp_size = _size;
+                    for (size_type j = 1;j<_size;j++)
+                        _alloc.construct(&tmp[j - 1], _start[j]);
+                    clear();
+                    _alloc.deallocate(_start, _capacity);
+                    _start = tmp;
+                    _size = tmp_size - 1;
+                }
             }
 
             iterator insert (iterator position, const value_type& val){
@@ -270,7 +323,18 @@ namespace ft
                 size_type pos = 0;
                 pos = this->begin() - position;
                 if (pos <= _size){
-                    this->reserve(_size + n);
+                    if (_size + n > _capacity){
+                        size_type tmp_size;
+                        value_type *tmp = _alloc.allocate(n);
+                        for (size_type i = 0;i<_size;i++)
+                            _alloc.construct(&tmp[i], _start[i]);
+                        tmp_size = _size;
+                        clear();
+                        _alloc.deallocate(_start, _capacity);
+                        _capacity = _size + n;
+                        _start = tmp;
+                        _size = tmp_size;
+                    }
                     size_type tmp_size = 0;
                     value_type *tmp = _alloc.allocate(pos + _size);
                     for (size_type i = 0;i<_size - pos;i++){
@@ -297,7 +361,18 @@ namespace ft
                 size_type n = first - last;
                 size_type pos = position - begin();
                 if (pos <= _size){
-                    this->reserve(_size + n);
+                    if (_size + n > _capacity){
+                        size_type tmp_size;
+                        value_type *tmp = _alloc.allocate(_size + n);
+                        for (size_type i = 0;i<_size;i++)
+                            _alloc.construct(&tmp[i], _start[i]);
+                        tmp_size = _size;
+                        clear();
+                        _alloc.deallocate(_start, _capacity);
+                        _capacity = _size + n;
+                        _start = tmp;
+                        _size = tmp_size;
+                    }
                     int tmp_size = 0;
                     value_type *tmp = _alloc.allocate(pos + _size);
                     for (size_type i = 0;i<_size - pos;i++){
@@ -341,7 +416,7 @@ namespace ft
                 return first;
             }
 
-            void swap (vector& x){
+            void swap (deque& x){
                 allocator_type	tmp_alloc;
                 pointer			tmp_start;
                 size_type		tmp_size;
@@ -386,12 +461,12 @@ namespace ft
     ///////////////////// NON-MEMBER FUNCTION OVERLOADS \\\\\\\\\\\\\\\\\\\\\\/
         
         template <class T, class Alloc>
-        bool operator== (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs){
+        bool operator== (const deque<T,Alloc>& lhs, const deque<T,Alloc>& rhs){
 
             if (lhs.size() != rhs.size())
                 return false;
-            typename ft::vector<T>::const_iterator first;
-            typename ft::vector<T>::const_iterator second;
+            typename ft::deque<T>::const_iterator first;
+            typename ft::deque<T>::const_iterator second;
 
             first = lhs.begin();
             second = rhs.begin();
@@ -406,14 +481,14 @@ namespace ft
         }
 
         template <class T, class Alloc>
-        bool operator!= (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs){
+        bool operator!= (const deque<T,Alloc>& lhs, const deque<T,Alloc>& rhs){
             return !(lhs == rhs);
         }
 
         template <class T, class Alloc>
-        bool operator<  (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs){
-            typename ft::vector<T>::const_iterator first1;
-            typename ft::vector<T>::const_iterator first2;
+        bool operator<  (const deque<T,Alloc>& lhs, const deque<T,Alloc>& rhs){
+            typename ft::deque<T>::const_iterator first1;
+            typename ft::deque<T>::const_iterator first2;
 
             first1 = lhs.begin();
             first2 = rhs.begin();
@@ -431,22 +506,22 @@ namespace ft
         }
 
         template <class T, class Alloc>
-        bool operator<= (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs){
+        bool operator<= (const deque<T,Alloc>& lhs, const deque<T,Alloc>& rhs){
             return !(rhs<lhs);
         }
 
         template <class T, class Alloc>
-        bool operator>  (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs){
+        bool operator>  (const deque<T,Alloc>& lhs, const deque<T,Alloc>& rhs){
             return (rhs<lhs);
         }
 
         template <class T, class Alloc>
-        bool operator>= (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs){
+        bool operator>= (const deque<T,Alloc>& lhs, const deque<T,Alloc>& rhs){
             return !(lhs<rhs);
         }
 
         template <class T, class Alloc>
-        void swap (vector<T,Alloc>& x, vector<T,Alloc>& y){
+        void swap (deque<T,Alloc>& x, deque<T,Alloc>& y){
             x.swap(y);
         }
 }

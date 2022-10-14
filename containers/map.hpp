@@ -57,9 +57,9 @@ namespace ft
 
 			};
 
-			map(): _comp(), _alloc(), _root(){}
+			map(): _comp(), _alloc(), _root(NULL){}
 
-			explicit map( const Compare& comp, const Allocator& alloc = Allocator() ): _comp(comp), _alloc(alloc), _root(){}
+			explicit map( const Compare& comp, const Allocator& alloc = Allocator() ): _comp(comp), _alloc(alloc), _root(NULL){}
 
 			template< class InputIt >
 			map( InputIt first, InputIt last, const Compare& comp = Compare(), const Allocator& alloc = Allocator() ): _comp(comp), _alloc(alloc), _root(){
@@ -72,7 +72,6 @@ namespace ft
 
 			map& operator=( const map& other )
 			{
-				std::cout << "operator=" << std::endl;
 				if (&other == this)
 					return *this;
 				clear();
@@ -87,7 +86,7 @@ namespace ft
 			T& at( const Key& key ){
 				iterator it = find(key);
 				if (it == end())
-					throw std::out_of_range("map::at:  key not found");
+					throw std::out_of_range("map::at");
 				else
 					return (*it).second;
 			}
@@ -95,7 +94,7 @@ namespace ft
 			const T& at( const Key& key ) const{
 				const_iterator it = find(key);
 				if (it == end())
-					throw std::out_of_range("map::at:  key not found");
+					throw std::out_of_range("map::at");
 				else
 					return (*it).second;
 			}

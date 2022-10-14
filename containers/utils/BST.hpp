@@ -14,8 +14,8 @@ namespace ft
           BST *parent;
           BST *left;
           BST *right;
-          value_type value;   
-          std::allocator<BST> alloc;       
+          value_type value;
+          std::allocator<BST> alloc;
 
           BST *CreateNewNode(value_type value){
             BST *newNode = alloc.allocate(1);
@@ -50,7 +50,7 @@ namespace ft
                 root = root->left;
             return root;
           }
-          
+
           BST *FindMin(BST *root) const{
             if (root)
               while (root->left != NULL)
@@ -130,13 +130,12 @@ namespace ft
           void swap(BST& x){
             if (&x == this)
               return ;
-            
+
             BST* save = this;
             *this = x;
             x = *save;
           }
     };
-
 }
 
 #endif
