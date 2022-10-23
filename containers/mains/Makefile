@@ -12,7 +12,7 @@ NAME = containers
 
 CC = c++
 
-FLAGS = -Wall -Werror -Wextra -g -std=c++98 -g3
+FLAGS = -Wall -Werror -Wextra -g -std=c++98 -fsanitize=address -g3
 
 OBJS = $(SRCS_VECTOR:.cpp=.o)
 

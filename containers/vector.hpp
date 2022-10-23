@@ -37,8 +37,8 @@ namespace ft
             explicit vector (size_type n, const value_type& val = value_type(), const allocator_type& alloc = allocator_type()) :
                 _alloc(alloc),
                 _start(0),
-                _size(n),
-                _capacity(n)
+                _size(0),
+                _capacity(0)
             {
                 assign(n, val);
             }
@@ -65,6 +65,7 @@ namespace ft
             {
                 clear();
                 _alloc.deallocate(_start, _capacity);
+                _capacity = 0;
             }
 
             vector& operator= (const vector& x){
@@ -131,7 +132,7 @@ namespace ft
                 }
                 else if (n > _size){
                     for (int i = 0;_size < n;i++) // dans le cas ou val contient toujours assez d'element pour completer jusqua n
-                        push_back(val[i]);
+                        push_back(val);
                 }
             }
 
@@ -204,9 +205,9 @@ namespace ft
     /////////////////////////////// MODIFIERS \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\/
 
             template <class InputIterator>
-            void assign (InputIterator first, InputIterator last){
+            void assign (InputIterator first, InputIterator last,typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type* = nullptr){
                 InputIterator tmp = first;
-                int range;
+                size_type range = 0;
                 while (tmp != last){
                     tmp++;
                     range++;
@@ -215,27 +216,28 @@ namespace ft
                 if (range > _capacity){
                     _alloc.deallocate(_start, _capacity);
                     _start = _alloc.allocate(range);
+                    _capacity = range;
                 }
-                _capacity = range;
-                for (size_type i = 0;i < last - first + i;i++){
+                for (size_type i = 0;first != last;i++,first++){
                     _alloc.construct(&_start[i], *first);
-                    first++;
-                    _size = i;
+                    _size = i + 1;
                 }
             }
 
             void assign (size_type n, const value_type& val){
                 clear();
-                if (_capacity == 0 && n > 0)
+                if (_capacity == 0 && n > 0){
                     _start = _alloc.allocate(n);
+                    _capacity = n;
+                }
                 else if (n > _capacity){
                     _alloc.deallocate(_start, _capacity);
                     _start = _alloc.allocate(n);
+                    _capacity = n;
                 }
-                _capacity = n;
                 for (size_type i = 0;i < n;i++){
-                    _alloc.construct(&_start[i], val[i]);
-                    _size = i;
+                    _alloc.construct(&_start[i], val);
+                    _size = i + 1;
                 }
             }
 
@@ -259,16 +261,15 @@ namespace ft
             iterator insert (iterator position, const value_type& val){
                 size_type pos;
 
-                pos = position - this->begin();
+                pos = ft::distance(begin(), position);
                 insert(position, 1, val);
-                return iterator(position + pos);
+                return begin() + pos;
             }
 
             void insert (iterator position, size_type n, const value_type& val){
                 if (!(n > 0))
                     return;
-                size_type pos = 0;
-                pos = this->begin() - position;
+                size_type pos = ft::distance(begin(), position);
                 if (pos <= _size){
                     this->reserve(_size + n);
                     size_type tmp_size = 0;
@@ -291,11 +292,11 @@ namespace ft
             }
 
             template <class InputIterator>
-            void insert (iterator position, InputIterator first, InputIterator last){
-                if (!(first - last > 0))
+            void insert (iterator position, InputIterator first, InputIterator last, typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type* = nullptr){
+                if (!(ft::distance(first, last) > 0))
                     return;
-                size_type n = first - last;
-                size_type pos = position - begin();
+                size_type n = ft::distance(first, last);
+                size_type pos = ft::distance(begin(), position);
                 if (pos <= _size){
                     this->reserve(_size + n);
                     int tmp_size = 0;
@@ -322,17 +323,18 @@ namespace ft
             }
 
             iterator erase (iterator first, iterator last){
-                if (!(first - last > 0))
+                if (!(ft::distance(first, last) > 0))
                     return first;
-                size_type n = first - last;
+                size_type n = ft::distance(first, last);
                 int tmp_size = 0;
-                value_type *tmp = _alloc.allocate(last - end());
-                for (int i = 0;i<last - end();i++){
+                value_type *tmp = _alloc.allocate(ft::distance(last, end()));
+                for (int i = 0;i<ft::distance(last, end());i++){
                     _alloc.construct(&tmp[i], _start[_size - 1 - i]);
                     tmp_size++;
                 }
-                for (size_type i = 0;i<tmp_size + n;i++)
+                for (size_type i = 0;i<tmp_size + n;i++){
                     pop_back();
+                }
                 for (int i = tmp_size - 1;i >= 0;i--)
                     push_back(tmp[i]);
                 for (int i = 0;i<tmp_size;i++)

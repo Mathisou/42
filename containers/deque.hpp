@@ -187,7 +187,7 @@ namespace ft
                     _start = _alloc.allocate(range);
                 }
                 _capacity = range;
-                for (size_type i = 0;i < last - first + i;i++){
+                for (size_type i = 0;i < ft::distance(first, last) + i;i++){
                     _alloc.construct(&_start[i], *first);
                     first++;
                     _size = i;
@@ -356,10 +356,10 @@ namespace ft
 
             template <class InputIterator>
             void insert (iterator position, InputIterator first, InputIterator last){
-                if (!(first - last > 0))
+                if (!(ft::distance(first, last) > 0))
                     return;
-                size_type n = first - last;
-                size_type pos = position - begin();
+                size_type n = ft::distance(first, last);
+                size_type pos = ft::distance(begin(), position);
                 if (pos <= _size){
                     if (_size + n > _capacity){
                         size_type tmp_size;
@@ -397,12 +397,12 @@ namespace ft
             }
 
             iterator erase (iterator first, iterator last){
-                if (!(first - last > 0))
+                if (!(ft::distance(first, last) > 0))
                     return first;
-                size_type n = first - last;
+                size_type n = ft::distance(first, last);
                 int tmp_size = 0;
-                value_type *tmp = _alloc.allocate(last - end());
-                for (int i = 0;i<last - end();i++){
+                value_type *tmp = _alloc.allocate(ft::distance(last - end()));
+                for (int i = 0;i<ft::distance(last, end());i++){
                     _alloc.construct(&tmp[i], _start[_size - 1 - i]);
                     tmp_size++;
                 }

@@ -18,6 +18,7 @@ int main()
 	map.insert(std::make_pair(6, 'b'));
 	map.erase(5);
 	map.erase(1);
+
 	// for (int i = 0;i < 10000;i++)
 	//  	map.insert(std::make_pair(i, 'a'));	
 	map_outfile << map.count(-3) << ", size: " << map.size() <<  ", find: " << map.find(6)->first << ", []: " << map[112] << ", good at:" << map.at(4) << ", wrong at:";
@@ -74,8 +75,6 @@ int main()
 	my_map.insert(ft::make_pair(6, 'b'));
 	my_map.erase(5);
 	my_map.erase(1);
-	// for (int i = 0;i < 10000;i++)
-	// 	my_map.insert(ft::make_pair(i, 'a'));
 	my_map_outfile << my_map.count(-3) << ", size: " << my_map.size() << ", find: " << my_map.find(6)->first <<  ", []: " << my_map[112] << ", good at:" << my_map.at(4) << ", wrong at:";
 	try
 	{

@@ -55,9 +55,9 @@ namespace ft
 
             VectorIterator &operator-=(int n){_ptr -= n;return *this;}
 
-            difference_type operator-( VectorIterator const & x ){return x._ptr - _ptr;}
+            difference_type operator-( const VectorIterator & x ) const{return _ptr - x._ptr;}
 
-            difference_type operator+( VectorIterator const & x ){return x._ptr + _ptr;}
+            difference_type operator+( VectorIterator const & x ) const {return x._ptr + _ptr;}
             
             bool operator == (const VectorIterator<const T> &other) const {return (_ptr == other.get_ptr());}
 
@@ -71,12 +71,30 @@ namespace ft
 
             bool operator<=(const VectorIterator<const T> &other) const {return _ptr <= other.get_ptr();}
 
+            reference operator*() const {return *_ptr;}
 
-            value_type operator*() const {return *_ptr;}
+            value_type *operator->() const{return (_ptr);}
 
             value_type &operator [] (int n) const{return _ptr[n];}
 
     };
+
+    template <class iterator>
+	VectorIterator<iterator> operator + (
+            typename VectorIterator<iterator>::difference_type n,
+            const VectorIterator<iterator> &rev_it)
+	{
+		return VectorIterator<iterator>(rev_it.get_ptr() + n);
+	}
+
+    template <class iterator>
+	VectorIterator<iterator> operator - (
+            typename VectorIterator<iterator>::difference_type n,
+            const VectorIterator<iterator> &rev_it)
+	{
+		return VectorIterator<iterator>(rev_it.get_ptr() - n);
+	}
+
     template<class T>
 
     std::ostream& operator<<( std::ostream & o, VectorIterator<T> const & i ){o << i.get_ptr();return o;}

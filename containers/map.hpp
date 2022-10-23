@@ -23,11 +23,11 @@ namespace ft
 			typedef BST<value_type, key_compare>								map_node;
 
 			typedef ft::MapIterator<map_node, Compare>					    	iterator;
-			typedef ft::ConstMapIterator<map_node, const Compare>				const_iterator;
+			typedef ft::ConstMapIterator<map_node, Compare>						const_iterator;
 			typedef ft::reverse_iterator<iterator> 							    reverse_iterator;
 			typedef ft::reverse_iterator<const_iterator>					    const_reverse_iterator;
 
-			typedef ptrdiff_t 											    difference_type;
+			typedef ptrdiff_t 											    	difference_type;
 			typedef size_t 													    size_type;
 
 		private:
@@ -35,6 +35,8 @@ namespace ft
 			key_compare									_comp;
 			allocator_type								_alloc;
 			map_node									*_root;
+			map_node									*_end;
+			std::allocator<map_node>					_bstalloc;
 
         public:
 
@@ -57,18 +59,40 @@ namespace ft
 
 			};
 
-			map(): _comp(), _alloc(), _root(NULL){}
+			map(): _comp(), _alloc(), _root(NULL), _end(){
+				// _alloc = Allocator();
+				// _comp = Compare();
+				_end = _bstalloc.allocate(1);
+				_end->right = NULL;
+				_end->is_end = true;
+				_end->left = NULL;
+			}
 
-			explicit map( const Compare& comp, const Allocator& alloc = Allocator() ): _comp(comp), _alloc(alloc), _root(NULL){}
+			explicit map( const Compare& comp, const Allocator& alloc = Allocator() ): _comp(comp), _alloc(alloc), _root(NULL){
+				_end = _bstalloc.allocate(1);
+				_end->right = NULL;
+				_end->is_end = true;
+				_end->left = NULL;
+			}
 
 			template< class InputIt >
-			map( InputIt first, InputIt last, const Compare& comp = Compare(), const Allocator& alloc = Allocator() ): _comp(comp), _alloc(alloc), _root(){
+			map( InputIt first, InputIt last, const Compare& comp = Compare(), const Allocator& alloc = Allocator(), typename ft::enable_if<!ft::is_integral<InputIt>::value, InputIt>::type* = nullptr ) : _comp(comp), _alloc(alloc), _root()
+			{
+				_end = _bstalloc.allocate(1);
+				_end->right = NULL;
+				_end->is_end = true;
+				_end->left = NULL;
 				insert(first, last);
 			}
 
-			map( const map& other ): _comp(other._comp), _alloc(other._alloc), _root(){insert(other.begin(), other.end());}
+			map( const map& other ): _comp(other._comp), _alloc(other._alloc), _root(), _end(){
+				_end = _bstalloc.allocate(1);
+				_end->right = NULL;
+				_end->is_end = true;
+				_end->left = NULL;
+				insert(other.begin(), other.end());}
 
-			~map(){clear();}
+			~map(){clear();_bstalloc.deallocate(_end, 1);}
 
 			map& operator=( const map& other )
 			{
@@ -99,20 +123,30 @@ namespace ft
 					return (*it).second;
 			}
 
-			T& operator[]( const Key& key ){
-				insert(ft::make_pair(key, T()));
+			mapped_type& operator[]( const key_type& key ){
+				insert(ft::make_pair(key, mapped_type()));
 				return find(key)->second;
 			}
 
 			/////////////////////////////// ITERATORS \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\/
 			#include <iostream>
-			iterator begin(){return iterator(_root->FindMin(_root), _comp);}
+			iterator begin(){
+				map_node *ret = _root->FindMin(_root);
+				if (!ret)
+					return iterator(_end, _comp);
+				return iterator(_root->FindMin(_root), _comp);
+			}
 
-			const_iterator begin() const{return const_iterator(_root->FindMin(_root), _comp);}
+			const_iterator begin() const{
+				map_node *ret = _root->FindMin(_root);
+				if (!ret)
+					return const_iterator(_end, _comp);
+				return const_iterator(_root->FindMin(_root), _comp);
+			}
 
-			iterator end(){return iterator(_root->FindMax(_root), _comp);}
+			iterator end(){return iterator(_end, _comp);}
 
-			const_iterator end() const{return const_iterator(_root->FindMax(_root), _comp);}
+			const_iterator end() const{return const_iterator(_end, _comp);}
 
 			reverse_iterator rbegin(){return reverse_iterator(end());}
 
@@ -133,7 +167,8 @@ namespace ft
 
 			size_type size() const{
 				int count = 0;
-				for (const_iterator it = begin(); it != end(); it++)
+				const_iterator ite = end();
+				for (const_iterator it = begin(); it != ite; it++)
 					count++;
 				return count;
 			}
@@ -149,59 +184,110 @@ namespace ft
 			}
 
 			ft::pair<iterator, bool> insert( const value_type& value ){
+				map_node *max = _root->FindMax(_root);
+				if (max)
+					max->right = NULL;
 				ft::pair <map_node*, bool> ret = _root->insertion(_root, value);
 				_root = ret.first;
-				return ft::make_pair(iterator(ret.first), ret.second);
+				max = _root->FindMax(_root);
+				max->right = _end;
+				_end->right = max;
+				iterator it = find(value.first);
+				return ft::make_pair(it, ret.second);
 			}
 
 			iterator insert( iterator hint, const value_type& value ){
 				(void)hint;
+				map_node *max = _root->FindMax(_root);
+				if (max)
+					max->right = NULL;
 				ft::pair <map_node*, bool> ret = _root->insertion(_root, value);
 				_root = ret.first;
-				return iterator(ret.first);
+				max = _root->FindMax(_root);
+				max->right = _end;
+				_end->right = max;
+				return find(value.first);
 			}
 
 			template< class InputIt >
 			void insert( InputIt first, InputIt last ){
 				ft::pair <map_node*, bool> ret;
+				map_node *max;
 				for (;first != last;first++){
+					max = _root->FindMax(_root);
+					if (max)
+						max->right = NULL;
 					ret = _root->insertion(_root, *first);
 					_root = ret.first;
+					max = _root->FindMax(_root);
+					max->right = _end;
+					_end->right = max;
 				}
 			}
 
 			void erase( iterator pos ){
 				_root = _root->deletion(_root, *pos);
+				map_node *max = _root->FindMax(_root);
+				max->right = _end;
+				_end->right = max;
 			}
 
 			void erase( iterator first, iterator last ){
-				while (first != last)
-					erase(first++);
+				map_node *max;
+				while (first != last){
+					_root = _root->deletion(_root, *first++);
+					max = _root->FindMax(_root);
+					max->right = _end;
+					_end->right = max;
+				}
 			}
 
 			size_type erase( const Key& key ){
 				if (find(key) == end())
 					return (0);
 				_root = _root->deletion(_root, ft::make_pair(key, mapped_type()));
+				map_node *max = _root->FindMax(_root);
+				max->right = _end;
+				_end->right = max;
 				return (1);
 			}
 
 			void swap( map& other ){
-				_root->swap(other);
+				key_compare									tmpcomp = _comp;
+				allocator_type								tmpalloc = _alloc;
+				map_node									*tmproot = _root;
+				map_node									*tmpend = _end;
+				std::allocator<map_node>					tmpbstalloc = _bstalloc;
+
+				_comp = other._comp;
+				_alloc = other._alloc;
+				_root = other._root;
+				_end = other._end;
+				_bstalloc = other._bstalloc;
+
+				other._comp = tmpcomp;
+				other._alloc = tmpalloc;
+				other._root = tmproot;
+				other._end = tmpend;
+				other._bstalloc = tmpbstalloc;
+				
+				
 			}
 
 			//////////////////////////////// LOOKUP \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\/
 
-			size_type count( const Key& key ) {
+			size_type count( const Key& key ) const {
 				if (find(key) == end())
 					return 0;
 				return 1;
 			}
 
-			iterator find( const Key& key ){
+			iterator find( const Key& key ) {
 				iterator it = begin();
 				for (; it != end() && it->first != key;it++)
 					;
+				if (it == end())
+					return end();
 				return it;
 			}
 
@@ -301,13 +387,14 @@ namespace ft
 				const_iterator last1 = lhs.end();
 				const_iterator first2 = rhs.begin();
 				const_iterator last2 = rhs.end();
-				for (; first1!=last1 && first2!=last2; first1++, first2++){
-					if (*first1 <= *first2)
+				for (; (first1 != last1) && (first2 != last2); ++first1, (void) ++first2)
+				{
+					if (*first1 < *first2)
 						return true;
-					if (*first1 > *first2){}
+					if (*first2 < *first1)
 						return false;
 				}
-				if (first1 == last1 && first2 != last2)
+				if ((first1 == last1 && first2 == last2) || (first1 == last1 && first2 != last2))
 					return true;
 				return false;
 			}
@@ -321,13 +408,14 @@ namespace ft
 				const_iterator last1 = rhs.end();
 				const_iterator first2 = lhs.begin();
 				const_iterator last2 = lhs.end();
-				for (; first1!=last1 && first2!=last2; first1++, first2++){
-					if (*first1 <= *first2)
+				for (; (first1 != last1) && (first2 != last2); ++first1, (void) ++first2)
+				{
+					if (*first1 < *first2)
 						return true;
-					if (*first1 > *first2){}
+					if (*first2 < *first1)
 						return false;
 				}
-				if (first1 == last1 && first2 != last2)
+				if ((first1 == last1 && first2 == last2) || (first1 == last1 && first2 != last2))
 					return true;
 				return false;
 			}

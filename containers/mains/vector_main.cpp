@@ -197,14 +197,14 @@ int main()
         vector_outfile << std::endl << "|||||||||||||||||" << std::endl << std::endl;
 
         
-        myvec1.erase(myvec1.begin() + 1, myvec1.end() - 1); // si begin - 1 comportement etrange a verif
+        myvec1.erase(myvec1.begin() + 1, myvec1.end() - 1);
         for (ft::vector<int>::iterator it = myvec1.begin(); it != myvec1.end(); it++){
             if (it < myvec1.end() - 1)
                 myvector_outfile << *it <<  " | ";
             else
                 myvector_outfile << *it << std::endl;
         }
-        vec1.erase(vec1.begin() + 1, vec1.end() - 1); // si begin - 1 comportement etrange a verif
+        vec1.erase(vec1.begin() + 1, vec1.end() - 1);
         for (std::vector<int>::iterator it = vec1.begin(); it != vec1.end(); it++){
             if (it < vec1.end() - 1)
                 vector_outfile << *it <<  " | ";

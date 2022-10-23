@@ -2,7 +2,7 @@
 # define UTILS_HPP
 
 # include <cstddef>
-    #include <iostream>
+# include <iostream>
 
 
 namespace ft
@@ -73,18 +73,35 @@ namespace ft
 	struct is_integral : public integral_type<T>
 	{};
     //////// LEXICOGRAPHICAL_COMPARE \\\\\\\/
-    template< class InputIt1, class InputIt2 >
-	bool lexicographical_compare( InputIt1 first1, InputIt1 last1, InputIt2 first2, InputIt2 last2 ){
-		for (; first1!=last1 && first2!=last2; first1++, first2++){
-			if (*first1 < *first2)
-				return true;
-			if (*first1 > *first2){}
-				return false;
-		}
-		if (first1 == last1 && first2 != last2)
-			return true;
-		return false;
-	}
+
+    template<class InputIt1, class InputIt2>
+    bool lexicographical_compare(InputIt1 first1, InputIt1 last1,
+                                InputIt2 first2, InputIt2 last2)
+    {
+        for (; (first1 != last1) && (first2 != last2); ++first1, (void) ++first2)
+        {
+            if (*first1 < *first2)
+                return true;
+            if (*first2 < *first1)
+                return false;
+        }
+        return (first1 == last1) && (first2 != last2);
+    }
+
+    template<class InputIt1, class InputIt2, class Compare>
+    bool lexicographical_compare(InputIt1 first1, InputIt1 last1,
+                                InputIt2 first2, InputIt2 last2, Compare comp)
+    {
+        for (; (first1 != last1) && (first2 != last2); ++first1, (void) ++first2)
+        {
+            if (comp(*first1, *first2))
+                return true;
+            if (comp(*first2, *first1))
+                return false;
+        }
+        return (first1 == last1) && (first2 != last2);
+    }
+
 	template< class InputIt1, class InputIt2, class Compare >
 	bool lexicographical_compare( InputIt1 first1, InputIt1 last1, InputIt2 first2, InputIt2 last2, Compare comp ){
 		for (; first1!=last1 && first2!=last2; first1++, first2++){
@@ -99,7 +116,6 @@ namespace ft
 	}
     //////// Pair \\\\\\\/
     template<class T1, class T2>
-
 	struct pair
 	{
 		typedef T1 first_type;
@@ -116,8 +132,6 @@ namespace ft
 		pair( const pair<U1, U2>& p ): first(p.first), second(p.second){}
 
 		pair& operator=( const pair& other ){
-            if (*this == other)
-                return *this;
             first = other.first;
             second = other.second;
             return *this;
@@ -208,8 +222,57 @@ namespace ft
     template <class T>
     struct less : binary_function<T, T, bool>
     {
-        bool operator() (const T& x, const T& y) const { return (x < y); }
+        bool operator() (const T& x, const T& y) const {return (x < y); }
     };
+
+    template <class Iter>
+    struct iterator_traits
+    {
+            typedef typename Iter::difference_type      difference_type;
+            typedef typename Iter::value_type           value_type;
+            typedef typename Iter::pointer              pointer;
+            typedef typename Iter::reference            reference;
+            typedef typename Iter::iterator_category    iterator_category;
+
+    };
+
+    template < class T >
+    struct iterator_traits<T*>
+    {
+        typedef	ptrdiff_t                      difference_type;
+        typedef	T                                   value_type;
+        typedef	T*                                  pointer;
+        typedef	T&                                  reference;
+        typedef ft::random_access_iterator_tag     iterator_category;
+    };
+
+    template< class T >
+    class iterator_traits<const T*>
+    {
+        typedef	ptrdiff_t                      difference_type;
+        typedef	T                                   value_type;
+        typedef	const T                             *pointer;
+        typedef	const T                             &reference;
+        typedef	ft::random_access_iterator_tag     iterator_category;
+    };
+
+    template<class InputIterator>
+    typename ft::iterator_traits<InputIterator>::difference_type distance( InputIterator first, InputIterator last )
+    {
+        typename ft::iterator_traits<InputIterator>::difference_type i = 0;
+        for (;first != last;first++)
+            i++;
+        return i;
+    }
+
+    template <bool B, class T = void, class U = void>
+	struct conditional {};
+
+	template <class T, class U>
+	struct conditional<true, T, U> { typedef T type; };
+
+	template <class T, class U>
+	struct conditional<false, T, U> { typedef U type; };
 }
 
 #endif
